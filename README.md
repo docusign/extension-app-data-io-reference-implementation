@@ -90,7 +90,7 @@ Replace `<PROXY_BASE_URL>` in your manifest.json file with the ngrok forwarding 
 - `actions.params.uri`
     * Replace this value for all of the actions.
 
-### 2. Navigate to the  [Developer Console](https://devconsole..com/)
+### 2. Navigate to the [Developer Console](https://devconsole.docusign.com/apps)
 Log in with your Docusign developer credentials and create a new app.
 ### 3. Upload your manifest and create the data writeback app
 [Create your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/create/) and [test your connections](https://developers.docusign.com/extension-apps/build-an-extension-app/test/). 
