@@ -92,5 +92,154 @@ Replace `<PROXY_BASE_URL>` in your manifest.json file with the ngrok forwarding 
 
 ### 2. Navigate to the [Developer Console](https://devconsole.docusign.com/apps)
 Log in with your Docusign developer credentials and create a new app.
+
 ### 3. Upload your manifest and create the data IO app
-To [create your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/create/), open the [Developer Console] and select **+New App.** In the app manifest editor that opens, upload your manifest file or paste into the editor itself; then select Validate. Once the editor validates your manifest, select **Create App.** 
+To [create your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/create/), open the [Developer Console](https://devconsole.docusign.com/apps) and select **+New App.** In the app manifest editor that opens, upload your manifest file or paste into the editor itself; then select Validate. Once the editor validates your manifest, select **Create App.** 
+
+### 4. Test the extension app
+This reference implementation uses mock data to simulate how data can be verified against a database. [Test your extension](https://developers.docusign.com/extension-apps/build-an-extension-app/test/) using the sample data in [fileDB.ts](https://github.com/docusign/extension-app-data-io-reference-implementation/blob/main/src/db/fileDB.ts). Extension app tests include [integration tests](https://developers.docusign.com/extension-apps/build-an-extension-app/test/integration-tests/) (connection tests and extension tests), [functional tests](https://developers.docusign.com/extension-apps/build-an-extension-app/test/functional-tests/), and [App Center preview](https://developers.docusign.com/extension-apps/build-an-extension-app/test/app-center-preview/). 
+
+
+### Extension tests
+The Developer Console offers five extension tests to verify that a data IO extension app can connect to and exchange data with third-party APIs (or an API proxy that in turn connects with those APIs). 
+
+**Note:** These instructions only apply if you use the [mock data](https://github.com/docusign/extension-app-data-io-reference-implementation/blob/main/src/db/fileDB.ts) in the reference implementation. If you use your own database, you’ll need to construct your requests based on your own schema. Queries for extension tests in the Developer Console are built using [IQuery](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/custom-query-language/) structure. 
+
+
+#### CreateRecord extension test
+To begin the extension test process, run the CreateRecord test using the input provided in the Developer Console. The test should return a response containing the record ID.
+
+![CreateRecord Test](https://github.com/user-attachments/assets/76cb05d3-07ba-4697-906e-af75530a61e2)
+
+All record types are located in the `/src/db/` folder of this repository.
+
+![DB folder](https://github.com/user-attachments/assets/38efe238-cac1-4250-b45d-b6bce4417fc1)
+
+
+Open the `sampleTypeName.json` file in the `/src/db/` folder and check that the records were created.
+
+![sampletypename.json](https://github.com/user-attachments/assets/3c4df8b2-b850-4032-8f9e-5e4a730b35dc)
+
+
+#### SearchRecords extension test
+This query searches the records that have been created. You don’t have to use the same sample values used here; the search should work with a valid attribute in `sampleTypeName.json`.
+
+Open the SearchRecords test and create a new query based on the `sampleTypeName.json` file:
+
+- The `from` attribute maps to the value of `typeName` in the CreateRecord query; in this case, `sampleTypeName`.
+- The `data` array from the CreateRecord query maps to the `attributesToSelect` array; in this case, `sampleKey1`.
+- The `name` property of the `leftOperand` object should be the value of `sampleKey1`; in this case, `sampleValue1`.
+- The `operator` value should be `EQUALS`.
+- The `name` property of the `rightOperand` object should be the same as what's in `attributesToSelect` array; in this case, `sampleKey1`.
+
+The query below has been updated based on the directions above. You can copy and paste this into the SearchRecords test input box.
+
+```json
+{
+    "query": {
+        "$class": "sampleQueryClass",
+        "attributesToSelect": [
+            "sampleKey1"
+        ],
+        "from": "sampleTypeName",
+        "queryFilter": {
+            "$class": "sampleQueryFilterClass",
+            "operation": {
+                "$class": "sampleOperationClass",
+                "leftOperand": {
+                    "$class": "sampleLeftOperandClass",
+                    "name": "sampleValue1",
+                    "type": "INTEGER",
+                    "isLiteral": true
+                },
+                "operator": "EQUALS",
+                "rightOperand": {
+                    "$class": "sampleRightOperandClass",
+                    "name": "sampleKey1",
+                    "type": "INTEGER",
+                    "isLiteral": false
+                }
+            }
+        }
+    },
+    "pagination": {
+        "limit": 10,
+        "skip": 10
+    }
+}
+```
+
+Running the test will return the record you queried.
+
+![SearchRecord test](https://github.com/user-attachments/assets/e9f3d2ed-bf96-4fad-922f-1e37411a2f48)
+
+
+#### PatchRecord extension test
+The `recordId` property in the sample input maps to an `Id` in the `sampleTypeName.json` file. Any valid record ID can be used in this field.
+
+In the `data` array, include any attributes and values to be added to the record. In this query, a new property will be added and the original data in the record will be updated.
+
+```bash
+{
+    "typeName": "sampleTypeName",
+    "recordId": "0",
+    "idempotencyKey": "sampleIdempotencyKey",
+    "data": {
+        "sampleKey1": "updatedSampleValue1",
+        "sampleKey2": "updatedSampleValue2",
+        "sampleKey3": "newSampleValue3"
+    }
+}
+```
+
+Running the test should return the response `"success": true`.
+
+![PatchRecord test](https://github.com/user-attachments/assets/adda7f2f-6dd0-4df4-b06c-3195873e2a20)
+
+
+Rerun the SearchRecords extension test to search for the new patched values. 
+
+**Input query:**
+
+```json
+    "query": {
+        "$class": "sampleQueryClass",
+        "attributesToSelect": [
+            "sampleKey1"
+        ],
+        "from": "sampleTypeName",
+        "queryFilter": {
+            "$class": "sampleQueryFilterClass",
+            "operation": {
+                "$class": "sampleOperationClass",
+                "leftOperand": {
+                    "$class": "sampleLeftOperandClass",
+                    "name": "updatedSampleValue1",
+                    "type": "INTEGER",
+                    "isLiteral": true
+                },
+                "operator": "EQUALS",
+                "rightOperand": {
+                    "$class": "sampleRightOperandClass",
+                    "name": "sampleKey1",
+                    "type": "INTEGER",
+                    "isLiteral": false
+                }
+            }
+        }
+    },
+    "pagination": {
+        "limit": 10,
+        "skip": 10
+    }
+}
+```
+
+**Results:**
+
+![Results of SearchRecords after PatchRecord](https://github.com/user-attachments/assets/950270ea-7abb-497a-afb0-be37f5c85ed2)
+
+
+Alternatively, the `sampleTypeName.json` file will contain the updated records. 
+
+![sampleTypeName.json after PatchRecord test](https://github.com/user-attachments/assets/f462d380-646f-4606-a9c3-07ed64f712f1)
