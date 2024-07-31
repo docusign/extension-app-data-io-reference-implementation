@@ -6,7 +6,7 @@ This reference implementation models the implementation of data input and output
 ### 1. Clone the repository
 Run the following command to clone the repository: 
 ```bash
-git clone https://github.com/docusign/extension-app-data-writeback-reference-implementation.git
+git clone https://github.com/docusign/extension-app-data-io-reference-implementation.git
 ```
 
 ### 2. Generate secret values
