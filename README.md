@@ -1,6 +1,6 @@
 # Data IO Extension App Reference Implementation
 ## Introduction
-This reference implementation models the use case of taking an agreement PDF sent by the Docusign platform using a data IO extension app and storing it locally.
+This reference implementation models the implementation of data input and output functionalities in an [extension app](https://developers.docusign.com/extension-apps/).
 
 ## Setup instructions
 ### 1. Clone the repository
