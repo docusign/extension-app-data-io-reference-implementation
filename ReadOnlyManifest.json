@@ -1,5 +1,5 @@
 {
-	"name": "Data IO App Test V6",
+	"name": "Data Read App",
 	"description": {
 	  "short": "App for data io",
 	  "long": "This app is designed to allow users to use data io extensions"
@@ -55,8 +55,6 @@
 		"description": "using in data io flow",
 		"template": "DataIO.Version6.DataInputOutput",
 		"actionReferences": [
-		  "CreateRecord Action",
-		  "PatchRecord Action",
 		  "SearchRecords Action",
 		  "GetTypeNames Action",
 		  "GetTypeDefinitions Action"
@@ -64,24 +62,6 @@
 	  }
 	],
 	"actions": [
-	  {
-		"name": "CreateRecord Action",
-		"description": "something about data io to a proxy",
-		"template": "DataIO.Version6.CreateRecord",
-		"connectionsReference": "authentication",
-		"params": {
-		  "uri": "<PROXY_BASE_URL>/api/dataio/createRecord"
-		}
-	  },
-	  {
-		"name": "PatchRecord Action",
-		"description": "something about data io to a proxy",
-		"template": "DataIO.Version6.PatchRecord",
-		"connectionsReference": "authentication",
-		"params": {
-		  "uri": "<PROXY_BASE_URL>/api/dataio/patchRecord"
-		}
-	  },
 	  {
 		"name": "SearchRecords Action",
 		"description": "something about data io to a proxy",
