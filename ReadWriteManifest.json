@@ -1,5 +1,5 @@
 {
-	"name": "Data IO App Test V6",
+	"name": "Data IO App",
 	"description": {
 	  "short": "App for data io",
 	  "long": "This app is designed to allow users to use data io extensions"
@@ -26,17 +26,17 @@
 		"params": {
 		  "provider": "CUSTOM",
 		  "scopes": [],
-		  "clientId": "37f7f71e39aee61623ede03c7d96d9919c122573ab2680a5fc5ddbc577bfff4d6a87120d807f339976db86cebb3b9210fbee208e9cf8182d41b4d1f866afeb5c",
-		  "clientSecret": "64a2e1edd482f832b7790c245edd8265369a516906d271c4c5f955fd66e9b13cbdcd6b8a4e920bff2e9d1ae810e9dba7b73e244330050884ab31761bc2652790",
+		  "clientId": "<CLIENT_ID>",
+		  "clientSecret": "<CLIENT_SECRET>",
 		  "customConfig": {
 			"profile": {
-			  "url": "https://ba3c-2600-1700-5448-1890-a510-1bf9-6301-b696.ngrok-free.app/api/oauth/userinfo",
+			  "url": "<PROXY_BASE_URL>/api/oauth/userinfo",
 			  "httpMethod": "GET",
 			  "idKey": "sub",
 			  "emailKey": "email"
 			},
-			"tokenUrl": "https://ba3c-2600-1700-5448-1890-a510-1bf9-6301-b696.ngrok-free.app/api/oauth/token",
-			"authorizationUrl": "https://ba3c-2600-1700-5448-1890-a510-1bf9-6301-b696.ngrok-free.app/api/oauth/authorize",
+			"tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
+			"authorizationUrl": "<PROXY_BASE_URL>/api/oauth/authorize",
 			"authorizationParams": {
 			  "access_type": "offline",
 			  "prompt": "consent"
@@ -70,7 +70,7 @@
 		"template": "DataIO.Version6.CreateRecord",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://ba3c-2600-1700-5448-1890-a510-1bf9-6301-b696.ngrok-free.app/api/dataio/createRecord"
+		  "uri": "<PROXY_BASE_URL>/api/dataio/createRecord"
 		}
 	  },
 	  {
@@ -79,7 +79,7 @@
 		"template": "DataIO.Version6.PatchRecord",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://ba3c-2600-1700-5448-1890-a510-1bf9-6301-b696.ngrok-free.app/api/dataio/patchRecord"
+		  "uri": "<PROXY_BASE_URL>/api/dataio/patchRecord"
 		}
 	  },
 	  {
@@ -88,7 +88,7 @@
 		"template": "DataIO.Version6.SearchRecords",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://ba3c-2600-1700-5448-1890-a510-1bf9-6301-b696.ngrok-free.app/api/dataio/searchRecords"
+		  "uri": "<PROXY_BASE_URL>/api/dataio/searchRecords"
 		}
 	  },
 	  {
@@ -97,7 +97,7 @@
 		"template": "DataIO.Version6.GetTypeNames",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://ba3c-2600-1700-5448-1890-a510-1bf9-6301-b696.ngrok-free.app/api/dataio/getTypeNames"
+		  "uri": "<PROXY_BASE_URL>/api/dataio/getTypeNames"
 		}
 	  },
 	  {
@@ -106,8 +106,12 @@
 		"template": "DataIO.Version6.GetTypeDefinitions",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://ba3c-2600-1700-5448-1890-a510-1bf9-6301-b696.ngrok-free.app/api/dataio/getTypeDefinitions"
+		  "uri": "<PROXY_BASE_URL>/api/dataio/getTypeDefinitions"
 		}
 	  }
-	]
+	],
+	"publicationRegions": [
+		"US"
+	],
+	"distribution": "PUBLIC"
   }
