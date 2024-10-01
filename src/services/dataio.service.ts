@@ -117,7 +117,7 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     if (index === -1) {
       return res.json({ records: [] })
     }
-    return res.json({ records: [data[index]] })
+    return res.json({ records: [data[index]] });
   } catch (err) {
     console.log(`Encountered an error searching data: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();
