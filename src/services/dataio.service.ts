@@ -115,9 +115,9 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     const data: object[] = db.readFile();
     const index: number = QueryExecutor.execute(query, data);
     if (index === -1) {
-      return res.status(404).json(generateErrorResponse(ErrorCode.NOT_FOUND, 'No record found')).send();
+      return res.json({ records: [] })
     }
-    return res.json({ records: [data[index]] })
+    return res.json({ records: [data[index]] });
   } catch (err) {
     console.log(`Encountered an error searching data: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();
