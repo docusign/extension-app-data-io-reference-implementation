@@ -29,12 +29,6 @@
 		  "clientId": "<CLIENT_ID>",
 		  "clientSecret": "<CLIENT_SECRET>",
 		  "customConfig": {
-			"profile": {
-			  "url": "<PROXY_BASE_URL>/api/oauth/userinfo",
-			  "httpMethod": "GET",
-			  "idKey": "sub",
-			  "emailKey": "email"
-			},
 			"tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
 			"authorizationUrl": "<PROXY_BASE_URL>/api/oauth/authorize",
 			"authorizationParams": {
