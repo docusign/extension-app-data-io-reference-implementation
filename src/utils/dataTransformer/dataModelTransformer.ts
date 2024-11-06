@@ -348,13 +348,13 @@ import {
   
     /**
      * Creates a string with each CRUD value that is true seperated by a comma
+     * For demo purposes always returns all the CRUD values
      * @param createable boolean to indicate if createable should be in string
      * @param readable boolean to indicate if readable should be in string
      * @param updateable boolean to indicate if updateable should be in string
      */
-    private static getCrudDecoratorValue = (createable: boolean, readable: boolean, updateable: boolean): string => {
-      return [createable && CRUD_ARGUMENTS.CREATEABLE, readable && CRUD_ARGUMENTS.READABLE, updateable && CRUD_ARGUMENTS.UPDATEABLE]
-        .filter(Boolean)
+    private static getCrudDecoratorValue = (_createable: boolean, _readable: boolean, _updateable: boolean): string => {
+      return [CRUD_ARGUMENTS.CREATEABLE, CRUD_ARGUMENTS.READABLE, CRUD_ARGUMENTS.UPDATEABLE]
         .join(',');
     };
   
