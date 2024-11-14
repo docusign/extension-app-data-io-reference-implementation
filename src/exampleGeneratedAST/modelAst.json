@@ -5,6 +5,34 @@
       "isAbstract": false,
       "properties": [
         {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "Name",
+          "isOptional": true,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Account Name"
+                }
+              ]
+            },
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Crud",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Createable,Readable,Updateable"
+                }
+              ]
+            }
+          ]
+        },
+        {
           "$class": "concerto.metamodel@1.0.0.DoubleProperty",
           "name": "ShippingLatitude",
           "isOptional": true,
