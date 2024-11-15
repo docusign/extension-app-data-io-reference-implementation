@@ -124,13 +124,13 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
 };
 
 /**
- * Retrieves the type names for Song and MasterRecordId.
+ * Retrieves the type names for Address and MasterRecordId.
  * @param {IReq<GetTypeNamesBody>} req - the request object
  * @param {IRes} res - the response object
  * @return {IRes}
  */
 export const getTypeNames = (req: IReq<GetTypeNamesBody>, res: IRes): IRes => {
-  return res.json({ typeNames: [{typeName: "Song", label: "Song"}] as TypeNameInfo[]})
+  return res.json({ typeNames: [{typeName: "Address", label: "Address"}] as TypeNameInfo[]})
 };
 
 /**
