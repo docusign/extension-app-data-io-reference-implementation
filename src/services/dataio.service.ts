@@ -2,8 +2,7 @@
 import { DataModelTransformer } from '../utils/dataTransformer/dataModelTransformer';
 import { CreateRecordBody, CreateRecordResponse, GetTypeDefinitionsBody, GetTypeNamesBody, PatchRecordBody, SearchRecordsBody, TypeNameInfo, SearchRecordsResponse } from '../models/datawriteback';
 import { IReq, IRes } from '../utils/types';
-import { AccountSObject } from 'src/mocks/AccountSObject';
-import { MasterRecordIdSObject } from 'src/mocks/MasterRecordIdSObject';
+import { AddressSObject } from 'src/mocks/AddressSObject';
 import { QueryExecutor } from 'src/utils/queryExecutor';
 import { FileDB } from 'src/db/fileDB';
 
@@ -125,13 +124,13 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
 };
 
 /**
- * Retrieves the type names for Account and MasterRecordId.
+ * Retrieves the type names for Song and MasterRecordId.
  * @param {IReq<GetTypeNamesBody>} req - the request object
  * @param {IRes} res - the response object
  * @return {IRes}
  */
 export const getTypeNames = (req: IReq<GetTypeNamesBody>, res: IRes): IRes => {
-  return res.json({ typeNames: [{typeName: "Account", label: "Account"}, {typeName: "MasterRecordId", label: "The Master Record Id"}] as TypeNameInfo[]})
+  return res.json({ typeNames: [{typeName: "Song", label: "Song"}] as TypeNameInfo[]})
 };
 
 /**
@@ -151,7 +150,7 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
   }
   try {
     return res.json({
-      declarations: DataModelTransformer.transformSObjectsToConcerto([AccountSObject as any, MasterRecordIdSObject as any])
+      declarations: DataModelTransformer.transformSObjectsToConcerto([AddressSObject as any])
     })
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);

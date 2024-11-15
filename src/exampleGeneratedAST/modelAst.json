@@ -1,738 +1,169 @@
 [
-    {
-      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
-      "name": "Account",
-      "isAbstract": false,
-      "properties": [
-        {
-          "$class": "concerto.metamodel@1.0.0.StringProperty",
-          "name": "Name",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Account Name"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Createable,Readable,Updateable"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.DoubleProperty",
-          "name": "ShippingLatitude",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Shipping Latitude"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Createable,Readable,Updateable"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.StringProperty",
-          "name": "Id",
-          "isOptional": false,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Account ID"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Readable"
-                }
-              ]
-            }
-          ],
-          "lengthValidator": {
-            "$class": "concerto.metamodel@1.0.0.StringLengthValidator",
-            "maxLength": 18
+  {
+    "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+    "name": "Address",
+    "isAbstract": false,
+    "properties": [
+      {
+        "$class": "concerto.metamodel@1.0.0.StringProperty",
+        "name": "Id",
+        "isOptional": false,
+        "isArray": false,
+        "decorators": [
+          {
+            "$class": "concerto.metamodel@1.0.0.Decorator",
+            "name": "Term",
+            "arguments": [
+              {
+                "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                "value": "Unique Identifier"
+              }
+            ]
           }
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.BooleanProperty",
-          "name": "61",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Deleted"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Readable"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.StringProperty",
-          "name": "MasterRecordId",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Master Record ID"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Readable"
-                }
-              ]
-            }
-          ],
-          "lengthValidator": {
-            "$class": "concerto.metamodel@1.0.0.StringLengthValidator",
-            "maxLength": 18
+        ]
+      },
+      {
+        "$class": "concerto.metamodel@1.0.0.StringProperty",
+        "name": "Name",
+        "isOptional": true,
+        "isArray": false,
+        "decorators": [
+          {
+            "$class": "concerto.metamodel@1.0.0.Decorator",
+            "name": "Term",
+            "arguments": [
+              {
+                "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                "value": "Full Name"
+              }
+            ]
           }
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.DoubleProperty",
-          "name": "PushCount",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Push Count"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Readable"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.ObjectProperty",
-          "name": "Type",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Account Type"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Createable,Readable,Updateable"
-                }
-              ]
-            }
-          ],
-          "type": {
-            "$class": "concerto.metamodel@1.0.0.TypeIdentifier",
-            "name": "AccountType_Enum"
+        ]
+      },
+      {
+        "$class": "concerto.metamodel@1.0.0.StringProperty",
+        "name": "street1",
+        "isOptional": false,
+        "isArray": false,
+        "decorators": [
+          {
+            "$class": "concerto.metamodel@1.0.0.Decorator",
+            "name": "Term",
+            "arguments": [
+              {
+                "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                "value": "Primary Street Address"
+              }
+            ]
           }
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.RelationshipProperty",
-          "name": "ChildAccounts",
-          "isOptional": true,
-          "isArray": true,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "ChildAccounts"
-                }
-              ]
-            }
-          ],
-          "type": {
-            "$class": "concerto.metamodel@1.0.0.TypeIdentifier",
-            "name": "Account"
+        ]
+      },
+      {
+        "$class": "concerto.metamodel@1.0.0.StringProperty",
+        "name": "street2",
+        "isOptional": true,
+        "isArray": false,
+        "decorators": [
+          {
+            "$class": "concerto.metamodel@1.0.0.Decorator",
+            "name": "Term",
+            "arguments": [
+              {
+                "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                "value": "Secondary Street Address"
+              }
+            ]
           }
-        }
-      ],
-      "decorators": [
-        {
-          "$class": "concerto.metamodel@1.0.0.Decorator",
-          "name": "Term",
-          "arguments": [
-            {
-              "$class": "concerto.metamodel@1.0.0.DecoratorString",
-              "value": "Account"
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.Decorator",
-          "name": "Crud",
-          "arguments": [
-            {
-              "$class": "concerto.metamodel@1.0.0.DecoratorString",
-              "value": "Createable,Readable,Updateable"
-            }
-          ]
-        }
-      ],
-      "identified": {
-        "$class": "concerto.metamodel@1.0.0.IdentifiedBy",
-        "name": "Id"
+        ]
+      },
+      {
+        "$class": "concerto.metamodel@1.0.0.StringProperty",
+        "name": "locality",
+        "isOptional": false,
+        "isArray": false,
+        "decorators": [
+          {
+            "$class": "concerto.metamodel@1.0.0.Decorator",
+            "name": "Term",
+            "arguments": [
+              {
+                "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                "value": "City or Locality"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$class": "concerto.metamodel@1.0.0.StringProperty",
+        "name": "subdivision",
+        "isOptional": false,
+        "isArray": false,
+        "decorators": [
+          {
+            "$class": "concerto.metamodel@1.0.0.Decorator",
+            "name": "Term",
+            "arguments": [
+              {
+                "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                "value": "State or Province"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$class": "concerto.metamodel@1.0.0.StringProperty",
+        "name": "countryOrRegion",
+        "isOptional": false,
+        "isArray": false,
+        "decorators": [
+          {
+            "$class": "concerto.metamodel@1.0.0.Decorator",
+            "name": "Term",
+            "arguments": [
+              {
+                "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                "value": "Country or Region"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$class": "concerto.metamodel@1.0.0.StringProperty",
+        "name": "postalCode",
+        "isOptional": false,
+        "isArray": false,
+        "decorators": [
+          {
+            "$class": "concerto.metamodel@1.0.0.Decorator",
+            "name": "Term",
+            "arguments": [
+              {
+                "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                "value": "Postal Code"
+              }
+            ]
+          }
+        ]
       }
-    },
-    {
-      "$class": "concerto.metamodel@1.0.0.EnumDeclaration",
-      "name": "AccountType_Enum",
-      "properties": [
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Prospect",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Prospect"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Customer - Direct",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Customer - Direct"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Customer - Channel",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Customer - Channel"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Channel Partner / Reseller",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Channel Partner / Reseller"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Installation Partner",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Installation Partner"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Technology Partner",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Technology Partner"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Other",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Other"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "decorators": []
-    },
-    {
-      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
-      "name": "MasterRecordId",
-      "isAbstract": false,
-      "properties": [
-        {
-          "$class": "concerto.metamodel@1.0.0.DoubleProperty",
-          "name": "ShippingLatitude",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Shipping Latitude"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Createable,Readable,Updateable"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.StringProperty",
-          "name": "Id",
-          "isOptional": false,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "MasterRecordId ID"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Readable"
-                }
-              ]
-            }
-          ],
-          "lengthValidator": {
-            "$class": "concerto.metamodel@1.0.0.StringLengthValidator",
-            "maxLength": 18
+    ],
+    "decorators": [
+      {
+        "$class": "concerto.metamodel@1.0.0.Decorator",
+        "name": "Term",
+        "arguments": [
+          {
+            "$class": "concerto.metamodel@1.0.0.DecoratorString",
+            "value": "Address"
           }
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.BooleanProperty",
-          "name": "61",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Deleted"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Readable"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.StringProperty",
-          "name": "MasterRecordId",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Master Record ID"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Readable"
-                }
-              ]
-            }
-          ],
-          "lengthValidator": {
-            "$class": "concerto.metamodel@1.0.0.StringLengthValidator",
-            "maxLength": 18
-          }
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.DoubleProperty",
-          "name": "PushCount",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Push Count"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Readable"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.ObjectProperty",
-          "name": "Type",
-          "isOptional": true,
-          "isArray": false,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "MasterRecordId Type"
-                }
-              ]
-            },
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Crud",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Createable,Readable,Updateable"
-                }
-              ]
-            }
-          ],
-          "type": {
-            "$class": "concerto.metamodel@1.0.0.TypeIdentifier",
-            "name": "MasterRecordIdType_Enum"
-          }
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.RelationshipProperty",
-          "name": "ChildMasterRecordIds",
-          "isOptional": true,
-          "isArray": true,
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "ChildMasterRecordIds"
-                }
-              ]
-            }
-          ],
-          "type": {
-            "$class": "concerto.metamodel@1.0.0.TypeIdentifier",
-            "name": "MasterRecordId"
-          }
-        }
-      ],
-      "decorators": [
-        {
-          "$class": "concerto.metamodel@1.0.0.Decorator",
-          "name": "Term",
-          "arguments": [
-            {
-              "$class": "concerto.metamodel@1.0.0.DecoratorString",
-              "value": "MasterRecordId"
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.Decorator",
-          "name": "Crud",
-          "arguments": [
-            {
-              "$class": "concerto.metamodel@1.0.0.DecoratorString",
-              "value": "Createable,Readable,Updateable"
-            }
-          ]
-        }
-      ],
-      "identified": {
-        "$class": "concerto.metamodel@1.0.0.IdentifiedBy",
-        "name": "Id"
+        ]
       }
-    },
-    {
-      "$class": "concerto.metamodel@1.0.0.EnumDeclaration",
-      "name": "MasterRecordIdType_Enum",
-      "properties": [
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Prospect",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Prospect"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Customer - Direct",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Customer - Direct"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Customer - Channel",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Customer - Channel"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Channel Partner / Reseller",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Channel Partner / Reseller"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Installation Partner",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Installation Partner"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Technology Partner",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Technology Partner"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "$class": "concerto.metamodel@1.0.0.EnumProperty",
-          "name": "Other",
-          "decorators": [
-            {
-              "$class": "concerto.metamodel@1.0.0.Decorator",
-              "name": "Term",
-              "arguments": [
-                {
-                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
-                  "value": "Other"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "decorators": []
+    ],
+    "identified": {
+      "$class": "concerto.metamodel@1.0.0.IdentifiedBy",
+      "name": "Id"
     }
-  ]
+  }
+]
