@@ -78,7 +78,7 @@ export const AddressSObject = {
       "calculatedFormula": null,
       "cascadeDelete": false,
       "caseSensitive": false,
-      "compoundFieldName": "Name",
+      "compoundFieldName": null,
       "controllerName": null,
       "createable": true,
       "custom": false,
@@ -127,6 +127,60 @@ export const AddressSObject = {
       "unique": false,
       "updateable": true,
       "writeRequiresMasterRead": false
+    },
+    {
+      "aggregatable": true,
+      "label": "Street 1",
+      "name": "street1",
+      "type": "string",
+      "length": 255,
+      "nillable": true,
+      "updateable": true
+    },
+    {
+      "aggregatable": true,
+      "label": "Street 2",
+      "name": "street2",
+      "type": "string",
+      "length": 255,
+      "nillable": true,
+      "updateable": true
+    },
+    {
+      "aggregatable": true,
+      "label": "Locality",
+      "name": "locality",
+      "type": "string",
+      "length": 100,
+      "nillable": true,
+      "updateable": true
+    },
+    {
+      "aggregatable": true,
+      "label": "Subdivision",
+      "name": "subdivision",
+      "type": "string",
+      "length": 100,
+      "nillable": true,
+      "updateable": true
+    },
+    {
+      "aggregatable": true,
+      "label": "Country or Region",
+      "name": "countryOrRegion",
+      "type": "string",
+      "length": 100,
+      "nillable": true,
+      "updateable": true
+    },
+    {
+      "aggregatable": true,
+      "label": "Postal Code",
+      "name": "postalCode",
+      "type": "string",
+      "length": 20,
+      "nillable": true,
+      "updateable": true
     }
   ],
   "hasSubtypes": false,
