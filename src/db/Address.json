@@ -1,0 +1,12 @@
+[
+  {
+    "Id": "0",
+    "Name": "John Doe",
+    "street1": "123 Main St",
+    "street2": "Apt 4B",
+    "locality": "Springfield",
+    "subdivision": "IL",
+    "countryOrRegion": "USA",
+    "postalCode": "62704"
+  }
+]

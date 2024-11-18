@@ -734,5 +734,172 @@
         }
       ],
       "decorators": []
+    },
+    {
+      "$class": "concerto.metamodel@1.0.0.ConceptDeclaration",
+      "name": "Address",
+      "isAbstract": false,
+      "properties": [
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "Id",
+          "isOptional": false,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Unique Identifier"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "Name",
+          "isOptional": true,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Full Name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "street1",
+          "isOptional": false,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Primary Street Address"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "street2",
+          "isOptional": true,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Secondary Street Address"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "locality",
+          "isOptional": false,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "City or Locality"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "subdivision",
+          "isOptional": false,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "State or Province"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "countryOrRegion",
+          "isOptional": false,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Country or Region"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.StringProperty",
+          "name": "postalCode",
+          "isOptional": false,
+          "isArray": false,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Postal Code"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "decorators": [
+        {
+          "$class": "concerto.metamodel@1.0.0.Decorator",
+          "name": "Term",
+          "arguments": [
+            {
+              "$class": "concerto.metamodel@1.0.0.DecoratorString",
+              "value": "Address"
+            }
+          ]
+        }
+      ],
+      "identified": {
+        "$class": "concerto.metamodel@1.0.0.IdentifiedBy",
+        "name": "Id"
+      }
     }
   ]
