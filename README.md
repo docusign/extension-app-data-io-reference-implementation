@@ -7,7 +7,7 @@ To test a read-only data IO extension app, modify the `ReadOnlyManifest.json` fi
 To test a data IO extension app with both read and write capabilities, modify the `ReadWriteManifest.json` file.
 
 ## Video Walkthrough
-[![Reference implementation videos](https://img.youtube.com/vi/_4p7GWK5aoA/0.jpg)](https://youtube.com/playlist?list=PLXpRTgmbu4orAwfvw5qMpYDIqqhT6Z7Og&feature=shared)
+[![Reference implementation videos](https://img.youtube.com/vi/_4p7GWK5aoA/0.jpg)](https://youtube.com/playlist?list=PLXpRTgmbu4orBQrYWPAXa4EBXv0IGGzID&feature=shared)
 
 ## Setup instructions
 ### 1. Clone the repository
