@@ -5,7 +5,8 @@
     "build": "tsc --build tsconfig.json",
     "lint": "npx eslint --ext .ts src/",
     "start": "node ./dist --env=production",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "parse-model": "concerto parse --model ./src/dataModel/model.cto --excludeLineLocations --output modelAst.json"
   },
   "nodemonConfig": {
     "watch": [

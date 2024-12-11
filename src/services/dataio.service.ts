@@ -1,12 +1,10 @@
-
-import { DataModelTransformer } from '../utils/dataTransformer/dataModelTransformer';
-import { CreateRecordBody, CreateRecordResponse, GetTypeDefinitionsBody, GetTypeNamesBody, PatchRecordBody, SearchRecordsBody, TypeNameInfo, SearchRecordsResponse } from '../models/datawriteback';
+import { CreateRecordBody, GetTypeDefinitionsBody, GetTypeNamesBody, PatchRecordBody, SearchRecordsBody, TypeNameInfo, SearchRecordsResponse } from '../models/datawriteback';
 import { IReq, IRes } from '../utils/types';
-import { AccountSObject } from 'src/mocks/AccountSObject';
-import { MasterRecordIdSObject } from 'src/mocks/MasterRecordIdSObject';
-import { AddressSObject } from 'src/mocks/AddressSObject';
 import { QueryExecutor } from 'src/utils/queryExecutor';
 import { FileDB } from 'src/db/fileDB';
+import model from '../dataModel/modelAst.json';
+import { DeclarationUnion, IConceptDeclaration, IDecorator, IDecoratorLiteral, IDecoratorString } from '@accordproject/concerto-types';
+import { CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
 
 enum ErrorCode {
   INTERNAL_ERROR = 'INTERNAL_ERROR',
@@ -25,6 +23,51 @@ type ErrorResponse = {
  * @returns {string}
  */
 const generateFilePath = (typeName: string): string => `${typeName}.json`;
+
+/**
+ * Check if the given decorators has a Crud decorator that includes the given CRUD action
+ * @param action The CRUD action to check for
+ * @param decorators The decorators to search in
+ * @returns {boolean} True if the decorators includes the CRUD action
+ */
+const hasCRUDActionDecorator = (action: string, decorators: IDecorator[]): boolean => {
+  return decorators.some((decorator: IDecorator) => 
+    decorator.name === DECORATOR_NAMES.CRUD &&
+    decorator.arguments?.some((arg: IDecoratorLiteral)  => 
+        arg.$class === "concerto.metamodel@1.0.0.DecoratorString" &&
+        (arg as IDecoratorString).value.includes(action)
+    )
+  );
+}
+
+/**
+ * Checks if the given declaration is a readable concept by checking for a Crud decorator with "Readable".
+ * @param declaration - The declaration to check.
+ * @returns {boolean} True if the declaration is a readable concept, false otherwise.
+ */
+const isReadableConcept = (declaration: DeclarationUnion): boolean => {
+  // Check if the declaration is a ConceptDeclaration
+  if (declaration.$class === "concerto.metamodel@1.0.0.ConceptDeclaration") {
+    // Check for Crud decorator with "Readable"
+    if (declaration.decorators) {
+        return hasCRUDActionDecorator(CRUD_ARGUMENTS.READABLE, declaration.decorators && []);
+    }
+  }
+  return false;
+}
+
+/**
+ * Extracts the value of the TERM decorator from the provided decorators.
+ * Every declaration and property must have a term decorator defined
+ *
+ * @param {IDecorator[]} decorators - An array of decorators to search through.
+ * @returns {string} The value of the TERM decorator if found.
+ */
+const getTermDecoratorValue = (decorators?: IDecorator[]): string => {
+  const stringDecorator: IDecoratorString = decorators?.filter((decorator: IDecorator) => decorator.name === DECORATOR_NAMES.TERM)[0].arguments![0] as IDecoratorString;
+  return stringDecorator.value;
+}
+
 
 /**
  * Generates an error response object with the provided message and code.
@@ -132,7 +175,15 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
  * @return {IRes}
  */
 export const getTypeNames = (req: IReq<GetTypeNamesBody>, res: IRes): IRes => {
-  return res.json({ typeNames: [{typeName: "Account", label: "Account"}, {typeName: "MasterRecordId", label: "The Master Record Id"}, {typeName: "Address", label: "Address"}] as TypeNameInfo[]})
+  const concepts: IConceptDeclaration[] = model.declarations.filter(isReadableConcept) as IConceptDeclaration[];
+  const typeNameInfos: TypeNameInfo[] = concepts.map((concept: IConceptDeclaration) => {
+    return {
+      typeName: concept.name,
+      label: getTermDecoratorValue(concept.decorators),
+    }
+  });
+
+  return res.json({ typeNames: typeNameInfos as TypeNameInfo[]})
 };
 
 /**
@@ -152,7 +203,7 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
   }
   try {
     return res.json({
-      declarations: DataModelTransformer.transformSObjectsToConcerto([AccountSObject as any, MasterRecordIdSObject as any, AddressSObject as any])
+      declarations: model.declarations.filter(isReadableConcept)
     })
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);

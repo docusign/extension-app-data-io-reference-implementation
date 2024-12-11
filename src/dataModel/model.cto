@@ -1,0 +1,103 @@
+namespace org.example
+
+enum AccountType_Enum {
+  o Prospect
+  o Customer_Direct
+  o Customer_Channel
+  o Channel_Partner_Reseller
+  o Installation_Partner
+  o Technology_Partner
+  o Other
+}
+
+@Term("Account")
+@Crud("Createable,Readable,Updateable")
+concept Account identified by Id {
+  @Term("Account ID")
+  @Crud("Readable")
+  o String Id length=[0, 18]
+
+  @Term("Account Name")
+  @Crud("Createable,Readable,Updateable")
+  o String Name optional
+
+  @Term("Shipping Latitude")
+  @Crud("Createable,Readable,Updateable")
+  o Double ShippingLatitude optional
+
+  @Term("Deleted")
+  @Crud("Readable")
+  o Boolean _61 optional
+
+  @Term("Master Record ID")
+  @Crud("Readable")
+  o String MasterRecordId length=[0, 18] optional
+
+  @Term("Push Count")
+  @Crud("Readable")
+  o Double PushCount optional
+
+  @Term("Account Type")
+  @Crud("Createable,Readable,Updateable")
+  o AccountType_Enum Type optional
+
+  @Term("ChildAccounts")
+  --> Account[] ChildAccounts optional
+}
+
+// Concept: Address
+@Term("Address")
+concept Address identified by Id {
+  @Term("Unique Identifier")
+  o String Id
+
+  @Term("Full Name")
+  o String Name optional
+
+  @Term("Primary Street Address")
+  o String street1
+
+  @Term("Secondary Street Address")
+  o String street2 optional
+
+  @Term("City or Locality")
+  o String locality
+
+  @Term("State or Province")
+  o String subdivision
+
+  @Term("Country or Region")
+  o String countryOrRegion
+
+  @Term("Postal Code")
+  o String postalCode
+}
+
+// Concept: Address
+@Term("Address")
+concept Address identified by Id {
+  @Term("Address ID")
+  o String Id length=[0, 18]
+
+  @Term("Name")
+  o String Name length=[0, 18]  optional
+
+  @Term("Street 1")
+  o String street1 length=[0, 255]  optional
+
+  @Term("Street 2")
+  o String street2 length=[0, 255] optional
+
+  @Term("Locality")
+  o String locality length=[0, 255] optional
+
+  @Term("Subdivision")
+  o String subdivision length=[0, 100] optional
+
+  @Term("Country or Region")
+  o String countryOrRegion length=[0, 100] optional
+
+  @Term("Postal Code")
+  o String postalCode length=[0, 20] optional
+}
+
