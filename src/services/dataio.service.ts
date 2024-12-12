@@ -4,7 +4,7 @@ import { QueryExecutor } from 'src/utils/queryExecutor';
 import { FileDB } from 'src/db/fileDB';
 import model from '../dataModel/modelAst.json';
 import { DeclarationUnion, IConceptDeclaration, IDecorator, IDecoratorLiteral, IDecoratorString } from '@accordproject/concerto-types';
-import { CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
+import { CONCERTO_CONCEPT_DECLARATION_CLASS, CONCERTO_STRING_DECORATOR_CLASS, ConcertoASTUtil, CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
 
 enum ErrorCode {
   INTERNAL_ERROR = 'INTERNAL_ERROR',
@@ -30,14 +30,14 @@ const generateFilePath = (typeName: string): string => `${typeName}.json`;
  * @param decorators The decorators to search in
  * @returns {boolean} True if the decorators includes the CRUD action
  */
-const hasCRUDActionDecorator = (action: string, decorators: IDecorator[]): boolean => {
-  return decorators.some((decorator: IDecorator) => 
+const hasCRUDActionDecorator = (action: string, decorators?: IDecorator[]): boolean => {
+  return decorators?.some((decorator: IDecorator) => 
     decorator.name === DECORATOR_NAMES.CRUD &&
     decorator.arguments?.some((arg: IDecoratorLiteral)  => 
-        arg.$class === "concerto.metamodel@1.0.0.DecoratorString" &&
+        arg.$class === CONCERTO_STRING_DECORATOR_CLASS &&
         (arg as IDecoratorString).value.includes(action)
     )
-  );
+  ) || false;
 }
 
 /**
@@ -47,13 +47,7 @@ const hasCRUDActionDecorator = (action: string, decorators: IDecorator[]): boole
  */
 const isReadableConcept = (declaration: DeclarationUnion): boolean => {
   // Check if the declaration is a ConceptDeclaration
-  if (declaration.$class === "concerto.metamodel@1.0.0.ConceptDeclaration") {
-    // Check for Crud decorator with "Readable"
-    if (declaration.decorators) {
-        return hasCRUDActionDecorator(CRUD_ARGUMENTS.READABLE, declaration.decorators && []);
-    }
-  }
-  return false;
+  return declaration.$class === CONCERTO_CONCEPT_DECLARATION_CLASS && declaration.decorators && hasCRUDActionDecorator(CRUD_ARGUMENTS.READABLE, declaration.decorators) || false
 }
 
 /**

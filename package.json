@@ -6,7 +6,7 @@
     "lint": "npx eslint --ext .ts src/",
     "start": "node ./dist --env=production",
     "dev": "nodemon",
-    "parse-model": "concerto parse --model ./src/dataModel/model.cto --excludeLineLocations --output modelAst.json"
+    "parse-model": "concerto parse --model ./src/dataModel/model.cto --excludeLineLocations --output ./src/dataModel/modelAst.json"
   },
   "nodemonConfig": {
     "watch": [

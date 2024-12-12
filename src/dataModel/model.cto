@@ -45,59 +45,83 @@ concept Account identified by Id {
   --> Account[] ChildAccounts optional
 }
 
-// Concept: Address
-@Term("Address")
-concept Address identified by Id {
-  @Term("Unique Identifier")
-  o String Id
+// Enum Declaration: MasterRecordIdType_Enum
+enum MasterRecordIdType_Enum {
+  o Prospect
+  o Customer_Direct
+  o Customer_Channel
+  o Channel_Partner_Reseller
+  o Installation_Partner
+  o Technology_Partner
+  o Other
+}
 
-  @Term("Full Name")
-  o String Name optional
+// Concept Declaration: MasterRecordId
+@Term("MasterRecordId")
+@Crud("Createable,Readable,Updateable")
+concept MasterRecordId identified by Id {
+  @Term("MasterRecordId ID")
+  @Crud("Readable")
+  o String Id length=[0, 18]
 
-  @Term("Primary Street Address")
-  o String street1
+  @Term("Deleted")
+  @Crud("Readable")
+  o Boolean Deleted
 
-  @Term("Secondary Street Address")
-  o String street2 optional
+  @Term("Account ID")
+  @Crud("Readable")
+  --> Account AccountId optional
 
-  @Term("City or Locality")
-  o String locality
+  @Term("Push Count")
+  @Crud("Readable")
+  o Double PushCount optional
 
-  @Term("State or Province")
-  o String subdivision
+  @Term("MasterRecordId Type")
+  @Crud("Createable,Readable,Updateable")
+  o MasterRecordIdType_Enum Type optional
 
-  @Term("Country or Region")
-  o String countryOrRegion
+  @Term("Shipping Latitude")
+  @Crud("Createable,Readable,Updateable")
+  o Double ShippingLatitude optional
 
-  @Term("Postal Code")
-  o String postalCode
+  @Term("ChildMasterRecordIds")
+  --> MasterRecordId[] ChildMasterRecordIds optional
 }
 
 // Concept: Address
 @Term("Address")
+@Crud("Createable,Readable,Updateable")
 concept Address identified by Id {
   @Term("Address ID")
+  @Crud("Createable,Readable,Updateable")
   o String Id length=[0, 18]
 
   @Term("Name")
+  @Crud("Createable,Readable,Updateable")
   o String Name length=[0, 18]  optional
 
   @Term("Street 1")
+  @Crud("Createable,Readable,Updateable")
   o String street1 length=[0, 255]  optional
 
   @Term("Street 2")
+  @Crud("Createable,Readable,Updateable")
   o String street2 length=[0, 255] optional
 
   @Term("Locality")
+  @Crud("Createable,Readable,Updateable")
   o String locality length=[0, 255] optional
 
   @Term("Subdivision")
+  @Crud("Createable,Readable,Updateable")
   o String subdivision length=[0, 100] optional
 
   @Term("Country or Region")
+  @Crud("Createable,Readable,Updateable")
   o String countryOrRegion length=[0, 100] optional
 
   @Term("Postal Code")
+  @Crud("Createable,Readable,Updateable")
   o String postalCode length=[0, 20] optional
 }
 
