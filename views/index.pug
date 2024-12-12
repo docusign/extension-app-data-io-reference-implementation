@@ -1,0 +1,13 @@
+html
+  head
+    title Redirect Page
+
+  body
+    h1 Welcome to the Redirect Page
+
+    button(onclick="redirectToVariableUrl()") Click me to consent
+
+    script.
+      function redirectToVariableUrl() {
+        window.location.href = '#{redirectUri}?code=#{code}&state=#{state}';
+      }
