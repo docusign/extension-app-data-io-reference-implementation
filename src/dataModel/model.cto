@@ -1,0 +1,127 @@
+namespace org.example
+
+enum AccountType_Enum {
+  o Prospect
+  o Customer_Direct
+  o Customer_Channel
+  o Channel_Partner_Reseller
+  o Installation_Partner
+  o Technology_Partner
+  o Other
+}
+
+@Term("Account")
+@Crud("Createable,Readable,Updateable")
+concept Account identified by Id {
+  @Term("Account ID")
+  @Crud("Readable")
+  o String Id length=[0, 18]
+
+  @Term("Account Name")
+  @Crud("Createable,Readable,Updateable")
+  o String Name optional
+
+  @Term("Shipping Latitude")
+  @Crud("Createable,Readable,Updateable")
+  o Double ShippingLatitude optional
+
+  @Term("Deleted")
+  @Crud("Readable")
+  o Boolean _61 optional
+
+  @Term("Master Record ID")
+  @Crud("Readable")
+  o String MasterRecordId length=[0, 18] optional
+
+  @Term("Push Count")
+  @Crud("Readable")
+  o Double PushCount optional
+
+  @Term("Account Type")
+  @Crud("Createable,Readable,Updateable")
+  o AccountType_Enum Type optional
+
+  @Term("ChildAccounts")
+  --> Account[] ChildAccounts optional
+}
+
+// Enum Declaration: MasterRecordIdType_Enum
+enum MasterRecordIdType_Enum {
+  o Prospect
+  o Customer_Direct
+  o Customer_Channel
+  o Channel_Partner_Reseller
+  o Installation_Partner
+  o Technology_Partner
+  o Other
+}
+
+// Concept Declaration: MasterRecordId
+@Term("MasterRecordId")
+@Crud("Createable,Readable,Updateable")
+concept MasterRecordId identified by Id {
+  @Term("MasterRecordId ID")
+  @Crud("Readable")
+  o String Id length=[0, 18]
+
+  @Term("Deleted")
+  @Crud("Readable")
+  o Boolean Deleted
+
+  @Term("Account ID")
+  @Crud("Readable")
+  --> Account AccountId optional
+
+  @Term("Push Count")
+  @Crud("Readable")
+  o Double PushCount optional
+
+  @Term("MasterRecordId Type")
+  @Crud("Createable,Readable,Updateable")
+  o MasterRecordIdType_Enum Type optional
+
+  @Term("Shipping Latitude")
+  @Crud("Createable,Readable,Updateable")
+  o Double ShippingLatitude optional
+
+  @Term("ChildMasterRecordIds")
+  --> MasterRecordId[] ChildMasterRecordIds optional
+}
+
+// Concept: Address
+@Term("Address")
+@Crud("Createable,Readable,Updateable")
+concept Address identified by Id {
+  @Term("Address ID")
+  @Crud("Createable,Readable,Updateable")
+  o String Id length=[0, 18]
+
+  @Term("Name")
+  @Crud("Createable,Readable,Updateable")
+  o String Name length=[0, 18]  optional
+
+  @Term("Street 1")
+  @Crud("Createable,Readable,Updateable")
+  o String street1 length=[0, 255]  optional
+
+  @Term("Street 2")
+  @Crud("Createable,Readable,Updateable")
+  o String street2 length=[0, 255] optional
+
+  @Term("Locality")
+  @Crud("Createable,Readable,Updateable")
+  o String locality length=[0, 255] optional
+
+  @Term("Subdivision")
+  @Crud("Createable,Readable,Updateable")
+  o String subdivision length=[0, 100] optional
+
+  @Term("Country or Region")
+  @Crud("Createable,Readable,Updateable")
+  o String countryOrRegion length=[0, 100] optional
+
+  @Term("Postal Code")
+  @Crud("Createable,Readable,Updateable")
+  o String postalCode length=[0, 20] optional
+}
+

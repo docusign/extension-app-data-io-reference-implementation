@@ -38,7 +38,13 @@ Run the following command to install the necessary dependencies:
 ```bash
 npm install
 ```
-### 6. Running the proxy server
+
+### 6. Generating Model
+Run the following command to generate a model for the current CTO schema
+```bash
+npm run parse-model
+```
+### 7. Running the proxy server
 #### Development mode:
 Start the proxy server in development mode by running the command:
 ```bash
