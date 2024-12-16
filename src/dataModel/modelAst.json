@@ -272,6 +272,44 @@
                   "value": "ChildAccounts"
                 }
               ]
+            },
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Crud",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Createable,Readable,Updateable"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$class": "concerto.metamodel@1.0.0.DateTimeProperty",
+          "name": "time",
+          "isArray": false,
+          "isOptional": true,
+          "decorators": [
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Term",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Time Something Happened"
+                }
+              ]
+            },
+            {
+              "$class": "concerto.metamodel@1.0.0.Decorator",
+              "name": "Crud",
+              "arguments": [
+                {
+                  "$class": "concerto.metamodel@1.0.0.DecoratorString",
+                  "value": "Createable,Readable,Updateable"
+                }
+              ]
             }
           ]
         }
