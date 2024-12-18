@@ -68,7 +68,7 @@ const convertDateToISO8601 = (data: object, typeName: string): void => {
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
     if (DATE_TIME_PROPERTIES.get(typeName)?.has(key)) {
-      dataRecord[key] = moment.utc(dataRecord[key] as string).local().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+      dataRecord[key] = moment.utc(dataRecord[key] as string, 'DD/MM/YYYY').local().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     }
   }
 }
