@@ -39,8 +39,8 @@ Run the following command to install the necessary dependencies:
 npm install
 ```
 
-### 6. Generating Model
-Run the following command to generate a model for the current CTO schema
+### 6. Generating model
+Run the following command to generate a model for the current CTO schema:
 ```bash
 npm run parse-model
 ```
@@ -215,6 +215,7 @@ Rerun the SearchRecords extension test to search for the new patched values.
 **Input query:**
 
 ```json
+{
     "query": {
         "$class": "sampleQueryClass",
         "attributesToSelect": [
