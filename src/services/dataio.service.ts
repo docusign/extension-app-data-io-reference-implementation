@@ -4,7 +4,8 @@ import { QueryExecutor } from 'src/utils/queryExecutor';
 import { FileDB } from 'src/db/fileDB';
 import model from '../dataModel/modelAst.json';
 import { DeclarationUnion, IConceptDeclaration, IDecorator, IDecoratorLiteral, IDecoratorString } from '@accordproject/concerto-types';
-import { CONCERTO_CONCEPT_DECLARATION_CLASS, CONCERTO_STRING_DECORATOR_CLASS, ConcertoASTUtil, CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
+import { CONCERTO_CONCEPT_DECLARATION_CLASS, CONCERTO_DATETIME_PROPERTY_CLASS, CONCERTO_STRING_DECORATOR_CLASS, CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
+import moment from 'moment';
 
 enum ErrorCode {
   INTERNAL_ERROR = 'INTERNAL_ERROR',
@@ -15,6 +16,61 @@ enum ErrorCode {
 type ErrorResponse = {
   message: string;
   code: string;
+}
+
+/**
+ * A map where the key is a string typeName and the value is a set of datetime properties in that concept
+ */
+const DATE_TIME_PROPERTIES: Map<string, Set<string>> = new Map(
+  model.declarations
+    .filter((declaration: DeclarationUnion) => declaration.$class === CONCERTO_CONCEPT_DECLARATION_CLASS)
+    .map((declaration) => [
+      declaration.name,
+      new Set(
+        declaration.properties
+          .filter((property) => property.$class === CONCERTO_DATETIME_PROPERTY_CLASS)
+          .map((property) => property.name)
+      )
+    ] as const)
+    .filter(([, set]) => set.size > 0)
+);
+
+/**
+ * Formats the date properties of the given data object to 'DD/MM/YYYY'.
+ * 
+ * Iterates over the properties of the data object and checks if the property
+ * is a date-time property based on the typeName. If it is a date-time property,
+ * it formats the date to 'DD/MM/YYYY' using moment.
+ * 
+ * @param data - The data object containing properties to be formatted.
+ * @param typeName - The type name used to identify date-time properties.
+ */
+const formatISO8061DateProperties = (data: object, typeName: string): void => {
+  const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
+  for (const key in dataRecord) {
+    if (DATE_TIME_PROPERTIES.get(typeName)?.has(key)) {
+      dataRecord[key] = moment.utc(dataRecord[key] as string).local().format('DD/MM/YYYY');
+    }
+  }
+}
+
+/**
+ * Converts date properties of the given data object to ISO 8601 format.
+ * 
+ * Iterates over the properties of the data object and checks if the property
+ * is a date-time property based on the typeName. If it is a date-time property,
+ * it converts the date to ISO 8601 format using moment.
+ * 
+ * @param data - The data object containing properties to be converted.
+ * @param typeName - The type name used to identify date-time properties.
+ */
+const convertDateToISO8601 = (data: object, typeName: string): void => {
+  const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
+  for (const key in dataRecord) {
+    if (DATE_TIME_PROPERTIES.get(typeName)?.has(key)) {
+      dataRecord[key] = moment.utc(dataRecord[key] as string, 'DD/MM/YYYY').local().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    }
+  }
 }
 
 /**
@@ -97,6 +153,7 @@ export const createRecord = (req: IReq<CreateRecordBody>, res: IRes): IRes => {
     const db: FileDB = new FileDB(generateFilePath(typeName));
     const recordId: string = JSON.stringify(db.readFile().length);
     (data as any)['Id'] = recordId;
+    formatISO8061DateProperties(data, typeName);
     db.appendToFile(data)
     return res.json({ recordId });
   } catch (err) {
@@ -124,6 +181,7 @@ export const patchRecord = (req: IReq<PatchRecordBody>, res: IRes): IRes => {
       return res.status(400).json(generateErrorResponse(ErrorCode.BAD_REQUEST, 'data, typeName or recordId missing in request')).send();
     }
     const db: FileDB = new FileDB(generateFilePath(typeName));
+    formatISO8061DateProperties(data, typeName);
     db.updateFile(recordId as unknown as number, data)
     return res.json({ success: true });
   } catch (err) {
@@ -155,7 +213,9 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     if (index === -1) {
       return res.json({ records: [] })
     }
-    return res.json({ records: [data[index]] });
+    const dataResult: object = data[index];
+    convertDateToISO8601(dataResult, query.from);
+    return res.json({ records: [dataResult] });
   } catch (err) {
     console.log(`Encountered an error searching data: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();
