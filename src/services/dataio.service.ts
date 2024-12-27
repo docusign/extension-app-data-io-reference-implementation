@@ -2,11 +2,11 @@ import { CreateRecordBody, GetTypeDefinitionsBody, GetTypeNamesBody, PatchRecord
 import { IReq, IRes } from '../utils/types';
 import { QueryExecutor } from 'src/utils/queryExecutor';
 import { FileDB } from 'src/db/fileDB';
-import { IConceptDeclaration, IDecorator, IDecoratorString } from '@accordproject/concerto-types';
-import { CONCERTO_DATETIME_PROPERTY_CLASS, CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
+import { CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
 import moment from 'moment';
 import fs from 'fs';
 import { ConceptDeclaration, ModelManager } from '@accordproject/concerto-core';
+import path from 'path';
 
 enum ErrorCode {
   INTERNAL_ERROR = 'INTERNAL_ERROR',
@@ -24,7 +24,7 @@ type ErrorResponse = {
  * Model manager allowes users to load in CTO files and use Concerto model features directly in code.
  */
 const MODEL_MANAGER: ModelManager = new ModelManager();
-MODEL_MANAGER.addCTOModel(fs.readFileSync('./dataModel/model.cto','utf8'));
+MODEL_MANAGER.addCTOModel(fs.readFileSync(path.join(__dirname, "../dataModel/model.cto"),'utf8'));
 MODEL_MANAGER.validateModelFiles();
 
 /**
@@ -41,7 +41,7 @@ const formatISO8061DateProperties = (data: object, typeName: string): void => {
   const concept: ConceptDeclaration = MODEL_MANAGER.getConceptDeclarations().filter(c => c.getName() === typeName)[0];
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
-    if (concept.getProperty(key).getType() === 'dateTime') {
+    if (concept.getProperty(key).getType() === 'DateTime') {
       dataRecord[key] = moment.utc(dataRecord[key] as string).local().format('DD/MM/YYYY');
     }
   }
@@ -61,7 +61,7 @@ const convertDateToISO8601 = (data: object, typeName: string): void => {
   const concept: ConceptDeclaration = MODEL_MANAGER.getConceptDeclarations().filter(c => c.getName() === typeName)[0];
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
-    if (concept.getProperty(key).getType() === 'dateTime') {
+    if (concept.getProperty(key).getType() === 'DateTime') {
       dataRecord[key] = moment.utc(dataRecord[key] as string, 'DD/MM/YYYY').local().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     }
   }
@@ -81,18 +81,6 @@ const generateFilePath = (typeName: string): string => `${typeName}.json`;
  */
 const isReadableConcept = (concept: ConceptDeclaration): boolean => {
   return (concept.getDecorator(DECORATOR_NAMES.CRUD).arguments[0] as string).includes(CRUD_ARGUMENTS.READABLE);
-}
-
-/**
- * Extracts the value of the TERM decorator from the provided decorators.
- * Every declaration and property must have a term decorator defined
- *
- * @param {IDecorator[]} decorators - An array of decorators to search through.
- * @returns {string} The value of the TERM decorator if found.
- */
-const getTermDecoratorValue = (decorators?: IDecorator[]): string => {
-  const stringDecorator: IDecoratorString = decorators?.filter((decorator: IDecorator) => decorator.name === DECORATOR_NAMES.TERM)[0].arguments![0] as IDecoratorString;
-  return stringDecorator.value;
 }
 
 
@@ -206,11 +194,11 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
  * @return {IRes}
  */
 export const getTypeNames = (req: IReq<GetTypeNamesBody>, res: IRes): IRes => {
-  const concepts: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations().filter(isReadableConcept)
+  const concepts: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations().filter(isReadableConcept);
   const typeNameInfos: TypeNameInfo[] = concepts.map((concept: ConceptDeclaration) => {
     return {
-      typeName: concept.name,
-      label: getTermDecoratorValue(concept.decorators),
+      typeName: concept.getName(),
+      label: (concept.getDecorator(DECORATOR_NAMES.TERM).getArguments()[0]) as unknown as string,
     }
   });
 
@@ -233,8 +221,9 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
     return res.status(400).json(generateErrorResponse(ErrorCode.BAD_REQUEST, 'Missing typeNames in request')).send();
   }
   try {
+    console.log(MODEL_MANAGER.getConceptDeclarations());
     return res.json({
-      declarations: MODEL_MANAGER.getConceptDeclarations().filter(isReadableConcept)
+      declarations: MODEL_MANAGER.getConceptDeclarations().filter(isReadableConcept).map(concept => concept.ast)
     })
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);
