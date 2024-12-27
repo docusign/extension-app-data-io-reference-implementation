@@ -1,4 +1,4 @@
-namespace org.example
+namespace org.example@1.0.0
 
 enum AccountType_Enum {
   o Prospect
@@ -49,7 +49,6 @@ concept Account identified by Id {
   @Term("Time Something Happened")
   @Crud("Createable,Readable,Updateable")
   o DateTime time optional
-
 }
 
 // Enum Declaration: MasterRecordIdType_Enum
