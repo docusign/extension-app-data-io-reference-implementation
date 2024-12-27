@@ -20,14 +20,6 @@ type ErrorResponse = {
 }
 
 /**
- * Concerto model manager setup using CTO file.
- * Model manager allowes users to load in CTO files and use Concerto model features directly in code.
- */
-const MODEL_MANAGER: ModelManager = new ModelManager();
-MODEL_MANAGER.addCTOModel(fs.readFileSync(path.join(__dirname, "../dataModel/model.cto"),'utf8'));
-MODEL_MANAGER.validateModelFiles();
-
-/**
  * Formats the date properties of the given data object to 'DD/MM/YYYY'.
  * 
  * Iterates over the properties of the data object and checks if the property
@@ -38,7 +30,7 @@ MODEL_MANAGER.validateModelFiles();
  * @param typeName - The type name used to identify date-time properties.
  */
 const formatISO8061DateProperties = (data: object, typeName: string): void => {
-  const concept: ConceptDeclaration = MODEL_MANAGER.getConceptDeclarations().filter(c => c.getName() === typeName)[0];
+  const concept: ConceptDeclaration = CONCEPTS.filter(c => c.getName() === typeName)[0];
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
     if (concept.getProperty(key).getType() === 'DateTime') {
@@ -58,7 +50,7 @@ const formatISO8061DateProperties = (data: object, typeName: string): void => {
  * @param typeName - The type name used to identify date-time properties.
  */
 const convertDateToISO8601 = (data: object, typeName: string): void => {
-  const concept: ConceptDeclaration = MODEL_MANAGER.getConceptDeclarations().filter(c => c.getName() === typeName)[0];
+  const concept: ConceptDeclaration = CONCEPTS.filter(c => c.getName() === typeName)[0];
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
     if (concept.getProperty(key).getType() === 'DateTime') {
@@ -83,7 +75,6 @@ const isReadableConcept = (concept: ConceptDeclaration): boolean => {
   return (concept.getDecorator(DECORATOR_NAMES.CRUD).arguments[0] as string).includes(CRUD_ARGUMENTS.READABLE);
 }
 
-
 /**
  * Generates an error response object with the provided message and code.
  *
@@ -97,6 +88,16 @@ const generateErrorResponse = (message: string, code: string): ErrorResponse => 
     code
   }
 }
+
+/**
+ * Concerto model manager setup using CTO file.
+ * Model manager allowes users to load in CTO files and use Concerto model features directly in code.
+ */
+const MODEL_MANAGER: ModelManager = new ModelManager();
+MODEL_MANAGER.addCTOModel(fs.readFileSync(path.join(__dirname, "../dataModel/model.cto"),'utf8'));
+MODEL_MANAGER.validateModelFiles();
+const CONCEPTS: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations();
+const READABLE_CONCEPTS: ConceptDeclaration[] = CONCEPTS.filter(isReadableConcept);
 
 /**
  * Create a record in the database based on the provided data and typeName.
@@ -194,8 +195,7 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
  * @return {IRes}
  */
 export const getTypeNames = (req: IReq<GetTypeNamesBody>, res: IRes): IRes => {
-  const concepts: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations().filter(isReadableConcept);
-  const typeNameInfos: TypeNameInfo[] = concepts.map((concept: ConceptDeclaration) => {
+  const typeNameInfos: TypeNameInfo[] = READABLE_CONCEPTS.map((concept: ConceptDeclaration) => {
     return {
       typeName: concept.getName(),
       label: (concept.getDecorator(DECORATOR_NAMES.TERM).getArguments()[0]) as unknown as string,
@@ -221,9 +221,8 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
     return res.status(400).json(generateErrorResponse(ErrorCode.BAD_REQUEST, 'Missing typeNames in request')).send();
   }
   try {
-    console.log(MODEL_MANAGER.getConceptDeclarations());
     return res.json({
-      declarations: MODEL_MANAGER.getConceptDeclarations().filter(isReadableConcept).map(concept => concept.ast)
+      declarations: READABLE_CONCEPTS.map(concept => concept.ast)
     })
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);
