@@ -1,4 +1,4 @@
-namespace org.example
+namespace org.example@1.0.0
 
 enum AccountType_Enum {
   o Prospect
@@ -50,6 +50,13 @@ concept Account identified by Id {
   @Crud("Createable,Readable,Updateable")
   o DateTime time optional
 
+  @Term("Master Record Relationship")
+  @Crud("Createable,Readable,Updateable")
+  --> MasterRecordId MasterRecordRel optional
+
+  @Term("Master Record Object")
+  @Crud("Createable,Readable,Updateable")
+  o MasterRecordId MasterRecordObj optional
 }
 
 // Enum Declaration: MasterRecordIdType_Enum

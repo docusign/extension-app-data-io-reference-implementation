@@ -5,8 +5,7 @@
     "build": "tsc --build tsconfig.json",
     "lint": "npx eslint --ext .ts src/",
     "start": "node ./dist --env=production",
-    "dev": "nodemon",
-    "parse-model": "concerto parse --model ./src/dataModel/model.cto --excludeLineLocations --output ./src/dataModel/modelAst.json"
+    "dev": "nodemon" 
   },
   "nodemonConfig": {
     "watch": [
@@ -19,6 +18,7 @@
   "dependencies": {
     "@accordproject/concerto-cli": "^3.16.6",
     "@accordproject/concerto-types": "^3.16.10",
+    "@accordproject/concerto-core": "^3.16.4",
     "ajv": "^8.17.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",

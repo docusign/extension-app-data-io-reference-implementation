@@ -2,10 +2,11 @@ import { CreateRecordBody, GetTypeDefinitionsBody, GetTypeNamesBody, PatchRecord
 import { IReq, IRes } from '../utils/types';
 import { QueryExecutor } from 'src/utils/queryExecutor';
 import { FileDB } from 'src/db/fileDB';
-import model from '../dataModel/modelAst.json';
-import { DeclarationUnion, IConceptDeclaration, IDecorator, IDecoratorLiteral, IDecoratorString } from '@accordproject/concerto-types';
-import { CONCERTO_CONCEPT_DECLARATION_CLASS, CONCERTO_DATETIME_PROPERTY_CLASS, CONCERTO_STRING_DECORATOR_CLASS, CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
+import { IConceptDeclaration, IDecorator, IDecoratorString } from '@accordproject/concerto-types';
+import { CONCERTO_DATETIME_PROPERTY_CLASS, CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
 import moment from 'moment';
+import fs from 'fs';
+import { ConceptDeclaration, ModelManager } from '@accordproject/concerto-core';
 
 enum ErrorCode {
   INTERNAL_ERROR = 'INTERNAL_ERROR',
@@ -19,21 +20,12 @@ type ErrorResponse = {
 }
 
 /**
- * A map where the key is a string typeName and the value is a set of datetime properties in that concept
+ * Concerto model manager setup using CTO file.
+ * Model manager allowes users to load in CTO files and use Concerto model features directly in code.
  */
-const DATE_TIME_PROPERTIES: Map<string, Set<string>> = new Map(
-  model.declarations
-    .filter((declaration: DeclarationUnion) => declaration.$class === CONCERTO_CONCEPT_DECLARATION_CLASS)
-    .map((declaration) => [
-      declaration.name,
-      new Set(
-        declaration.properties
-          .filter((property) => property.$class === CONCERTO_DATETIME_PROPERTY_CLASS)
-          .map((property) => property.name)
-      )
-    ] as const)
-    .filter(([, set]) => set.size > 0)
-);
+const MODEL_MANAGER: ModelManager = new ModelManager();
+MODEL_MANAGER.addCTOModel(fs.readFileSync('./dataModel/model.cto','utf8'));
+MODEL_MANAGER.validateModelFiles();
 
 /**
  * Formats the date properties of the given data object to 'DD/MM/YYYY'.
@@ -46,9 +38,10 @@ const DATE_TIME_PROPERTIES: Map<string, Set<string>> = new Map(
  * @param typeName - The type name used to identify date-time properties.
  */
 const formatISO8061DateProperties = (data: object, typeName: string): void => {
+  const concept: ConceptDeclaration = MODEL_MANAGER.getConceptDeclarations().filter(c => c.getName() === typeName)[0];
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
-    if (DATE_TIME_PROPERTIES.get(typeName)?.has(key)) {
+    if (concept.getProperty(key).getType() === 'dateTime') {
       dataRecord[key] = moment.utc(dataRecord[key] as string).local().format('DD/MM/YYYY');
     }
   }
@@ -65,9 +58,10 @@ const formatISO8061DateProperties = (data: object, typeName: string): void => {
  * @param typeName - The type name used to identify date-time properties.
  */
 const convertDateToISO8601 = (data: object, typeName: string): void => {
+  const concept: ConceptDeclaration = MODEL_MANAGER.getConceptDeclarations().filter(c => c.getName() === typeName)[0];
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
-    if (DATE_TIME_PROPERTIES.get(typeName)?.has(key)) {
+    if (concept.getProperty(key).getType() === 'dateTime') {
       dataRecord[key] = moment.utc(dataRecord[key] as string, 'DD/MM/YYYY').local().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     }
   }
@@ -81,29 +75,12 @@ const convertDateToISO8601 = (data: object, typeName: string): void => {
 const generateFilePath = (typeName: string): string => `${typeName}.json`;
 
 /**
- * Check if the given decorators has a Crud decorator that includes the given CRUD action
- * @param action The CRUD action to check for
- * @param decorators The decorators to search in
- * @returns {boolean} True if the decorators includes the CRUD action
- */
-const hasCRUDActionDecorator = (action: string, decorators?: IDecorator[]): boolean => {
-  return decorators?.some((decorator: IDecorator) => 
-    decorator.name === DECORATOR_NAMES.CRUD &&
-    decorator.arguments?.some((arg: IDecoratorLiteral)  => 
-        arg.$class === CONCERTO_STRING_DECORATOR_CLASS &&
-        (arg as IDecoratorString).value.includes(action)
-    )
-  ) || false;
-}
-
-/**
  * Checks if the given declaration is a readable concept by checking for a Crud decorator with "Readable".
  * @param declaration - The declaration to check.
  * @returns {boolean} True if the declaration is a readable concept, false otherwise.
  */
-const isReadableConcept = (declaration: DeclarationUnion): boolean => {
-  // Check if the declaration is a ConceptDeclaration
-  return declaration.$class === CONCERTO_CONCEPT_DECLARATION_CLASS && declaration.decorators && hasCRUDActionDecorator(CRUD_ARGUMENTS.READABLE, declaration.decorators) || false
+const isReadableConcept = (concept: ConceptDeclaration): boolean => {
+  return (concept.getDecorator(DECORATOR_NAMES.CRUD).arguments[0] as string).includes(CRUD_ARGUMENTS.READABLE);
 }
 
 /**
@@ -229,8 +206,8 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
  * @return {IRes}
  */
 export const getTypeNames = (req: IReq<GetTypeNamesBody>, res: IRes): IRes => {
-  const concepts: IConceptDeclaration[] = model.declarations.filter(isReadableConcept) as IConceptDeclaration[];
-  const typeNameInfos: TypeNameInfo[] = concepts.map((concept: IConceptDeclaration) => {
+  const concepts: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations().filter(isReadableConcept)
+  const typeNameInfos: TypeNameInfo[] = concepts.map((concept: ConceptDeclaration) => {
     return {
       typeName: concept.name,
       label: getTermDecoratorValue(concept.decorators),
@@ -257,7 +234,7 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
   }
   try {
     return res.json({
-      declarations: model.declarations.filter(isReadableConcept)
+      declarations: MODEL_MANAGER.getConceptDeclarations().filter(isReadableConcept)
     })
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);
