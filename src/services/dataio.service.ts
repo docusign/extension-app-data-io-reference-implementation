@@ -1,13 +1,22 @@
-import { CreateRecordBody, GetTypeDefinitionsBody, GetTypeNamesBody, PatchRecordBody, SearchRecordsBody, TypeNameInfo, SearchRecordsResponse } from '../models/datawriteback';
+import { CreateRecordBody, GetTypeDefinitionsBody, GetTypeNamesBody, PatchRecordBody, SearchRecordsBody, TypeNameInfo } from '../models/datawriteback';
 import { IReq, IRes } from '../utils/types';
 import { QueryExecutor } from 'src/utils/queryExecutor';
 import { FileDB } from 'src/db/fileDB';
-import { CRUD_ARGUMENTS, DECORATOR_NAMES } from '../utils/concertoASTUtil';
 import moment from 'moment';
-import fs from 'fs';
 import { ConceptDeclaration, ModelManager } from '@accordproject/concerto-core';
 import path from 'path';
+import { ModelManagerUtil } from 'src/utils/modelManagerUtil';
 
+enum DECORATOR_NAMES {
+  TERM = 'Term',
+  CRUD = 'Crud',
+}
+
+enum CRUD_ARGUMENTS {
+  CREATEABLE = 'Createable',
+  READABLE = 'Readable',
+  UPDATEABLE = 'Updateable',
+}
 enum ErrorCode {
   INTERNAL_ERROR = 'INTERNAL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
@@ -93,9 +102,7 @@ const generateErrorResponse = (message: string, code: string): ErrorResponse => 
  * Concerto model manager setup using CTO file.
  * Model manager allowes users to load in CTO files and use Concerto model features directly in code.
  */
-const MODEL_MANAGER: ModelManager = new ModelManager();
-MODEL_MANAGER.addCTOModel(fs.readFileSync(path.join(__dirname, "../dataModel/model.cto"),'utf8'));
-MODEL_MANAGER.validateModelFiles();
+const MODEL_MANAGER: ModelManager = ModelManagerUtil.createModelManagerFromCTO(path.join(__dirname, "../dataModel/model.cto"));
 const CONCEPTS: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations();
 const READABLE_CONCEPTS: ConceptDeclaration[] = CONCEPTS.filter(isReadableConcept);
 
@@ -220,9 +227,10 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
   if (!typeNames) {
     return res.status(400).json(generateErrorResponse(ErrorCode.BAD_REQUEST, 'Missing typeNames in request')).send();
   }
+  MODEL_MANAGER.addCTOModel
   try {
     return res.json({
-      declarations: READABLE_CONCEPTS.map(concept => concept.ast)
+      declarations: READABLE_CONCEPTS.map((concept: ConceptDeclaration) => concept.ast)
     })
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);
