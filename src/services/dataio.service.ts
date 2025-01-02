@@ -6,6 +6,7 @@ import moment from 'moment';
 import { ConceptDeclaration, ModelManager } from '@accordproject/concerto-core';
 import path from 'path';
 import { ModelManagerUtil } from 'src/utils/modelManagerUtil';
+import { ResultRehydrator } from 'src/utils/resultRehydrator';
 
 enum DECORATOR_NAMES {
   TERM = 'Term',
@@ -188,7 +189,8 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     }
     const dataResult: object = data[index];
     convertDateToISO8601(dataResult, query.from);
-    return res.json({ records: [dataResult] });
+
+    return res.json({ records: [ResultRehydrator.filterAndRehydrate(query.attributesToSelect, data[index])] });
   } catch (err) {
     console.log(`Encountered an error searching data: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();
