@@ -22,14 +22,13 @@ WORKDIR ${APP_DIR}
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
-COPY --chown=${UID}:${GID} package.json .
-
 # Dependencies stage
 FROM base AS dependencies
 ARG APP_DIR
 
-RUN npm install && \
-    npm cache clean --force && \
+RUN --mount=type=bind,source=./package.json,target=${APP_DIR}/package.json \
+    --mount=type=cache,target=${APP_DIR}/.npm,uid=$UID,gid=$GID,mode=0755,sharing=locked \
+    npm install && \
     touch ${APP_DIR}/production.env && \
     touch ${APP_DIR}/development.env
 
@@ -63,6 +62,7 @@ ARG APP_DIR
 
 ENV NODE_ENV=production
 
+COPY --chown=${UID}:${GID} package.json .
 COPY --chown=${UID}:${GID} ./views ./views
 COPY --chown=${UID}:${GID} --from=build ${APP_DIR}/dist ./dist
 
