@@ -38,13 +38,7 @@ Run the following command to install the necessary dependencies:
 ```bash
 npm install
 ```
-
-### 6. Generating model
-Run the following command to generate a model for the current CTO schema:
-```bash
-npm run parse-model
-```
-### 7. Running the proxy server
+### 6. Running the proxy server
 #### Development mode:
 Start the proxy server in development mode by running the command:
 ```bash
@@ -120,30 +114,43 @@ The Developer Console offers five extension tests to verify that a data IO exten
 
 
 #### CreateRecord extension test
-To begin the extension test process, run the CreateRecord test using the input provided in the Developer Console. The test should return a response containing the record ID.
+To begin the extension test process, run the CreateRecord test using the sample query below. The test should return a response containing the record ID.
 
-![CreateRecord Test](https://github.com/user-attachments/assets/76cb05d3-07ba-4697-906e-af75530a61e2)
+```json
+{
+  "typeName": "Account",
+  "idempotencyKey": "NOT_USED_CURRENTLY",
+  "data": {
+    "Name": "Test Account",
+    "ShippingLatitude": 10,
+    "PushCount": 6      
+  }
+}
+```
+
+![CreateRecord Test](https://github.com/user-attachments/assets/f962d007-2cab-49ce-a032-472cd214478d)
+
 
 All record types are located in the `/src/db/` folder of this repository.
 
-![DB folder](https://github.com/user-attachments/assets/38efe238-cac1-4250-b45d-b6bce4417fc1)
+![db folder](https://github.com/user-attachments/assets/06449adc-057e-44c8-a76e-8406b29ae13e)
 
 
-Open the `sampleTypeName.json` file in the `/src/db/` folder and check that the records were created.
+Open the `Account.json` file in the `/src/db/` folder and check that the records were created.
 
-![sampletypename.json](https://github.com/user-attachments/assets/3c4df8b2-b850-4032-8f9e-5e4a730b35dc)
+![Account.json](https://github.com/user-attachments/assets/37cca0e3-9113-4e01-a710-514b16763dbe)
 
 
 #### SearchRecords extension test
-This query searches the records that have been created. You don’t have to use the same sample values used here; the search should work with a valid attribute in `sampleTypeName.json`.
+This query searches the records that have been created. You don’t have to use the same sample values used here; the search should work with a valid attribute in `Account.json`.
 
-Open the SearchRecords test and create a new query based on the `sampleTypeName.json` file:
+Open the SearchRecords test and create a new query based on the `Account.json` file:
 
-- The `from` attribute maps to the value of `typeName` in the CreateRecord query; in this case, `sampleTypeName`.
-- The `data` array from the CreateRecord query maps to the `attributesToSelect` array; in this case, `sampleKey1`.
-- The `name` property of the `leftOperand` object should be the value of `sampleKey1`; in this case, `sampleValue1`.
+- The `from` attribute maps to the value of `typeName` in the CreateRecord query; in this case, `Account`.
+- The `data` array from the CreateRecord query maps to the `attributesToSelect` array; in this case, `Name`.
+- The `name` property of the `leftOperand` object should be the value of `Name`; in this case, `Test Account`.
 - The `operator` value should be `EQUALS`.
-- The `name` property of the `rightOperand` object should be the same as what's in `attributesToSelect` array; in this case, `sampleKey1`.
+- The `name` property of the `rightOperand` object should be the same as what's in `attributesToSelect` array; in this case, `Name`.
 
 The query below has been updated based on the directions above. You can copy and paste this into the SearchRecords test input box.
 
@@ -152,23 +159,23 @@ The query below has been updated based on the directions above. You can copy and
     "query": {
         "$class": "sampleQueryClass",
         "attributesToSelect": [
-            "sampleKey1"
+            "Name"
         ],
-        "from": "sampleTypeName",
+        "from": "Account",
         "queryFilter": {
             "$class": "sampleQueryFilterClass",
             "operation": {
                 "$class": "sampleOperationClass",
                 "leftOperand": {
                     "$class": "sampleLeftOperandClass",
-                    "name": "sampleValue1",
+                    "name": "Test Account",
                     "type": "INTEGER",
                     "isLiteral": true
                 },
                 "operator": "EQUALS",
                 "rightOperand": {
                     "$class": "sampleRightOperandClass",
-                    "name": "sampleKey1",
+                    "name": "Name",
                     "type": "INTEGER",
                     "isLiteral": false
                 }
@@ -184,30 +191,32 @@ The query below has been updated based on the directions above. You can copy and
 
 Running the test will return the record you queried.
 
-![SearchRecord test](https://github.com/user-attachments/assets/e9f3d2ed-bf96-4fad-922f-1e37411a2f48)
+![SearchRecord test](https://github.com/user-attachments/assets/4b800866-4d34-40ce-a367-f0fdee56a082)
+
 
 
 #### PatchRecord extension test
-The `recordId` property in the sample input maps to an `Id` in the `sampleTypeName.json` file. Any valid record ID can be used in this field.
+The `recordId` property in the sample input maps to an `Id` in the `Account.json` file. Any valid record ID can be used in this field.
 
-In the `data` array, include any attributes and values to be added to the record. In this query, a new property will be added and the original data in the record will be updated.
+In the `data` array, include any attributes and values to be added to the record. In this query, a new property will be added, and the original data in the record will be updated.
 
 ```bash
 {
-    "typeName": "sampleTypeName",
-    "recordId": "0",
-    "idempotencyKey": "sampleIdempotencyKey",
-    "data": {
-        "sampleKey1": "updatedSampleValue1",
-        "sampleKey2": "updatedSampleValue2",
-        "sampleKey3": "newSampleValue3"
-    }
+  "recordId": "2",
+  "typeName": "Account",
+  "idempotencyKey": "NOT_USED_CURRENTLY",
+  "data": {
+    "Name": "updatedTestAccount",
+    "ShippingLatitude": 11,
+    "PushCount": 7,
+    "MasterRecordId": "ABCD"
+  }
 }
 ```
 
 Running the test should return the response `"success": true`.
 
-![PatchRecord test](https://github.com/user-attachments/assets/adda7f2f-6dd0-4df4-b06c-3195873e2a20)
+![PatchRecord test](https://github.com/user-attachments/assets/e445b06b-6790-475a-8434-c0eea1e003b3)
 
 
 Rerun the SearchRecords extension test to search for the new patched values. 
@@ -219,23 +228,23 @@ Rerun the SearchRecords extension test to search for the new patched values.
     "query": {
         "$class": "sampleQueryClass",
         "attributesToSelect": [
-            "sampleKey1"
+            "Name"
         ],
-        "from": "sampleTypeName",
+        "from": "Account",
         "queryFilter": {
             "$class": "sampleQueryFilterClass",
             "operation": {
                 "$class": "sampleOperationClass",
                 "leftOperand": {
                     "$class": "sampleLeftOperandClass",
-                    "name": "updatedSampleValue1",
+                    "name": "updatedTestAccount",
                     "type": "INTEGER",
                     "isLiteral": true
                 },
                 "operator": "EQUALS",
                 "rightOperand": {
                     "$class": "sampleRightOperandClass",
-                    "name": "sampleKey1",
+                    "name": "Name",
                     "type": "INTEGER",
                     "isLiteral": false
                 }
@@ -251,9 +260,10 @@ Rerun the SearchRecords extension test to search for the new patched values.
 
 **Results:**
 
-![Results of SearchRecords after PatchRecord](https://github.com/user-attachments/assets/950270ea-7abb-497a-afb0-be37f5c85ed2)
+![Results of SearchRecords after PatchRecord](https://github.com/user-attachments/assets/70dbce23-0c9d-4150-ab25-c853e92d695f)
 
 
-Alternatively, the `sampleTypeName.json` file will contain the updated records. 
+Alternatively, the `Account.json` file will contain the updated records. 
 
-![sampleTypeName.json after PatchRecord test](https://github.com/user-attachments/assets/f462d380-646f-4606-a9c3-07ed64f712f1)
+![Account.json after PatchRecord test](https://github.com/user-attachments/assets/ace8276b-2d36-4171-a598-2450e6d9b5fe)
+
