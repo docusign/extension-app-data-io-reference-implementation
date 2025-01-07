@@ -157,24 +157,24 @@ The query below has been updated based on the directions above. You can copy and
 ```json
 {
     "query": {
-        "$class": "sampleQueryClass",
+        "$class": "com.docusign.connected.data.queries@1.0.0.Query",
         "attributesToSelect": [
             "Name"
         ],
         "from": "Account",
         "queryFilter": {
-            "$class": "sampleQueryFilterClass",
+            "$class": "com.docusign.connected.data.queries@1.0.0.QueryFilter",
             "operation": {
-                "$class": "sampleOperationClass",
+                "$class": "com.docusign.connected.data.queries@1.0.0.ComparisonOperation",
                 "leftOperand": {
-                    "$class": "sampleLeftOperandClass",
+                    "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
                     "name": "Test Account",
                     "type": "INTEGER",
                     "isLiteral": true
                 },
                 "operator": "EQUALS",
                 "rightOperand": {
-                    "$class": "sampleRightOperandClass",
+                    "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
                     "name": "Name",
                     "type": "INTEGER",
                     "isLiteral": false
@@ -227,24 +227,24 @@ Rerun the SearchRecords extension test to search for the new patched values.
 ```json
 {
     "query": {
-        "$class": "sampleQueryClass",
+        "$class": "com.docusign.connected.data.queries@1.0.0.Query",
         "attributesToSelect": [
             "Name"
         ],
         "from": "Account",
         "queryFilter": {
-            "$class": "sampleQueryFilterClass",
+            "$class": "com.docusign.connected.data.queries@1.0.0.QueryFilter",
             "operation": {
-                "$class": "sampleOperationClass",
+                "$class": "com.docusign.connected.data.queries@1.0.0.ComparisonOperation",
                 "leftOperand": {
-                    "$class": "sampleLeftOperandClass",
+                    "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
                     "name": "updatedTestAccount",
                     "type": "INTEGER",
                     "isLiteral": true
                 },
                 "operator": "EQUALS",
                 "rightOperand": {
-                    "$class": "sampleRightOperandClass",
+                    "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
                     "name": "Name",
                     "type": "INTEGER",
                     "isLiteral": false
