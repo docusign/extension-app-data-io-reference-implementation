@@ -191,7 +191,8 @@ The query below has been updated based on the directions above. You can copy and
 
 Running the test will return the record you queried.
 
-![SearchRecord test](https://github.com/user-attachments/assets/4b800866-4d34-40ce-a367-f0fdee56a082)
+![new search records](https://github.com/user-attachments/assets/4e6e26e2-040b-43a1-b20c-f69c84bcf765)
+
 
 
 
