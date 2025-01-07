@@ -3,5 +3,8 @@ dist/
 **/**/*.log
 dataIO/
 development.env
+production.env
 package-lock.json
 workingManifest.json
+terraform.tfstate
+manifests/backups/*.json
