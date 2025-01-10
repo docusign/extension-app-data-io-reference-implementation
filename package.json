@@ -5,7 +5,7 @@
     "build": "tsc --build tsconfig.json",
     "lint": "npx eslint --ext .ts src/",
     "start": "node ./dist --env=production",
-    "dev": "nodemon"
+    "dev": "nodemon" 
   },
   "nodemonConfig": {
     "watch": [
@@ -16,15 +16,21 @@
     "exec": "./node_modules/.bin/ts-node --files -r tsconfig-paths/register ./src"
   },
   "dependencies": {
-    "@accordproject/concerto-types": "^3.16.10",
+    "@accordproject/concerto-cli": "^3.16.6",
+    "@accordproject/concerto-types": "~3.19.6",
+    "@accordproject/concerto-core": "~3.19.6",
+    "ajv": "^8.17.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "express-jwt": "^8.4.1",
     "express-validator": "^7.0.1",
     "helmet": "^7.0.0",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.30.1",
     "morgan": "^1.10.0",
+    "npm": "^11.0.0",
     "pug": "^3.0.2",
     "ts-command-line-args": "^2.5.0",
     "ts-force": "^3.4.3"

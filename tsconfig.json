@@ -67,7 +67,8 @@
     "forceConsistentCasingInFileNames": true,  /* Disallow inconsistently-cased references to the same file. */
     "useUnknownInCatchVariables": false,
     "sourceMap": false,
-    "removeComments": true
+    "removeComments": true,
+    "resolveJsonModule": true,
   },
   "include": [
     "src/**/*.ts",
