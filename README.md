@@ -267,4 +267,3 @@ Rerun the SearchRecords extension test to search for the new patched values.
 Alternatively, the `Account.json` file will contain the updated records. 
 
 ![Account.json after PatchRecord test](https://github.com/user-attachments/assets/ace8276b-2d36-4171-a598-2450e6d9b5fe)
-
