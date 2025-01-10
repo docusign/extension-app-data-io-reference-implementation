@@ -49,6 +49,14 @@ concept Account identified by Id {
   @Term("Time Something Happened")
   @Crud("Createable,Readable,Updateable")
   o DateTime time optional
+
+  @Term("Master Record Object")
+  @Crud("Createable,Readable,Updateable")
+  o MasterRecordId msRecord optional
+
+  @Term("Master Record Relationship")
+  @Crud("Createable,Readable,Updateable")
+  --> MasterRecordId msRecord2 optional
 }
 
 // Enum Declaration: MasterRecordIdType_Enum
@@ -91,7 +99,16 @@ concept MasterRecordId identified by Id {
   o Double ShippingLatitude optional
 
   @Term("ChildMasterRecordIds")
+    @Crud("Createable,Readable,Updateable")
   --> MasterRecordId[] ChildMasterRecordIds optional
+
+  @Term("Address Relationship")
+  @Crud("Createable,Readable,Updateable")
+  --> Address addy
+
+  @Term("Address Object")
+  @Crud("Createable,Readable,Updateable")
+  o Address addy2
 }
 
 // Concept: Address

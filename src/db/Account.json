@@ -2,7 +2,6 @@
   {
     "Id": "0",
     "Name": "Account 0",
-    "Deleted": false,
     "MasterRecordId": 1,
     "PushCount": 100,
     "Type": "two_year",
@@ -12,5 +11,21 @@
     "ShippingLatitude": "ThisIsATestAgain",
     "Type": "two_year",
     "Id": "1"
+  },
+  {
+    "time": "17/10/2024",
+    "Id": "2",
+    "Name": "updatedTestAccount",
+    "ShippingLatitude": 11,
+    "PushCount": 7,
+    "MasterRecordId": 0
+  },
+  {
+    "time": "27/12/2024",
+    "Id": "3"
+  },
+  {
+    "time": "27/12/2024",
+    "Id": "4"
   }
 ]
