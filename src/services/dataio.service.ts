@@ -29,25 +29,41 @@ type ErrorResponse = {
   code: string;
 }
 
+
+
 /**
  * Formats the date properties of the given data object to 'DD/MM/YYYY'.
  * 
  * Iterates over the properties of the data object and checks if the property
  * is a date-time property based on the typeName. If it is a date-time property,
- * it formats the date to 'DD/MM/YYYY' using moment.
+ * it validates and formats the date to 'DD/MM/YYYY' using moment.
  * 
  * @param data - The data object containing properties to be formatted.
  * @param typeName - The type name used to identify date-time properties.
+ * @throws Error if a date property does not match valid ISO 8601 formats.
  */
 const formatISO8061DateProperties = (data: object, typeName: string): void => {
   const concept: ConceptDeclaration = CONCEPTS.filter(c => c.getName() === typeName)[0];
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
+
+  // Define a regex for valid ISO 8601 date-time formats
+  const validISO8601Regex = /^(\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{1,3})?(Z|[+-]\d{2}:\d{2})?)?)$/;
+
   for (const key in dataRecord) {
     if (concept.getProperty(key).getType() === 'DateTime') {
-      dataRecord[key] = moment.utc(dataRecord[key] as string).local().format('DD/MM/YYYY');
+      const value = dataRecord[key] as string;
+
+      // Validate against allowed ISO 8601 formats
+      if (!validISO8601Regex.test(value)) {
+        throw new Error(`Invalid date format for property "${key}": "${value}". Must match a valid ISO 8601 format.`);
+      }
+
+      // Format to 'DD/MM/YYYY'
+      dataRecord[key] = moment.utc(value).local().format('DD/MM/YYYY');
     }
   }
-}
+};
+
 
 /**
  * Converts date properties of the given data object to ISO 8601 format.
@@ -64,7 +80,7 @@ const convertDateToISO8601 = (data: object, typeName: string): void => {
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
     if (concept.getProperty(key).getType() === 'DateTime') {
-      dataRecord[key] = moment.utc(dataRecord[key] as string, 'DD/MM/YYYY').local().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+      dataRecord[key] = moment.utc(dataRecord[key] as string).local().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     }
   }
 }
