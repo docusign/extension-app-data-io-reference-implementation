@@ -59,7 +59,7 @@ const formatISO8061DateProperties = (data: object, typeName: string): void => {
       }
 
       // Format to ISO 8601 UTC with 'Z' suffix (e.g., 'YYYY-MM-DDTHH:mm:ss.SSSZ')
-      dataRecord[key] = moment.utc(value).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+      dataRecord[key] = moment.utc(value).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
     }
   }
 };
@@ -80,7 +80,7 @@ const convertDateToISO8601 = (data: object, typeName: string): void => {
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
     if (concept.getProperty(key).getType() === 'DateTime') {
-      dataRecord[key] = moment.utc(dataRecord[key] as string).local().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+      dataRecord[key] = moment.utc(dataRecord[key] as string).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     }
   }
 }
@@ -199,6 +199,8 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     }
     const db: FileDB = new FileDB(generateFilePath(query.from));
     const data: object[] = db.readFile();
+    // console.log(JSON.stringify(query));
+    // convertDateToISO8601(query.queryFilter.operation.leftOperand.name, query.from);
     const index: number = QueryExecutor.execute(query, data);
     if (index === -1) {
       return res.json({ records: [] })
