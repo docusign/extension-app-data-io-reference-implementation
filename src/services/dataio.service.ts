@@ -32,11 +32,11 @@ type ErrorResponse = {
 
 
 /**
- * Formats the date properties of the given data object to 'DD/MM/YYYY'.
+ * Formats the date properties of the given data object to 'YYYY-MM-DDTHH:mm:ss.SSSZ'.
  * 
  * Iterates over the properties of the data object and checks if the property
  * is a date-time property based on the typeName. If it is a date-time property,
- * it validates and formats the date to 'DD/MM/YYYY' using moment.
+ * it validates and formats the date to 'YYYY-MM-DDTHH:mm:ss.SSSZ' using moment.
  * 
  * @param data - The data object containing properties to be formatted.
  * @param typeName - The type name used to identify date-time properties.
@@ -58,8 +58,8 @@ const formatISO8061DateProperties = (data: object, typeName: string): void => {
         throw new Error(`Invalid date format for property "${key}": "${value}". Must match a valid ISO 8601 format.`);
       }
 
-      // Format to 'DD/MM/YYYY'
-      dataRecord[key] = moment.utc(value).local().format('DD/MM/YYYY');
+      // Format to ISO 8601 UTC with 'Z' suffix (e.g., 'YYYY-MM-DDTHH:mm:ss.SSSZ')
+      dataRecord[key] = moment.utc(value).local().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
     }
   }
 };
