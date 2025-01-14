@@ -199,8 +199,6 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     }
     const db: FileDB = new FileDB(generateFilePath(query.from));
     const data: object[] = db.readFile();
-    // console.log(JSON.stringify(query));
-    // convertDateToISO8601(query.queryFilter.operation.leftOperand.name, query.from);
     const index: number = QueryExecutor.execute(query, data);
     if (index === -1) {
       return res.json({ records: [] })
