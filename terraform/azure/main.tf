@@ -1,81 +1,64 @@
-# Create a resource group
-module "resource_group" {
-  source       = "./modules/resource_group"
-  ext_app_name = var.ext_app_name
-  rg_name      = "rg-${var.ext_app_name}"
-  rg_region    = var.rg_region
+data "azurerm_subscription" "current" {
+  count = var.subscription_id == null ? 1 : 0
 }
 
-# Create app service plan
-module "app_service_plan" {
-  source       = "./modules/app_service_plan"
-  asp_name     = "asp-${var.ext_app_name}"
-  asp_os_type  = var.asp_os_type
-  asp_sku_name = var.asp_sku_name
-  ext_app_name = var.ext_app_name
-  location     = module.resource_group.resource_group_location
-  rg_name      = module.resource_group.resource_group_name
-  worker_count = 1
+locals {
+  subscription_id = coalesce(var.subscription_id, one(data.azurerm_subscription.current[*].subscription_id))
+
+  application_jwt_secret_key      = coalesce(var.application_jwt_secret_key, one(module.generate_jwt_secret_key[*].random_bytes))
+  application_oauth_client_id     = coalesce(var.application_oauth_client_id, one(module.generate_oauth_client_id[*].random_bytes))
+  application_oauth_client_secret = coalesce(var.application_oauth_client_secret, one(module.generate_oauth_client_secret[*].random_bytes))
+  application_authorization_code  = coalesce(var.application_authorization_code, one(module.generate_authorization_code[*].random_bytes))
+
+  resource_name_separator    = "-"
+  file_path_separator        = "/"
+  docker_registry_separator  = "/"
+  docker_image_tag_separator = ":"
+
+  output_manifest_files_directory = abspath(join(local.file_path_separator, compact([path.cwd, var.output_manifest_files_directory])))
+  output_manifest_files_paths     = module.manifest[*].output_file_path
+
+  tags = merge(
+    {
+      application = var.application_name
+    },
+    var.tags
+  )
 }
 
-# Create an Azure Container Registry
-module "container_registry" {
-  source       = "./modules/container_registry"
-  acr_location = module.resource_group.resource_group_location
-  acr_name     = replace("acr${var.ext_app_name}", "-", "")
-  acr_rg_name  = module.resource_group.resource_group_name
-  acr_sku      = var.acr_sku
-  ext_app_name = var.ext_app_name
+module "generate_jwt_secret_key" {
+  count = var.application_jwt_secret_key == "" ? 1 : 0
+
+  source = "../common/modules/generate"
 }
 
-# # Update env files
-# module "update_env_files" {
-#   source = "./modules/update_env_files"
-# }
+module "generate_oauth_client_id" {
+  count = var.application_oauth_client_id == "" ? 1 : 0
 
-# Build and push docker image
-module "build_push_docker_image" {
-  source           = "./modules/build_push_docker_image"
-  acr_login_server = module.container_registry.acr_login_server
-  acr_name         = module.container_registry.acr_name
-  # acr_admin_password = module.container_registry.acr_admin_password
-  # acr_admin_username = module.container_registry.acr_admin_username
-  docker_image_name = var.ext_app_name
+  source = "../common/modules/generate"
 }
 
-# Generate secrets
-module "generate_secrets" {
-  source = "./modules/generate_secrets"
+module "generate_oauth_client_secret" {
+  count = var.application_oauth_client_secret == "" ? 1 : 0
+
+  source = "../common/modules/generate"
 }
 
-# Create web app service
-module "web_app_service" {
-  source              = "./modules/web_app_service"
-  acr_id              = module.container_registry.acr_id
-  acr_login_server    = module.container_registry.acr_login_server
-  acr_name            = module.container_registry.acr_name
-  app_name            = "app-${var.ext_app_name}"
-  docker_image_name   = module.build_push_docker_image.docker_image_name_with_tag
-  ext_app_name        = var.ext_app_name
-  location            = module.resource_group.resource_group_location
-  rg_name             = module.resource_group.resource_group_name
-  service_plan_id     = module.app_service_plan.app_service_plan_id
-  authorization_code  = module.generate_secrets.authorization_code
-  jwt_secret_key      = module.generate_secrets.jwt_secret_key
-  oauth_client_id     = module.generate_secrets.oauth_client_id
-  oauth_client_secret = module.generate_secrets.oauth_client_secret
-  node_env            = var.node_env
-  node_port           = var.node_port
-  depends_on = [
-    module.build_push_docker_image
-  ]
+module "generate_authorization_code" {
+  count = var.application_authorization_code == "" ? 1 : 0
+
+  source = "../common/modules/generate"
 }
 
-# Update ReadOnlyManifest.json and ReadWriteManifest.json files
-module "update_manifest_files" {
-  source                = "./modules/update_manifest_files"
-  oauth_client_id       = module.generate_secrets.oauth_client_id
-  oauth_client_secret   = module.generate_secrets.oauth_client_secret
-  web_app_url           = replace(module.web_app_service.web_app_url, "/", "\\/")
-  manifests_folder_path = "../../manifests"
+module "manifest" {
+  count = length(var.manifest_files_paths)
+
+  source = "../common/modules/template"
+
+  input_file_path  = abspath(join(local.file_path_separator, [path.cwd, var.manifest_files_paths[count.index]]))
+  output_file_path = join(local.file_path_separator, [local.output_manifest_files_directory, basename(var.manifest_files_paths[count.index])])
+
+  client_id     = local.application_oauth_client_id
+  client_secret = local.application_oauth_client_secret
+  base_url      = local.application_service_url
 }
