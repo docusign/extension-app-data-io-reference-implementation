@@ -42,7 +42,8 @@ locals {
   base_image_name          = one(data.docker_registry_image.base[*].name)
   base_image_sha256_digest = one(data.docker_registry_image.base[*].sha256_digest)
 
-  app_image_name = try(coalesce(one(docker_registry_image.app[*].name), one(docker_image.app[*].name)), null)
+  app_image_name        = try(coalesce(one(docker_registry_image.app[*].name), one(docker_image.app[*].name)), null)
+  app_image_repo_digest = one(docker_image.app[*].repo_digest)
 }
 
 data "docker_registry_image" "base" {

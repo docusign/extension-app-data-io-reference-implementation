@@ -56,5 +56,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_app_image_name"></a> [app\_image\_name](#output\_app\_image\_name) | The name of the built application image. |
+| <a name="output_app_image_repo_digest"></a> [app\_image\_repo\_digest](#output\_app\_image\_repo\_digest) | The digest of the built application image. |
 | <a name="output_base_image_name"></a> [base\_image\_name](#output\_base\_image\_name) | The name of the used base image. |
 <!-- END_TF_DOCS -->
