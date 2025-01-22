@@ -6,7 +6,7 @@ import {
     Operator, 
     ILogicalOperation, 
     LogicalOperator 
-} from "src/models/IQuery";
+} from "../models/IQuery";
 import * as path from "path";
 import * as fs from "fs";
 

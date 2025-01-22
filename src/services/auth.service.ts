@@ -10,10 +10,18 @@ export const authorize = (req: IReqQuery<AuthorizeQuery>, res: IRes) => {
   const {
     query: { redirect_uri: redirectUri, state },
   } = req;
+
+  // Determine the script path dynamically based on the environment
+  const scriptPath =
+    process.env.NODE_ENV === 'production'
+      ? '/js/redirect.js' // Serve the compiled file in production
+      : '../utils/redirect.ts'; // Serve the source file in development
+
   return res.render('index.pug', {
     redirectUri,
     code: env.AUTHORIZATION_CODE,
     state,
+    scriptPath, // Pass the script path to the Pug template
   });
 };
 
