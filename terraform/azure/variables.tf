@@ -98,6 +98,13 @@ variable "application_build_labels" {
   }
 }
 
+variable "do_randomize_resource_names" {
+  description = "Whether to randomize the resource names that should be globally unique"
+  type        = bool
+  nullable    = false
+  default     = true
+}
+
 variable "resource_group_name" {
   description = "The name of the resource group. If it is not defined, the prefixed application name will be used"
   type        = string
