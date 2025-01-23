@@ -111,6 +111,7 @@ Disable containerd for pulling and storing images:
 | <a name="input_application_webapp_name"></a> [application\_webapp\_name](#input\_application\_webapp\_name) | The name of the application web app. If it is not defined, the prefixed application name will be used | `string` | `null` | no |
 | <a name="input_container_registry_name"></a> [container\_registry\_name](#input\_container\_registry\_name) | The name of the container registry. If it is not defined, the prefixed application name will be used | `string` | `null` | no |
 | <a name="input_container_registry_sku"></a> [container\_registry\_sku](#input\_container\_registry\_sku) | The SKU of the container registry | `string` | `"Basic"` | no |
+| <a name="input_container_tool"></a> [container\_tool](#input\_container\_tool) | The container tool to use for building and pushing images | `string` | `"docker"` | no |
 | <a name="input_do_enable_admin_access"></a> [do\_enable\_admin\_access](#input\_do\_enable\_admin\_access) | Whether to enable admin access to the container registry | `bool` | `true` | no |
 | <a name="input_do_randomize_resource_names"></a> [do\_randomize\_resource\_names](#input\_do\_randomize\_resource\_names) | Whether to randomize the resource names that should be globally unique | `bool` | `true` | no |
 | <a name="input_docker_host"></a> [docker\_host](#input\_docker\_host) | The Docker host (e.g. 'tcp://127.0.0.1:2376' or 'unix:///var/run/docker.sock') to connect to. If empty, the default Docker host will be used | `string` | `null` | no |

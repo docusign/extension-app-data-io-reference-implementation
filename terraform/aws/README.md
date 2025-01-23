@@ -62,6 +62,7 @@
 | <a name="input_application_oauth_client_id"></a> [application\_oauth\_client\_id](#input\_application\_oauth\_client\_id) | The OAuth client ID for the application. If empty, a random client ID will be generated. | `string` | `""` | no |
 | <a name="input_application_oauth_client_secret"></a> [application\_oauth\_client\_secret](#input\_application\_oauth\_client\_secret) | The OAuth client secret for the application. If empty, a random client secret will be generated. | `string` | `""` | no |
 | <a name="input_application_port"></a> [application\_port](#input\_application\_port) | The port the application listens on | `number` | `3000` | no |
+| <a name="input_container_tool"></a> [container\_tool](#input\_container\_tool) | The container tool to use for building and pushing images | `string` | `"docker"` | no |
 | <a name="input_do_force_delete_repository"></a> [do\_force\_delete\_repository](#input\_do\_force\_delete\_repository) | Whether to delete the ECR repository even if it contains images | `bool` | `true` | no |
 | <a name="input_do_scan_images"></a> [do\_scan\_images](#input\_do\_scan\_images) | Whether images are scanned after being pushed to the ECR repository | `bool` | `true` | no |
 | <a name="input_docker_host"></a> [docker\_host](#input\_docker\_host) | The Docker host (e.g. 'tcp://127.0.0.1:2376' or 'unix:///var/run/docker.sock') to connect to. If empty, the default Docker host will be used | `string` | `null` | no |

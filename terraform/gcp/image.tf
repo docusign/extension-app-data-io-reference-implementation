@@ -24,7 +24,9 @@ locals {
     PORT       = var.application_port
   }
 
-  container_tool = "docker"
+  application_build_dockerfile = {
+    podman = "Containerfile"
+  }
 }
 
 module "image" {
@@ -34,6 +36,7 @@ module "image" {
 
   app_image_name               = local.application_image_name
   app_image_build_context      = local.application_build_context
+  app_image_build_dockerfile   = lookup(local.application_build_dockerfile, var.container_tool, null)
   app_image_build_target_stage = var.application_build_target_stage
   app_image_build_paths        = var.application_build_paths
   app_image_build_args         = local.application_build_arguments
@@ -50,7 +53,7 @@ resource "terraform_data" "login_container_registry" {
     application_service_account_private_key      = local.application_service_account_private_key
     application_service_account_private_key_type = "_json_key_base64"
 
-    container_tool = local.container_tool
+    container_tool = var.container_tool
   }
 
   triggers_replace = [
@@ -77,7 +80,7 @@ resource "terraform_data" "push_docker_image" {
       local.application_image_name_without_registry,
     ]))
 
-    container_tool = local.container_tool
+    container_tool = var.container_tool
   }
 
   triggers_replace = [

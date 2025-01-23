@@ -61,6 +61,13 @@ variable "app_image_build_context" {
   default     = ""
 }
 
+variable "app_image_build_dockerfile" {
+  description = "The path to the Dockerfile to use for building the image."
+  type        = string
+  nullable    = true
+  default     = null
+}
+
 variable "app_image_build_platform" {
   description = "The platform to build the image for."
   type        = string

@@ -34,6 +34,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_app_image_build_args"></a> [app\_image\_build\_args](#input\_app\_image\_build\_args) | The build arguments to pass to the build process. | `map(string)` | `{}` | no |
 | <a name="input_app_image_build_context"></a> [app\_image\_build\_context](#input\_app\_image\_build\_context) | The absolute path to the build context. If it is empty, the application image will not be built. | `string` | `""` | no |
+| <a name="input_app_image_build_dockerfile"></a> [app\_image\_build\_dockerfile](#input\_app\_image\_build\_dockerfile) | The path to the Dockerfile to use for building the image. | `string` | `null` | no |
 | <a name="input_app_image_build_labels"></a> [app\_image\_build\_labels](#input\_app\_image\_build\_labels) | The labels to apply to the image. | `map(string)` | `{}` | no |
 | <a name="input_app_image_build_paths"></a> [app\_image\_build\_paths](#input\_app\_image\_build\_paths) | Paths of files relative to the build context, changes to which lead to a rebuild of the image. Supported pattern matches are the same as for the `fileset` Terraform function (https://developer.hashicorp.com/terraform/language/functions/fileset). | `list(string)` | `[]` | no |
 | <a name="input_app_image_build_platform"></a> [app\_image\_build\_platform](#input\_app\_image\_build\_platform) | The platform to build the image for. | `string` | `"linux/amd64"` | no |

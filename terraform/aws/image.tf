@@ -6,6 +6,10 @@ locals {
     BASE_IMAGE = var.application_build_base_image_name
     PORT       = var.application_port
   }
+
+  application_build_dockerfile = {
+    podman = "Containerfile"
+  }
 }
 
 module "image" {
@@ -15,6 +19,7 @@ module "image" {
 
   app_image_name               = local.application_image_name
   app_image_build_context      = local.application_build_context
+  app_image_build_dockerfile   = lookup(local.application_build_dockerfile, var.container_tool, null)
   app_image_build_target_stage = var.application_build_target_stage
   app_image_build_paths        = var.application_build_paths
   app_image_build_args         = local.application_build_arguments
