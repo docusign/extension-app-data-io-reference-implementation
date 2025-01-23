@@ -16,6 +16,13 @@ locals {
 
   output_manifest_files_directory = abspath(join(local.file_path_separator, compact([path.cwd, var.output_manifest_files_directory])))
   output_manifest_files_paths     = module.manifest[*].output_file_path
+
+  tags = merge(
+    {
+      application = var.application_name
+    },
+    var.tags
+  )
 }
 
 module "generate_jwt_secret_key" {

@@ -51,7 +51,6 @@ resource "aws_iam_role_policy_attachment" "apprunner" {
 
 resource "aws_apprunner_service" "this" {
   service_name = var.application_name
-  tags         = var.tags
 
   source_configuration {
     auto_deployments_enabled = false
