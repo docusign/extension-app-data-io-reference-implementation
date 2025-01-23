@@ -1,7 +1,7 @@
 locals {
   container_registry_name = coalesce(
     var.container_registry_name,
-    replace(lower(join(local.resource_name_separator, compact(["cr", var.application_name]))), "-", "")
+    replace(lower(join(local.resource_name_separator, compact(["cr", var.application_name, one(random_id.container_registry[*].hex)]))), "-", "")
   )
 
   created_container_registry_id                  = azurerm_container_registry.this.id
@@ -14,6 +14,16 @@ locals {
     local.container_registry_protocol,
     local.created_container_registry_login_server
   ]))
+}
+
+resource "random_id" "container_registry" {
+  count = var.do_randomize_resource_names ? 1 : 0
+
+  byte_length = 2
+
+  keepers = {
+    resource_group_id = local.created_resource_group_id
+  }
 }
 
 resource "azurerm_container_registry" "this" {

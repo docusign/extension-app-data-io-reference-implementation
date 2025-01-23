@@ -10,7 +10,7 @@ locals {
 
   application_webapp_name = coalesce(
     var.application_webapp_name,
-    lower(join(local.resource_name_separator, compact(["app", var.application_name])))
+    lower(join(local.resource_name_separator, compact(["app", var.application_name, one(random_id.web_app[*].hex)])))
   )
 
   application_webapp_system_settings = {
@@ -49,6 +49,16 @@ resource "azurerm_service_plan" "this" {
   worker_count = var.application_service_plan_worker_count
 
   tags = local.tags
+}
+
+resource "random_id" "web_app" {
+  count = var.do_randomize_resource_names ? 1 : 0
+
+  byte_length = 2
+
+  keepers = {
+    resource_group_id = local.created_resource_group_id
+  }
 }
 
 resource "azurerm_linux_web_app" "this" {

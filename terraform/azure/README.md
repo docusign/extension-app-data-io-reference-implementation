@@ -60,6 +60,7 @@ Disable containerd for pulling and storing images:
 | Name | Version |
 |------|---------|
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.16 |
+| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.6 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
@@ -82,6 +83,8 @@ Disable containerd for pulling and storing images:
 | [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [azurerm_role_assignment.pull_image](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_service_plan.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/service_plan) | resource |
+| [random_id.container_registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [random_id.web_app](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [terraform_data.login_container_registry](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [terraform_data.push_docker_image](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
@@ -109,6 +112,7 @@ Disable containerd for pulling and storing images:
 | <a name="input_container_registry_name"></a> [container\_registry\_name](#input\_container\_registry\_name) | The name of the container registry. If it is not defined, the prefixed application name will be used | `string` | `null` | no |
 | <a name="input_container_registry_sku"></a> [container\_registry\_sku](#input\_container\_registry\_sku) | The SKU of the container registry | `string` | `"Basic"` | no |
 | <a name="input_do_enable_admin_access"></a> [do\_enable\_admin\_access](#input\_do\_enable\_admin\_access) | Whether to enable admin access to the container registry | `bool` | `true` | no |
+| <a name="input_do_randomize_resource_names"></a> [do\_randomize\_resource\_names](#input\_do\_randomize\_resource\_names) | Whether to randomize the resource names that should be globally unique | `bool` | `true` | no |
 | <a name="input_docker_host"></a> [docker\_host](#input\_docker\_host) | The Docker host (e.g. 'tcp://127.0.0.1:2376' or 'unix:///var/run/docker.sock') to connect to. If empty, the default Docker host will be used | `string` | `null` | no |
 | <a name="input_is_application_webapp_always_on"></a> [is\_application\_webapp\_always\_on](#input\_is\_application\_webapp\_always\_on) | Whether the application web app should always be on | `bool` | `false` | no |
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the resources will be created | `string` | `"West Europe"` | no |
