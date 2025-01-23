@@ -2,8 +2,6 @@ resource "aws_ecr_repository" "this" {
   name         = var.application_name
   force_delete = var.do_force_delete_repository
 
-  tags = var.tags
-
   image_tag_mutability = var.repository_image_tag_mutability
 
   image_scanning_configuration {
