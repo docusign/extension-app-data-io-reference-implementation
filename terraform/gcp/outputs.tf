@@ -1,8 +1,9 @@
-output "web_app_url" {
-  description = "The URL of the deployed Cloud Run service"
-  value       = module.cloud_run_service.web_app_url
+output "application_service_url" {
+  description = "The base URL of the application service"
+  value       = local.application_service_url
 }
 
-output "docker_image_full_name" {
-  value = module.build_push_docker_image.docker_image_full_name
+output "output_manifest_files_paths" {
+  description = "The absolute paths to the output manifest files"
+  value       = local.output_manifest_files_paths
 }
