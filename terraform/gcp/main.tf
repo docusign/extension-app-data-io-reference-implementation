@@ -1,47 +1,61 @@
-# Create Google Container Registry
-module "docker_registry" {
-  source       = "./modules/docker_registry"
-  gcp_region   = var.gcp_region
-  ext_app_name = var.ext_app_name
+data "google_client_config" "this" {}
+
+locals {
+  region = coalesce(var.region, data.google_client_config.this.region)
+
+  application_jwt_secret_key      = coalesce(var.application_jwt_secret_key, one(module.generate_jwt_secret_key[*].random_bytes))
+  application_oauth_client_id     = coalesce(var.application_oauth_client_id, one(module.generate_oauth_client_id[*].random_bytes))
+  application_oauth_client_secret = coalesce(var.application_oauth_client_secret, one(module.generate_oauth_client_secret[*].random_bytes))
+  application_authorization_code  = coalesce(var.application_authorization_code, one(module.generate_authorization_code[*].random_bytes))
+
+  file_path_separator        = "/"
+  docker_registry_separator  = "/"
+  docker_image_tag_separator = ":"
+
+  output_manifest_files_directory = abspath(join(local.file_path_separator, compact([path.cwd, var.output_manifest_files_directory])))
+  output_manifest_files_paths     = module.manifest[*].output_file_path
+
+  labels = merge(
+    {
+      application = var.application_name
+    },
+    var.labels
+  )
 }
 
-# Build and push docker image
-module "build_push_docker_image" {
-  source          = "./modules/build_push_docker_image"
-  ext_app_name    = var.ext_app_name
-  gcp_project_id  = var.gcp_project_id
-  gcp_region      = var.gcp_region
-  repository_name = module.docker_registry.repository_name
+module "generate_jwt_secret_key" {
+  count = var.application_jwt_secret_key == "" ? 1 : 0
+
+  source = "../common/modules/generate"
 }
 
-# Generate secrets
-module "generate_secrets" {
-  source = "./modules/generate_secrets"
+module "generate_oauth_client_id" {
+  count = var.application_oauth_client_id == "" ? 1 : 0
+
+  source = "../common/modules/generate"
 }
 
-module "cloud_run_service" {
-  source                    = "./modules/cloud_run_service"
-  cloud_service_account     = "sa-${var.ext_app_name}"
-  docker_image_full_name    = module.build_push_docker_image.docker_image_full_name
-  ext_app_name              = var.ext_app_name
-  gcp_project_id            = var.gcp_project_id
-  gcp_region                = var.gcp_region
-  environment_variables     = var.environment_variables
-  terraform_service_account = var.terraform_service_account
-  authorization_code        = module.generate_secrets.authorization_code
-  jwt_secret_key            = module.generate_secrets.jwt_secret_key
-  oauth_client_id           = module.generate_secrets.oauth_client_id
-  oauth_client_secret       = module.generate_secrets.oauth_client_secret
-  depends_on = [
-    module.build_push_docker_image
-  ]
+module "generate_oauth_client_secret" {
+  count = var.application_oauth_client_secret == "" ? 1 : 0
+
+  source = "../common/modules/generate"
 }
 
-# Update manifest files
-module "update_manifest_files" {
-  source                = "./modules/update_manifest_files"
-  oauth_client_id       = module.generate_secrets.oauth_client_id
-  oauth_client_secret   = module.generate_secrets.oauth_client_secret
-  web_app_url           = replace(module.cloud_run_service.web_app_url, "/", "\\/")
-  manifests_folder_path = "../../manifests"
+module "generate_authorization_code" {
+  count = var.application_authorization_code == "" ? 1 : 0
+
+  source = "../common/modules/generate"
+}
+
+module "manifest" {
+  count = length(var.manifest_files_paths)
+
+  source = "../common/modules/template"
+
+  input_file_path  = abspath(join(local.file_path_separator, [path.cwd, var.manifest_files_paths[count.index]]))
+  output_file_path = join(local.file_path_separator, [local.output_manifest_files_directory, basename(var.manifest_files_paths[count.index])])
+
+  client_id     = local.application_oauth_client_id
+  client_secret = local.application_oauth_client_secret
+  base_url      = local.application_service_url
 }
