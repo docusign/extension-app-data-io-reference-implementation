@@ -32,6 +32,18 @@ variable "docker_host" {
   default     = null
 }
 
+variable "container_tool" {
+  description = "The container tool to use for building and pushing images"
+  type        = string
+  nullable    = false
+  default     = "docker"
+
+  validation {
+    condition     = contains(["docker", "podman"], var.container_tool)
+    error_message = "The container tool must be one of 'docker' or 'podman'"
+  }
+}
+
 variable "application_name" {
   description = "The name of the application"
   type        = string
