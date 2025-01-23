@@ -65,7 +65,7 @@ resource "azurerm_linux_web_app" "this" {
 
   site_config {
     application_stack {
-      docker_image_name   = local.pushed_application_image_name_without_registry
+      docker_image_name   = terraform_data.push_docker_image.output.application_image_name_without_registry
       docker_registry_url = local.created_container_registry_url
     }
     always_on                               = var.is_application_webapp_always_on
