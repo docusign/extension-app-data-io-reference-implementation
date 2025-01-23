@@ -1,13 +1,9 @@
 html
   head
     title Redirect Page
+    script(src=scriptPath)
 
   body
     h1 Welcome to the Redirect Page
 
-    button(onclick="redirectToVariableUrl()") Click me to consent
-
-    script.
-      function redirectToVariableUrl() {
-        window.location.href = '#{redirectUri}?code=#{code}&state=#{state}';
-      }
+    button(id="consentButton", data-redirect-uri=redirectUri, data-code=code, data-state=state) Click me to consent

@@ -2,10 +2,11 @@
   "name": "extension-app-data-writeback-reference-implementation",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc --build tsconfig.json",
+    "build": "tsc --build tsconfig.json && npm run copy-files",
+    "copy-files": "cpx ./src/**/*.cto dist && cpx ./src/db/*.json dist/db",
     "lint": "npx eslint --ext .ts src/",
     "start": "node ./dist --env=production",
-    "dev": "nodemon" 
+    "dev": "nodemon"
   },
   "nodemonConfig": {
     "watch": [
@@ -17,8 +18,8 @@
   },
   "dependencies": {
     "@accordproject/concerto-cli": "^3.16.6",
-    "@accordproject/concerto-types": "~3.19.6",
     "@accordproject/concerto-core": "~3.19.6",
+    "@accordproject/concerto-types": "~3.19.6",
     "ajv": "^8.17.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -43,6 +44,7 @@
     "@types/pug": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
+    "cpx": "^1.5.0",
     "eslint": "^8.41.0",
     "eslint-plugin-node": "^11.1.0",
     "nodemon": "^2.0.22",

@@ -17,6 +17,7 @@ import HttpStatusCodes from './constants/http';
 import { NodeEnvs } from './constants/env';
 import { RouteError } from './utils/errors';
 import { UnauthorizedError } from 'express-jwt';
+import path from 'path';
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.set('views', './views');
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/js', express.static(path.join(__dirname, '../public/js')));
 
 // Show routes called in console during development
 if (env.NODE_ENV === NodeEnvs.Dev) {

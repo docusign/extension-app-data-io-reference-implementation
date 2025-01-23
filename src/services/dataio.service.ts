@@ -1,12 +1,12 @@
 import { CreateRecordBody, GetTypeDefinitionsBody, GetTypeNamesBody, PatchRecordBody, SearchRecordsBody, TypeNameInfo } from '../models/datawriteback';
 import { IReq, IRes } from '../utils/types';
-import { QueryExecutor } from 'src/utils/queryExecutor';
-import { FileDB } from 'src/db/fileDB';
+import { QueryExecutor } from '../utils/queryExecutor';
+import { FileDB } from '../db/fileDB';
 import moment from 'moment';
 import { ConceptDeclaration, ModelManager } from '@accordproject/concerto-core';
 import path from 'path';
-import { ModelManagerUtil } from 'src/utils/modelManagerUtil';
-import { ResultRehydrator } from 'src/utils/resultRehydrator';
+import { ModelManagerUtil } from '../utils/modelManagerUtil';
+import { ResultRehydrator } from '../utils/resultRehydrator';
 
 enum DECORATOR_NAMES {
   TERM = 'Term',
