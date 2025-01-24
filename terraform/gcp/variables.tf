@@ -96,11 +96,16 @@ variable "application_build_paths" {
   ]
 }
 
-variable "application_build_target_stage" {
-  description = "The target build stage for the application"
+variable "application_environment_mode" {
+  description = "The environment mode for the application"
   type        = string
   nullable    = true
   default     = "production"
+
+  validation {
+    condition     = contains(["development", "production"], var.application_environment_mode)
+    error_message = "The environment mode must be one of 'development' or 'production'"
+  }
 }
 
 variable "application_build_labels" {
