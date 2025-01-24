@@ -37,15 +37,19 @@ data "aws_iam_policy_document" "apprunner" {
 resource "aws_iam_role" "access" {
   name               = join(local.iam_role_name_separator, [var.application_name, local.region, "access"])
   assume_role_policy = data.aws_iam_policy_document.apprunner.json
+}
 
-  # workaround for https://github.com/hashicorp/terraform-provider-aws/issues/6566
-  provisioner "local-exec" {
-    command = "sleep 10"
+# workaround for https://github.com/hashicorp/terraform-provider-aws/issues/6566
+resource "time_sleep" "access_iam_role_propagation" {
+  create_duration = "10s"
+
+  triggers = {
+    name = aws_iam_role.access.name
   }
 }
 
 resource "aws_iam_role_policy_attachment" "apprunner" {
-  role       = aws_iam_role.access.name
+  role       = time_sleep.access_iam_role_propagation.triggers["name"]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
 }
 
