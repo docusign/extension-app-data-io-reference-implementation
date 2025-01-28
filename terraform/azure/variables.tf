@@ -222,6 +222,7 @@ variable "is_application_webapp_always_on" {
 variable "application_jwt_secret_key" {
   description = "The secret key to use for signing JWT tokens. If empty, a random key will be generated."
   type        = string
+  sensitive   = true
   nullable    = false
   default     = ""
 }
@@ -229,6 +230,7 @@ variable "application_jwt_secret_key" {
 variable "application_oauth_client_id" {
   description = "The OAuth client ID for the application. If empty, a random client ID will be generated."
   type        = string
+  sensitive   = true
   nullable    = false
   default     = ""
 }
@@ -236,6 +238,7 @@ variable "application_oauth_client_id" {
 variable "application_oauth_client_secret" {
   description = "The OAuth client secret for the application. If empty, a random client secret will be generated."
   type        = string
+  sensitive   = true
   nullable    = false
   default     = ""
 }
@@ -243,6 +246,7 @@ variable "application_oauth_client_secret" {
 variable "application_authorization_code" {
   description = "The authorization code for the application. If empty, a random code will be generated."
   type        = string
+  sensitive   = true
   nullable    = false
   default     = ""
 }
