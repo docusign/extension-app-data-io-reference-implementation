@@ -71,6 +71,7 @@ variable "application_build_paths" {
     "src/**",
     "views/**",
     "package.json",
+    "tsconfig.json",
     "Dockerfile",
     ".dockerignore"
   ]
