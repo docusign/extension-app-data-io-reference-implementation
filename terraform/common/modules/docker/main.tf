@@ -15,15 +15,7 @@ locals {
   app_image_tag              = strcontains(var.app_image_name, ":") && !strcontains(var.app_image_name, "@sha256") ? element(split(":", var.app_image_name), 1) : null
   app_image_name_without_tag = element(split(":", var.app_image_name), 0)
 
-  timestamp_tag = join("",
-    [
-      one(time_static.app_docker_image[*].year),
-      one(time_static.app_docker_image[*].month),
-      one(time_static.app_docker_image[*].day),
-      one(time_static.app_docker_image[*].hour),
-      one(time_static.app_docker_image[*].minute),
-      one(time_static.app_docker_image[*].second),
-  ])
+  timestamp_tag = formatdate("YYYYMMDDHHmmss", one(time_static.app_docker_image[*].rfc3339))
 
   app_image_name_with_timestamp_tag = join(":", compact([local.app_image_name_without_tag, local.timestamp_tag]))
   app_image_build_name              = var.do_use_timestamp_tag && local.app_image_tag == null ? local.app_image_name_with_timestamp_tag : var.app_image_name
