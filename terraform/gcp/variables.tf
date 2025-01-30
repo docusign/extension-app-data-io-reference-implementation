@@ -88,6 +88,7 @@ variable "application_build_paths" {
   description = "Paths of files relative to the build context, changes to which lead to a rebuild of the image. Supported pattern matches are the same as for the `fileset` Terraform function (https://developer.hashicorp.com/terraform/language/functions/fileset)."
   type        = list(string)
   default = [
+    "public/**",
     "src/**",
     "views/**",
     "package.json",
