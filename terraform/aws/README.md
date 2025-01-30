@@ -70,7 +70,7 @@
 | <a name="input_docker_host"></a> [docker\_host](#input\_docker\_host) | The Docker host (e.g. 'tcp://127.0.0.1:2376' or 'unix:///var/run/docker.sock') to connect to. If empty, the default Docker host will be used | `string` | `null` | no |
 | <a name="input_manifest_files_paths"></a> [manifest\_files\_paths](#input\_manifest\_files\_paths) | The list of manifest files relative paths to generate | `list(string)` | <pre>[<br/>  "../../ReadOnlyManifest.json",<br/>  "../../ReadWriteManifest.json"<br/>]</pre> | no |
 | <a name="input_output_manifest_files_directory"></a> [output\_manifest\_files\_directory](#input\_output\_manifest\_files\_directory) | The directory to output the generated manifest files | `string` | `".terraform"` | no |
-| <a name="input_region"></a> [region](#input\_region) | The AWS region | `string` | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | The AWS region | `string` | `"us-east-1"` | no |
 | <a name="input_repository_image_tag_mutability"></a> [repository\_image\_tag\_mutability](#input\_repository\_image\_tag\_mutability) | The image tag mutability setting for the ECR repository | `string` | `"MUTABLE"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of the tags to apply to various resources | `map(string)` | `{}` | no |
 
