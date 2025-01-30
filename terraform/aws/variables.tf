@@ -2,7 +2,7 @@ variable "region" {
   description = "The AWS region"
   type        = string
   nullable    = true
-  default     = null
+  default     = "us-east-1"
 }
 
 variable "docker_host" {

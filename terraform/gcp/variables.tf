@@ -6,17 +6,17 @@ variable "project" {
 }
 
 variable "region" {
-  description = " The default region to manage resources in. If another region is specified on a regional resource, it will take precedence. Alternatively, this can be specified using the `GOOGLE_REGION` environment variable"
+  description = "The default region to manage resources in. If another region is specified on a regional resource, it will take precedence. Alternatively, this can be specified using the `GOOGLE_REGION` environment variable"
   type        = string
   nullable    = true
-  default     = null
+  default     = "us-central1"
 }
 
 variable "zone" {
   description = "The default zone to manage resources in. Generally, this zone should be within the default region you specified. If another zone is specified on a zonal resource, it will take precedence. Alternatively, this can be specified using the `GOOGLE_ZONE` environment variable"
   type        = string
   nullable    = true
-  default     = null
+  default     = "us-central1-a"
 }
 
 variable "credentials" {
