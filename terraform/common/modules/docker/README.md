@@ -1,3 +1,5 @@
+# Shared reusable module for Docker-related resources
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
