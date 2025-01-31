@@ -1,3 +1,5 @@
+# Shared reusable module for generating secret values
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

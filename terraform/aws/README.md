@@ -1,3 +1,16 @@
+# Terraform configuration for deploying to Amazon Web Services (AWS)
+
+## Specific Cloud Prerequisites
+
+To get started, you need to:
+
+1. **Configure AWS CLI**: Install and configure the AWS CLI to interact with your AWS account. You can follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions).
+
+    ```sh
+    aws configure
+    ```
+In that case `aws` Terraform provider is authenticated to AWS using [shared configuration and credentials files](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#shared-configuration-and-credentials-files), but you may use other methods for [authenticating to AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
