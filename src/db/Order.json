@@ -1,0 +1,55 @@
+[
+    {
+      "$class": "org.example.Order",
+      "Id": "ORD_1001",
+      "orderNumber": "TC-2100-001",
+      "totalAmount": 245000.00,
+      "orderDate": "2025-03-15T00:00:00Z",
+      "orderLines": [
+        {
+          "$class": "org.example.OrderLine",
+          "productName": "Cloud Migration Service",
+          "quantity": 1,
+          "unitPrice": 200000.00,
+          "totalPrice": 200000.00,
+          "relatedInvoice": "INV_21001"
+        },
+        {
+          "$class": "org.example.OrderLine",
+          "productName": "Data Backup Solution",
+          "quantity": 5,
+          "unitPrice": 9000.00,
+          "totalPrice": 45000.00,
+          "relatedInvoice": "INV_21001"
+        }
+      ],
+      "orderInvoice": "INV_21001"
+    },
+    {
+      "$class": "org.example.Order",
+      "Id": "ORD_1002",
+      "orderNumber": "TC-2100-002",
+      "totalAmount": 170000.00,
+      "orderDate": "2025-04-01T00:00:00Z",
+      "orderLines": [
+        {
+          "$class": "org.example.OrderLine",
+          "productName": "IoT Sensor Package",
+          "quantity": 100,
+          "unitPrice": 1200.00,
+          "totalPrice": 120000.00,
+          "relatedInvoice": "INV_21002"
+        },
+        {
+          "$class": "org.example.OrderLine",
+          "productName": "IoT Platform Setup",
+          "quantity": 1,
+          "unitPrice": 50000.00,
+          "totalPrice": 50000.00,
+          "relatedInvoice": "INV_21002"
+        }
+      ],
+      "orderInvoice": "INV_21002"
+    }
+  ]
+  

@@ -201,6 +201,7 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     const data: object[] = db.readFile();
     const index: number = QueryExecutor.execute(query, data);
     if (index === -1) {
+      console.log('No results found');
       return res.json({ records: [] })
     }
     const dataResult: object = data[index];

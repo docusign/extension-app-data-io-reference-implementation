@@ -5,26 +5,26 @@ import {
     IOperand, 
     Operator, 
     ILogicalOperation, 
-    LogicalOperator 
+    LogicalOperator, 
+    OperandType
 } from "../models/IQuery";
 import * as path from "path";
 import * as fs from "fs";
 
 /**
- * Class to execute a query against the dataset.
+ * Class responsible for executing queries on data sets.
  */
 export class QueryExecutor {
     /**
-     * Executes a query on a dataset and returns the index of the first match.
-     * Returns -1 if no match is found.
-     * @param query - The query object.
-     * @param data - The dataset to be executed on.
-     * @returns the index of the first match
+     * Executes a query on the given input data.
+     * @param {IQuery} query - The query to execute.
+     * @param {object[]} inputData - The data to query against.
+     * @returns {number} The index of the first matching record, or -1 if no match is found.
      */
     public static execute(query: IQuery, inputData: object[]): number {
         const operation: OperationUnion = query.queryFilter.operation;
         for (let index: number = 0; index < inputData.length; index++) {
-            if (QueryExecutor.executeOperation(operation, inputData[index])) {
+            if (this.evaluateOperation(operation, inputData[index])) {
                 return index;
             }
         }
@@ -32,24 +32,25 @@ export class QueryExecutor {
     }
 
     /**
-     * Executes an operation (comparison or logical) on a record.
-     * @param operation - The operation to execute.
-     * @param record - The record to execute the operation on.
-     * @returns The result of the operation evaluation.
+     * Evaluates an operation on a given record.
+     * @param {OperationUnion} operation - The operation to evaluate.
+     * @param {object} record - The record to evaluate against.
+     * @returns {boolean} True if the operation evaluates to true, false otherwise.
+     * @private
      */
-    private static executeOperation(operation: OperationUnion, record: object): boolean {
+    private static evaluateOperation(operation: OperationUnion, record: object): boolean {
         if ('leftOperand' in operation) {
-            return QueryExecutor.executeComparisonOperation(operation, record);
+            return this.executeComparisonOperation(operation, record);
         } else {
-            return QueryExecutor.executeLogicalOperation(operation, record);
+            return this.executeLogicalOperation(operation, record);
         }
     }
 
     /**
-     * Resolves a property path (walk) on a record. Supports loading relationship properties from external JSON files.
-     * @param walk - The property path to resolve.
-     * @param record - The record to resolve the path against.
-     * @returns The resolved value or undefined if not found.
+     * Resolves a property path (walk) on a given record.
+     * @param {string} walk - The property path to resolve.
+     * @param {Record<string, any>} record - The record to resolve the path on.
+     * @returns {any} The resolved value.
      */
     public static resolveWalk(walk: string, record: Record<string, any>): any {
         const segments: string[] = walk.split('/');
@@ -58,12 +59,10 @@ export class QueryExecutor {
         for (const segment of segments) {
             if (!currentValue) return undefined;
 
-            // Handle relationship properties with type names
             if (segment.includes('(:')) {
                 const [propertyName, typeName] = segment.split('(:');
                 const cleanTypeName: string = typeName.replace(')', '');
 
-                // Load external JSON file for the relationship type
                 const filePath: string = path.resolve(__dirname, `../db/${cleanTypeName}.json`);
                 if (!fs.existsSync(filePath)) {
                     console.warn(`File not found: ${filePath}`);
@@ -71,21 +70,21 @@ export class QueryExecutor {
                 }
 
                 const relatedData: Record<string, any>[] = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-                const relationshipId: string = currentValue[propertyName] ?? "-1";
+                const relationshipId: string = currentValue[propertyName];
 
-                // Find the related object by its ID
-                currentValue = relatedData.find((item: Record<string, any>) => parseInt(item.Id) === parseInt(relationshipId));
+                currentValue = relatedData.find((item: Record<string, any>) => item.Id === relationshipId);
                 continue;
             }
 
-            // Handle array and object properties
             const isArray: boolean = segment.endsWith('[]');
             const cleanSegment: string = segment.replace(/\[\]$/, '');
 
             currentValue = currentValue[cleanSegment];
 
             if (isArray && Array.isArray(currentValue)) {
-                return currentValue; // Return array for further processing
+                return currentValue.map((item: any) => 
+                    this.resolveWalk(segments.slice(segments.indexOf(segment) + 1).join('/'), item)
+                ).flat();
             }
         }
 
@@ -93,10 +92,11 @@ export class QueryExecutor {
     }
 
     /**
-     * Executes a comparison operation on a record.
-     * @param operation - The comparison operation to execute.
-     * @param record - The record to execute the operation on.
-     * @returns The result of the comparison operation evaluation.
+     * Executes a comparison operation on a given record.
+     * @param {IComparisonOperation} operation - The comparison operation to execute.
+     * @param {object} record - The record to execute the operation on.
+     * @returns {boolean} True if the comparison is true, false otherwise.
+     * @private
      */
     private static executeComparisonOperation(operation: IComparisonOperation, record: object): boolean {
         const leftOperand: IOperand = operation.leftOperand;
@@ -104,18 +104,28 @@ export class QueryExecutor {
         const operator: Operator = operation.operator;
 
         const leftValue: any = leftOperand.isLiteral 
-            ? leftOperand.name 
-            : QueryExecutor.resolveWalk(leftOperand.name, record);
+            ? this.coerceValue(leftOperand.name, leftOperand.type)
+            : this.resolveWalk(leftOperand.name, record);
 
         const rightValue: any = rightOperand.isLiteral 
-            ? rightOperand.name 
-            : QueryExecutor.resolveWalk(rightOperand.name, record);
+            ? this.coerceValue(rightOperand.name, rightOperand.type)
+            : this.resolveWalk(rightOperand.name, record);
 
         switch (operator) {
             case Operator.EQUALS:
-                return leftValue === rightValue;
+                return this.deepEqual(leftValue, rightValue);
             case Operator.NOT_EQUALS:
-                return leftValue !== rightValue;
+                return !this.deepEqual(leftValue, rightValue);
+            case Operator.GREATER_THAN:
+                return leftValue > rightValue;
+            case Operator.LESS_THAN:
+                return leftValue < rightValue;
+            case Operator.GREATER_THAN_OR_EQUALS_TO:
+                return leftValue >= rightValue;
+            case Operator.LESS_THAN_OR_EQUALS_TO:
+                return leftValue <= rightValue;
+            case Operator.IN:
+                return Array.isArray(rightValue) && rightValue.includes(leftValue);
             default:
                 console.warn('Unsupported operator:', operator);
                 return false;
@@ -123,16 +133,17 @@ export class QueryExecutor {
     }
 
     /**
-     * Executes a logical operation (AND/OR) on a record.
-     * @param operation - The logical operation to execute.
-     * @param record - The record to execute the operation on.
-     * @returns The result of the logical operation evaluation.
+     * Executes a logical operation on a given record.
+     * @param {ILogicalOperation} operation - The logical operation to execute.
+     * @param {object} record - The record to execute the operation on.
+     * @returns {boolean} True if the logical operation is true, false otherwise.
+     * @private
      */
     private static executeLogicalOperation(operation: ILogicalOperation, record: object): boolean {
         const { leftOperation, operator, rightOperation } = operation;
 
-        const leftResult: boolean = QueryExecutor.executeOperation(leftOperation, record);
-        const rightResult: boolean = QueryExecutor.executeOperation(rightOperation, record);
+        const leftResult: boolean = this.evaluateOperation(leftOperation, record);
+        const rightResult: boolean = this.evaluateOperation(rightOperation, record);
 
         switch (operator) {
             case LogicalOperator.AND:
@@ -140,7 +151,53 @@ export class QueryExecutor {
             case LogicalOperator.OR:
                 return leftResult || rightResult;
             default:
+                console.warn('Unsupported logical operator:', operator);
                 return false;
         }
+    }
+
+    /**
+     * Coerces a value to the specified type.
+     * @param {string} value - The value to coerce.
+     * @param {OperandType} type - The type to coerce to.
+     * @returns {any} The coerced value.
+     * @private
+     */
+    private static coerceValue(value: string, type: OperandType): any {
+        switch(type) {
+            case 'DOUBLE':
+                return parseFloat(value);
+            case 'INTEGER':
+                return parseInt(value, 10);
+            case 'BOOLEAN':
+                return value.toLowerCase() === 'true';
+            case 'DATETIME':
+                return new Date(value).getTime();
+            default:
+                return value;
+        }
+    }
+
+    /**
+     * Performs a deep equality check between two values.
+     * @param {any} a - The first value to compare.
+     * @param {any} b - The second value to compare.
+     * @returns {boolean} True if the values are deeply equal, false otherwise.
+     * @private
+     */
+    private static deepEqual(a: any, b: any): boolean {
+        if (a === b) return true;
+        if (typeof a !== typeof b) return false;
+        if (Array.isArray(a) && Array.isArray(b)) {
+            if (a.length !== b.length) return false;
+            return a.every((val, index) => this.deepEqual(val, b[index]));
+        }
+        if (typeof a === 'object' && a !== null && b !== null) {
+            const keysA = Object.keys(a);
+            const keysB = Object.keys(b);
+            if (keysA.length !== keysB.length) return false;
+            return keysA.every(key => this.deepEqual(a[key], b[key]));
+        }
+        return false;
     }
 }

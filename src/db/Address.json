@@ -1,12 +1,26 @@
 [
   {
-    "Id": "0",
-    "Name": "John Doe",
-    "street1": "123 Main St",
-    "street2": "Apt 4B",
-    "locality": "Springfield",
-    "subdivision": "IL",
+    "Id": "ADDR001",
+    "Name": "HQ Building",
+    "street1": "123 Tech Valley Dr",
+    "street2": "Suite 2100",
+    "locality": "San Francisco",
+    "subdivision": "CA",
     "countryOrRegion": "USA",
-    "postalCode": "62704"
+    "postalCode": "94105",
+    "isPrimary": true,
+    "primaryContact": "CONTACT_01"
+  },
+  {
+    "Id": "ADDR002",
+    "Name": "Warehouse",
+    "street1": "456 Industrial Way",
+    "street2": "Bldg C",
+    "locality": "Oakland",
+    "subdivision": "CA",
+    "countryOrRegion": "USA",
+    "postalCode": "94607",
+    "isPrimary": false,
+    "primaryContact": "CONTACT_02"
   }
 ]
