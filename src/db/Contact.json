@@ -1,6 +1,5 @@
 [
     {
-      "$class": "org.example.Contact",
       "Id": "CONTACT_01",
       "fullName": "Sarah Johnson",
       "email": "s.johnson@techcorp.com",
@@ -8,7 +7,6 @@
       "currentOpportunity": "OPP_001"
     },
     {
-      "$class": "org.example.Contact",
       "Id": "CONTACT_02",
       "fullName": "Michael Chen",
       "email": "m.chen@techcorp.com",

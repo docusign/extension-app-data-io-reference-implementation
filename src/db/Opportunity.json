@@ -1,6 +1,5 @@
 [
     {
-      "$class": "org.example.Opportunity",
       "Id": "OPP_001",
       "name": "Enterprise Cloud Migration",
       "amount": 250000.00,
@@ -8,7 +7,6 @@
       "associatedOrder": "ORD_1001"
     },
     {
-      "$class": "org.example.Opportunity",
       "Id": "OPP_002",
       "name": "IoT Implementation",
       "amount": 175000.00,
