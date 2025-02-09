@@ -80,7 +80,7 @@ const convertDateToISO8601 = (data: object, typeName: string): void => {
   const concept: ConceptDeclaration = CONCEPTS.filter(c => c.getName() === typeName)[0];
   const dataRecord: Record<string, unknown> = data as Record<string, unknown>;
   for (const key in dataRecord) {
-    if (concept.getProperty(key).getType() === 'DateTime') {
+    if (concept.getProperty(key)?.getType() === 'DateTime') {
       dataRecord[key] = moment.utc(dataRecord[key] as string).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     }
   }

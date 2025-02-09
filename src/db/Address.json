@@ -8,7 +8,6 @@
     "subdivision": "CA",
     "countryOrRegion": "USA",
     "postalCode": "94105",
-    "isPrimary": true,
     "primaryContact": "CONTACT_01"
   },
   {
@@ -20,7 +19,6 @@
     "subdivision": "CA",
     "countryOrRegion": "USA",
     "postalCode": "94607",
-    "isPrimary": false,
     "primaryContact": "CONTACT_02"
   }
 ]
