@@ -2,33 +2,64 @@
   {
     "Id": "0",
     "Name": "Account 0",
-    "MasterRecordId": 1,
-    "PushCount": 100,
-    "Type": "two_year",
-    "ShippingLatitude": "ThisIsTest"
+    "MasterRecordId": "MR000001",
+    "PushCount": 100.0,
+    "Type": "Customer_Direct",
+    "ShippingLatitude": null,
+    "time": null
   },
   {
+    "Id": "1",
     "Name": "Account 1",
-    "ShippingLatitude": "ThisIsATestAgain",
-    "Type": "two_year",
-    "Id": "1"
+    "MasterRecordId": "MR000001",
+    "PushCount": null,
+    "Type": null,
+    "ShippingLatitude": null,
+    "time": null
   },
   {
-    "time": "2024-10-17",
     "Id": "2",
     "Name": "updatedTestAccount",
-    "ShippingLatitude": 11,
-    "PushCount": 7,
-    "MasterRecordId": 0
+    "MasterRecordId": "MR000002",
+    "PushCount": 7.0,
+    "Type": null,
+    "ShippingLatitude": 11.0,
+    "time": "2024-10-17T00:00:00"
   },
   {
+    "Id": "3",
     "Name": "Account 3",
-    "time": "2024-12-27T05:24:03.917Z",
-    "Id": "3"
+    "MasterRecordId": "MR000002",
+    "PushCount": null,
+    "Type": null,
+    "ShippingLatitude": null,
+    "time": "2024-12-27T05:24:03.917Z"
   },
   {
+    "Id": "4",
     "Name": "Account 4",
-    "time": "2024-12-28T00:00:00.000Z",
-    "Id": "4"
+    "MasterRecordId": "MR000001",
+    "PushCount": null,
+    "Type": null,
+    "ShippingLatitude": null,
+    "time": "2024-12-28T00:00:00Z"
+  },
+  {
+    "Id": "5",
+    "Name": "Test Account",
+    "MasterRecordId": "MR000002",
+    "PushCount": 6.0,
+    "Type": null,
+    "ShippingLatitude": 10.0,
+    "time": null
+  },
+  {
+    "Id": "6",
+    "Name": "TechCorp Solutions",
+    "MasterRecordId": "MR000001",
+    "PushCount": 6.0,
+    "Type": null,
+    "ShippingLatitude": 10.0,
+    "time": null
   }
 ]
