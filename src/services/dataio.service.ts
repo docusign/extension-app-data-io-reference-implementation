@@ -29,7 +29,8 @@ type ErrorResponse = {
   code: string;
 }
 
-
+// For simplicity all concepts are identified by Id
+const IDENTIFIER: string = 'Id';
 
 /**
  * Formats the date properties of the given data object to 'YYYY-MM-DDTHH:mm:ss.SSSZ'.
@@ -142,7 +143,7 @@ export const createRecord = (req: IReq<CreateRecordBody>, res: IRes): IRes => {
     }
     const db: FileDB = new FileDB(generateFilePath(typeName));
     const recordId: string = JSON.stringify(db.readFile().length);
-    (data as any)['Id'] = recordId;
+    (data as any)[IDENTIFIER] = recordId;
     formatISO8061DateProperties(data, typeName);
     db.appendToFile(data)
     return res.json({ recordId });
@@ -172,7 +173,7 @@ export const patchRecord = (req: IReq<PatchRecordBody>, res: IRes): IRes => {
     }
     const db: FileDB = new FileDB(generateFilePath(typeName));
     formatISO8061DateProperties(data, typeName);
-    db.updateFile(recordId as unknown as number, data)
+    db.updateFile(IDENTIFIER, recordId, data)
     return res.json({ success: true });
   } catch (err) {
     console.log(`Encountered an error patching data: ${err.message}`);

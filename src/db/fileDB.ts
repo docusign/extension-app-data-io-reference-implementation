@@ -96,19 +96,18 @@ export class FileDB {
     }
   }
 
+
   /**
-   * Updates an object in the JSON file.
-   * @param {number} index - The index of the object to update.
-   * @param {object} updatedObject - The updated object.
-   * @returns {boolean}
+   * Updates a record in the JSON file by identifier and record ID.
+   * @param {string} identifier - The identifier field name.
+   * @param {string} recordId - The record ID to update.
+   * @param {object} updatedObject - The updated object to write to the file.
+   * @returns {void}
    */
-  updateFile(index: number, updatedObject: object): void {
+  updateFile(identifier: string, recordId: string, updatedObject: object): void {
     try {
       const jsonArray: object[] = this.readFile();
-      if (index < 0 || index >= jsonArray.length) {
-        console.error('Index out of bounds');
-        throw Error(`Error updating file: Index out of bounds, trying to save at index ${index} with length of ${jsonArray.length}`);
-      }
+      const index = jsonArray.findIndex((record: any) => record[identifier] === recordId);
       for (const key of Object.keys(updatedObject)) {
         (jsonArray[index] as any)[key] =  (updatedObject as any)[key];
       }
