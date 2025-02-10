@@ -15,6 +15,10 @@ To get started, you need to:
     ```sh
     az account set --subscription "your-subscription-id"
     ```
+    It's also necessary to set the Azure subscription when running the `azurerm` Terraform provider with version 4.0 or above. This can be done by specifying the `subscription_id` Terraform variable or by exporting the `ARM_SUBSCRIPTION_ID` environment variable. For instance,
+    ```sh
+    export ARM_SUBSCRIPTION_ID="your-subscription-id"
+    ```
 
 In that case `azurerm` Terraform provider is [authenticated to Azure using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), but you may use other methods for [authenticating to Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#authenticating-to-azure).
 
