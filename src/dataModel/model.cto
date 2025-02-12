@@ -146,5 +146,133 @@ concept Address identified by Id {
   @Term("Postal Code")
   @Crud("Createable,Readable,Updateable")
   o String postalCode length=[0, 20] optional
+
+  @Term("Contact Reference")
+  @Crud("Createable,Readable,Updateable")
+  --> Contact primaryContact optional
+}
+
+@Term("Contact")
+@Crud("Createable,Readable,Updateable,Deletable")
+concept Contact identified by Id {
+    @Term("Contact ID")
+    @Crud("Readable")
+    o String Id
+
+    @Term("Full Name")
+    @Crud("Createable,Readable,Updateable")
+    o String fullName
+
+    @Term("Email")
+    @Crud("Createable,Readable,Updateable")
+    o String email optional
+
+    @Term("Phone")
+    @Crud("Createable,Readable,Updateable")
+    o String phone optional
+
+    @Term("Opportunity Link")
+    @Crud("Createable,Readable,Updateable")
+    --> Opportunity currentOpportunity optional
+}
+
+@Term("Opportunity")
+@Crud("Createable,Readable,Updateable,Deletable")
+concept Opportunity identified by Id {
+    @Term("Opportunity ID")
+    @Crud("Readable")
+    o String Id
+
+    @Term("Opportunity Name")
+    @Crud("Createable,Readable,Updateable")
+    o String name
+
+    @Term("Amount")
+    @Crud("Createable,Readable,Updateable")
+    o Double amount optional
+
+    @Term("Close Date")
+    @Crud("Createable,Readable,Updateable")
+    o DateTime closeDate optional
+
+    @Term("Order Relationship")
+    @Crud("Createable,Readable,Updateable")
+    --> Order associatedOrder optional
+}
+
+@Term("OrderLine")
+@Crud("Createable,Readable,Updateable,Deletable")
+concept OrderLine {
+    @Term("Product Name")
+    @Crud("Createable,Readable,Updateable")
+    o String productName
+
+    @Term("Quantity")
+    @Crud("Createable,Readable,Updateable")
+    o Integer quantity
+
+    @Term("Unit Price")
+    @Crud("Createable,Readable,Updateable")
+    o Double unitPrice
+
+    @Term("Total Price")
+    @Crud("Readable")
+    o Double totalPrice
+
+    @Term("Related Invoice")
+    @Crud("Createable,Readable,Updateable")
+    --> Invoice relatedInvoice optional
+}
+
+@Term("Order")
+@Crud("Createable,Readable,Updateable,Deletable")
+concept Order identified by Id {
+    @Term("Order ID")
+    @Crud("Readable")
+    o String Id
+
+    @Term("Order Number")
+    @Crud("Createable,Readable,Updateable")
+    o String orderNumber
+
+    @Term("Total Amount")
+    @Crud("Createable,Readable,Updateable")
+    o Double totalAmount
+
+    @Term("Order Date")
+    @Crud("Createable,Readable,Updateable")
+    o DateTime orderDate
+
+    @Term("Order Lines")
+    @Crud("Createable,Readable,Updateable")
+    o OrderLine[] orderLines
+
+    @Term("Invoice Connection")
+    @Crud("Createable,Readable,Updateable")
+    --> Invoice orderInvoice optional
+}
+
+@Term("Invoice")
+@Crud("Createable,Readable,Updateable,Deletable")
+concept Invoice identified by Id {
+    @Term("Invoice ID")
+    @Crud("Readable")
+    o String Id
+
+    @Term("Invoice Number")
+    @Crud("Createable,Readable,Updateable")
+    o String invoiceNumber
+
+    @Term("Amount")
+    @Crud("Createable,Readable,Updateable")
+    o Double amount
+
+    @Term("Due Date")
+    @Crud("Createable,Readable,Updateable")
+    o DateTime dueDate
+
+    @Term("Is Paid")
+    @Crud("Createable,Readable,Updateable")
+    o Boolean isPaid optional
 }
 

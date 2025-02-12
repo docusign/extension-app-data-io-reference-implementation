@@ -1,0 +1,30 @@
+[
+    {
+        "productName": "Data Backup Solution",
+        "quantity": 2,
+        "unitPrice": 1200.00,
+        "totalPrice": 2400.00,
+        "relatedInvoice": "INV_21002"
+    },
+    {
+        "productName": "Smartphone",
+        "quantity": 5,
+        "unitPrice": 800.00,
+        "totalPrice": 4000.00,
+        "relatedInvoice": "INV_21002"
+    },
+    {
+        "productName": "Headphones",
+        "quantity": 10,
+        "unitPrice": 50.00,
+        "totalPrice": 500.00,
+        "relatedInvoice": "INV_21001"
+    },
+    {
+        "productName": "Monitor",
+        "quantity": 3,
+        "unitPrice": 300.00,
+        "totalPrice": 900.00,
+        "relatedInvoice": "INV_21001"
+    }
+]
