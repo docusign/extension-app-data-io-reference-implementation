@@ -1,6 +1,11 @@
-## Specific Cloud Prerequisites
+# Terraform configuration for deploying to Google Cloud Platform (GCP)
 
-To get started, you need to:
+## Specific cloud prerequisites
+
+Before deploying your extension app on GCP, complete the following setup steps:
+
+1. [Sign up for a Google Cloud account](https://cloud.google.com/free/) (if you don’t already have one).
+    * You must [enable billing](https://cloud.google.com/billing/docs/how-to/manage-billing-account) to use most Google Cloud services, even if staying within the free tier.
 
 1. **Configure Google Cloud SDK**: Install and configure the Google Cloud SDK to interact with your Google account. You can follow the instructions [here](https://cloud.google.com/sdk/docs/install).
 
@@ -9,12 +14,21 @@ To get started, you need to:
     gcloud auth login
     gcloud auth application-default login
     ```
+    * The first command logs you into Google Cloud.
+    * The second command allows Terraform and other tools to use ADC for authentication.
 
 1. **Configure your Google Cloud project**:
     ```sh
     gcloud config set project YOUR_PROJECT_ID
     ```
-
+    If you don’t have a project yet, [create one](https://cloud.google.com/resource-manager/docs/creating-managing-projects):
+    ```sh
+    gcloud projects create YOUR_PROJECT_ID --name="Your Project Name"
+    ```
+    After setting the project, export it as an environment variable so Terraform can reference it:
+    ```sh
+    export GOOGLE_CLOUD_PROJECT="your-project-id"
+    ```
 1. **Enable necessary APIs**: The following services must be [enabled in a project](https://cloud.google.com/service-usage/docs/enable-disable) before their service API can be used by the provider:
     - Cloud Resource Manager API
     - Artifact Registry API
@@ -29,6 +43,8 @@ To get started, you need to:
     ```
 
 In that case `google` Terraform provider is authenticated to Google using [User Application Default Credentials ("ADCs")](https://cloud.google.com/sdk/gcloud/reference/auth/application-default), but you may use other methods for [authenticating to Google](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#authentication).
+
+Now that you’ve set up your Google Cloud environment, continue with the [Terraform deployment guide](terraform/README.md) to provision your infrastructure.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

@@ -1,15 +1,27 @@
 # Terraform configuration for deploying to Amazon Web Services (AWS)
 
-## Specific Cloud Prerequisites
+## Specific cloud prerequisites
 
-To get started, you need to:
+Before deploying your extension app on AWS, complete the following setup steps:
 
-1. **Configure AWS CLI**: Install and configure the AWS CLI to interact with your AWS account. You can follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions).
+1. [Sign up for a free AWS account](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all) (if you don’t already have one).
 
+1. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with programmatic access and generate an access key (access key ID and secret access key).
+
+1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions) to interact with AWS services from the command line.
+
+1. **Configure AWS CLI**: Configure the AWS CLI to interact with your AWS account. You can follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html).
+* Run the following command in your terminal and follow the prompts:
     ```sh
     aws configure
     ```
+* Enter your AWS access key ID and AWS secret access key (generated from your IAM user).
+* Specify your default AWS region (e.g., `us-east-1`, `us-west-2`).
+* Set the default output format (`json`, `text`, or `table—json` is recommended).
+
 In that case `aws` Terraform provider is authenticated to AWS using [shared configuration and credentials files](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#shared-configuration-and-credentials-files), but you may use other methods for [authenticating to AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
+
+Now that you’ve set up your AWS environment, continue with the [Terraform deployment guide](terraform/README.md) to provision your infrastructure.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

@@ -1,8 +1,10 @@
 # Terraform configuration for deploying to Microsoft Azure
 
-## Specific Cloud Prerequisites
+## Specific cloud prerequisites
 
-To get started, you need to:
+Before deploying your extension app on Azure, complete the following setup steps:
+
+1. [Sign up for an Azure Free Account](https://azure.microsoft.com/free/) (if you don’t already have one).
 
 1. **Configure Azure CLI**: Install and configure the Azure CLI to interact with your Azure account. You can follow the instructions [here](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 
@@ -20,7 +22,20 @@ To get started, you need to:
     export ARM_SUBSCRIPTION_ID="your-subscription-id"
     ```
 
+1. Make sure you have the correct permissions
+    Terraform needs sufficient permissions to create resources. Make sure your Azure user has the Contributor role:
+    ```sh
+    az role assignment list --assignee <your-email> --output table
+    ```
+    If needed, assign the correct role:
+    ```sh
+    az role assignment create --assignee <your-email> --role "Contributor" --scope "/subscriptions/your-subscription-id"
+    ```
+
+
 In that case `azurerm` Terraform provider is [authenticated to Azure using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), but you may use other methods for [authenticating to Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#authenticating-to-azure).
+
+Now that you’ve set up your Azure environment, continue with the [Terraform deployment guide](terraform/README.md) to provision your infrastructure.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
