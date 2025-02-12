@@ -6,10 +6,19 @@ To test a read-only data IO extension app, modify the `ReadOnlyManifest.json` fi
 
 To test a data IO extension app with both read and write capabilities, modify the `ReadWriteManifest.json` file.
 
-## Video Walkthrough
+## Choose your setup: local or cloud deployment
+If you want to run the app locally using Node.js and ngrok, follow the [Local setup instructions](#local-setup-instructions) below.
+
+If you want to deploy the app to the cloud using Docker and Terraform, see [Deploying an extension app to the cloud with Terraform](terraform/README.md). This includes cloud-specific setup instructions for the following cloud providers:
+- [Amazon Web Services](https://aws.amazon.com/)
+- [Microsoft Azure](https://azure.microsoft.com/)
+- [Google Cloud Platform](https://cloud.google.com/)
+
+## Local setup instructions
+
+### Video Walkthrough
 [![Reference implementation videos](https://img.youtube.com/vi/_4p7GWK5aoA/0.jpg)](https://youtube.com/playlist?list=PLXpRTgmbu4orBQrYWPAXa4EBXv0IGGzID&feature=shared)
 
-## Setup instructions
 ### 1. Clone the repository
 Run the following command to clone the repository: 
 ```bash

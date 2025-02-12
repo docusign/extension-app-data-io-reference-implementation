@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "tsc --build tsconfig.json && npm run copy-files",
-    "copy-files": "cpx ./src/**/*.cto dist && cpx ./src/db/*.json dist/db",
+    "copy-files": "cpx './src/**/*.cto' 'dist' && cpx './src/db/*.json' 'dist/db'",
     "lint": "npx eslint --ext .ts src/",
     "start": "node ./dist --env=production",
     "dev": "nodemon"
