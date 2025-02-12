@@ -169,7 +169,7 @@ The query below has been updated based on the directions above. You can copy and
                 "leftOperand": {
                     "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
                     "name": "Test Account",
-                    "type": "INTEGER",
+                    "type": "STRING",
                     "isLiteral": true
                 },
                 "operator": "EQUALS",
@@ -239,7 +239,7 @@ Rerun the SearchRecords extension test to search for the new patched values.
                 "leftOperand": {
                     "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
                     "name": "updatedTestAccount",
-                    "type": "INTEGER",
+                    "type": "STRING",
                     "isLiteral": true
                 },
                 "operator": "EQUALS",
