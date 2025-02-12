@@ -1,0 +1,24 @@
+# Ignore everything
+*
+
+# Allow files and directories
+!/.eslintignore
+!/.eslintrc.json
+!/.prettierrc
+
+!/package.json
+!/tsconfig.json
+
+!/development.env
+!/production.env
+
+!/public
+!/src
+!/views
+
+# Ignore unnecessary files inside allowed directories
+# This should go after the allowed directories
+**/*~
+**/*.log
+**/.DS_Store
+**/Thumbs.db
