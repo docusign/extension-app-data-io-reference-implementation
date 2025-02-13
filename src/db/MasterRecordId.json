@@ -1,17 +1,35 @@
 [
   {
-    "Id": "0",
-    "Name": "Master Record 0",
+    "Id": "MR000001",
     "Deleted": false,
-    "MasterRecordId": 1,
-    "PushCount": 100,
-    "Type": "two_year",
-    "ShippingLatitude": "1.0.052.56"
+    "AccountId": "ACCT002",
+    "PushCount": 15000,
+    "Type": "Customer_Direct",
+    "ShippingLatitude": 1.0052,
+    "lastUpdated": "2025-03-15T14:30:00Z",
+    "addy": "ADDR001",
+    "Name": "Master Record 0",
+    "addy2": {
+      "$class": "org.example.Address",
+      "street1": "123 Tech Valley Dr",
+      "street2": "Suite 2100",
+      "locality": "San Francisco",
+      "subdivision": "CA",
+      "countryOrRegion": "USA",
+      "postalCode": "94105"
+    },
+    "ChildMasterRecordIds": ["MR000002"]
   },
   {
-    "Type": "",
-    "ShippingLatitude": "",
-    "Id": "1",
-    "Name": "test"
+    "Id": "MR000002",
+    "Deleted": false,
+    "AccountId": "ACCT003",
+    "PushCount": 0,
+    "Type": "Prospect",
+    "ShippingLatitude": null,
+    "lastUpdated": "2025-03-16T09:45:00Z",
+    "addy": "ADDR002",
+    "Name": "Primary Record",
+    "ChildMasterRecordIds": []
   }
 ]
