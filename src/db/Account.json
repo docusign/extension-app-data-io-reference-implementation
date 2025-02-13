@@ -2,7 +2,7 @@
   {
     "Id": "0",
     "Name": "Account 0",
-    "MasterRecordId": "MR000001",
+    "MasterRecordId": "1",
     "PushCount": 100.0,
     "Type": "Customer_Direct",
     "ShippingLatitude": null,
@@ -11,7 +11,7 @@
   {
     "Id": "1",
     "Name": "Account 1",
-    "MasterRecordId": "MR000001",
+    "MasterRecordId": "1",
     "PushCount": null,
     "Type": null,
     "ShippingLatitude": null,
@@ -20,7 +20,7 @@
   {
     "Id": "2",
     "Name": "updatedTestAccount",
-    "MasterRecordId": "MR000002",
+    "MasterRecordId": "2",
     "PushCount": 7.0,
     "Type": null,
     "ShippingLatitude": 11.0,
@@ -29,7 +29,7 @@
   {
     "Id": "3",
     "Name": "Account 3",
-    "MasterRecordId": "MR000002",
+    "MasterRecordId": "2",
     "PushCount": null,
     "Type": null,
     "ShippingLatitude": null,
@@ -38,7 +38,7 @@
   {
     "Id": "4",
     "Name": "Account 4",
-    "MasterRecordId": "MR000001",
+    "MasterRecordId": "1",
     "PushCount": null,
     "Type": null,
     "ShippingLatitude": null,
@@ -47,7 +47,7 @@
   {
     "Id": "5",
     "Name": "Test Account",
-    "MasterRecordId": "MR000002",
+    "MasterRecordId": "2",
     "PushCount": 6.0,
     "Type": null,
     "ShippingLatitude": 10.0,
@@ -56,7 +56,7 @@
   {
     "Id": "6",
     "Name": "TechCorp Solutions",
-    "MasterRecordId": "MR000001",
+    "MasterRecordId": "1",
     "PushCount": 6.0,
     "Type": null,
     "ShippingLatitude": 10.0,

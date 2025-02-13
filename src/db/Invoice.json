@@ -1,13 +1,13 @@
 [
     {
-      "Id": "INV_21001",
+      "Id": "1",
       "invoiceNumber": "INV-2025-001",
       "amount": 245000.00,
       "dueDate": "2025-07-31T00:00:00Z",
       "isPaid": false
     },
     {
-      "Id": "INV_21002",
+      "Id": "2",
       "invoiceNumber": "INV-2025-002",
       "amount": 170000.00,
       "dueDate": "2025-08-15T00:00:00Z",
