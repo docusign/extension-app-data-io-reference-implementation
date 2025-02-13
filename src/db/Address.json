@@ -1,6 +1,6 @@
 [
   {
-    "Id": "ADDR001",
+    "Id": "1",
     "Name": "HQ Building",
     "street1": "123 Tech Valley Dr",
     "street2": "Suite 2100",
@@ -8,10 +8,10 @@
     "subdivision": "CA",
     "countryOrRegion": "USA",
     "postalCode": "94105",
-    "primaryContact": "CONTACT_01"
+    "primaryContact": "1"
   },
   {
-    "Id": "ADDR002",
+    "Id": "2",
     "Name": "Warehouse",
     "street1": "456 Industrial Way",
     "street2": "Bldg C",
@@ -19,6 +19,6 @@
     "subdivision": "CA",
     "countryOrRegion": "USA",
     "postalCode": "94607",
-    "primaryContact": "CONTACT_02"
+    "primaryContact": "2"
   }
 ]
