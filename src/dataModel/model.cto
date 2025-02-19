@@ -116,7 +116,7 @@ concept MasterRecordId identified by Id {
 @Crud("Createable,Readable,Updateable")
 concept Address identified by Id {
   @Term("Address ID")
-  @Crud("Createable,Readable,Updateable")
+  @Crud("Readable")
   o String Id length=[0, 18]
 
   @Term("Name")
