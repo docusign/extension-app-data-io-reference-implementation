@@ -6,6 +6,11 @@ To test a read-only data IO extension app, modify the `ReadOnlyManifest.json` fi
 
 To test a data IO extension app with both read and write capabilities, modify the `ReadWriteManifest.json` file.
 
+## Hosted Version (no setup required)
+You can use the hosted version of this reference implementation by directly uploading the appropriate manifest file located in the root of the repository: `Hosted.ReadOnlyManifest.json` or `Hosted.ReadWriteManifest.json` to the Docusign Developer Console. See [Upload your manifest and create the data IO app](#3-upload-your-manifest-and-create-the-data-io-app).
+
+**Note:** The provided manifests include `clientId` and `clientSecret` values used in the sample authentication connection. These do not authenticate to a real system, but the hosted reference implementation requires these exact values.
+
 ## Choose your setup: local or cloud deployment
 If you want to run the app locally using Node.js and ngrok, follow the [Local setup instructions](#local-setup-instructions) below.
 
