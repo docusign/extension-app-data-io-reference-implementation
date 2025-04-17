@@ -21,7 +21,7 @@ Before deploying your extension app on AWS, complete the following setup steps:
 
 In that case `aws` Terraform provider is authenticated to AWS using [shared configuration and credentials files](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#shared-configuration-and-credentials-files), but you may use other methods for [authenticating to AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
 
-Now that you’ve set up your AWS environment, continue with the [Terraform deployment guide](terraform/README.md) to provision your infrastructure.
+Now that you’ve set up your AWS environment, continue with the [Terraform deployment guide](../README.md) to provision your infrastructure.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
