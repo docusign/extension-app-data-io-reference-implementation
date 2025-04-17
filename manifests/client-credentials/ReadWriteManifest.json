@@ -1,0 +1,108 @@
+{
+	"name": "Data IO App",
+	"description": {
+	  "short": "App for data io",
+	  "long": "This app is designed to allow users to use data io extensions"
+	},
+	"icon": {
+	  "data": "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",
+	  "mediaType": "image/png"
+	},
+	"screenshots": [],
+	"publisher": {
+	  "name": "John Doe",
+	  "email": "john.doe@gmail.com",
+	  "phone": "800-867-5309",
+	  "website": "www.johndoe.com"
+	},
+	"termsOfServiceUrl": "www.johndoe.com/tos",
+	"privacyUrl": "www.johndoe.com/privacy",
+	"supportUrl": "www.johndoe.com/support",
+	"connections": [
+	  {
+		"name": "authentication",
+		"description": "secure connection to the data io proxy",
+		"type": "oauth2",
+        "grantType": "client_credentials",
+		"params": {
+		  "provider": "CUSTOM",
+		  "scopes": [],
+		  "clientId": "<CLIENT_ID>",
+		  "clientSecret": "<CLIENT_SECRET>",
+		  "customConfig": {
+            "authorizationMethod": "header",
+            "authorizationParams": {},
+            "requiredScopes": [],
+            "scopeSeparator": " ",
+            "tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
+            "refreshScopes": []
+          }
+		}
+	  }
+	],
+	"extensions": [
+	  {
+		"name": "My Data IO Extension",
+		"description": "using in data io flow",
+		"template": "DataIO.Version6.DataInputOutput",
+		"actionReferences": [
+		  "CreateRecord Action",
+		  "PatchRecord Action",
+		  "SearchRecords Action",
+		  "GetTypeNames Action",
+		  "GetTypeDefinitions Action"
+		]
+	  }
+	],
+	"actions": [
+	  {
+		"name": "CreateRecord Action",
+		"description": "something about data io to a proxy",
+		"template": "DataIO.Version6.CreateRecord",
+		"connectionsReference": "authentication",
+		"params": {
+		  "uri": "<PROXY_BASE_URL>/api/dataio/createRecord"
+		}
+	  },
+	  {
+		"name": "PatchRecord Action",
+		"description": "something about data io to a proxy",
+		"template": "DataIO.Version6.PatchRecord",
+		"connectionsReference": "authentication",
+		"params": {
+		  "uri": "<PROXY_BASE_URL>/api/dataio/patchRecord"
+		}
+	  },
+	  {
+		"name": "SearchRecords Action",
+		"description": "something about data io to a proxy",
+		"template": "DataIO.Version6.SearchRecords",
+		"connectionsReference": "authentication",
+		"params": {
+		  "uri": "<PROXY_BASE_URL>/api/dataio/searchRecords"
+		}
+	  },
+	  {
+		"name": "GetTypeNames Action",
+		"description": "something about data io to a proxy",
+		"template": "DataIO.Version6.GetTypeNames",
+		"connectionsReference": "authentication",
+		"params": {
+		  "uri": "<PROXY_BASE_URL>/api/dataio/getTypeNames"
+		}
+	  },
+	  {
+		"name": "GetTypeDefinitions Action",
+		"description": "something about data io to a proxy",
+		"template": "DataIO.Version6.GetTypeDefinitions",
+		"connectionsReference": "authentication",
+		"params": {
+		  "uri": "<PROXY_BASE_URL>/api/dataio/getTypeDefinitions"
+		}
+	  }
+	],
+	"publicationRegions": [
+		"US"
+	],
+	"distribution": "PRIVATE"
+  }

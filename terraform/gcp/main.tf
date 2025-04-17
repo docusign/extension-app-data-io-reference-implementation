@@ -53,8 +53,11 @@ module "manifest" {
   source = "../common/modules/template"
 
   input_file_path  = abspath(join(local.file_path_separator, [path.cwd, var.manifest_files_paths[count.index]]))
-  output_file_path = join(local.file_path_separator, [local.output_manifest_files_directory, basename(var.manifest_files_paths[count.index])])
-
+  output_file_path = join(local.file_path_separator, [
+    local.output_manifest_files_directory,
+    "${basename(dirname(var.manifest_files_paths[count.index]))}.${basename(var.manifest_files_paths[count.index])}"
+  ])
+  
   client_id     = local.application_oauth_client_id
   client_secret = local.application_oauth_client_secret
   base_url      = local.application_service_url

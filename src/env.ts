@@ -4,7 +4,7 @@
 
 /* eslint-disable node/no-process-env */
 
-const { NODE_ENV, PORT, OAUTH_CLIENT_ID, AUTHORIZATION_CODE, JWT_SECRET_KEY } = process.env;
+const { NODE_ENV, PORT, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, AUTHORIZATION_CODE, JWT_SECRET_KEY } = process.env;
 
 if (!NODE_ENV) {
   throw new Error('NODE_ENV not set');
@@ -16,6 +16,10 @@ if (!PORT) {
 
 if (!OAUTH_CLIENT_ID) {
   throw new Error('OAUTH_CLIENT_ID not set');
+}
+
+if (!OAUTH_CLIENT_SECRET) {
+  throw new Error('OAUTH_CLIENT_SECRET not set');
 }
 
 if (!AUTHORIZATION_CODE) {
@@ -30,6 +34,7 @@ export default {
   NODE_ENV,
   PORT,
   OAUTH_CLIENT_ID,
+  OAUTH_CLIENT_SECRET,
   AUTHORIZATION_CODE,
   JWT_SECRET_KEY,
 };
