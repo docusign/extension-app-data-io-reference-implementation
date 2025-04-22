@@ -180,10 +180,10 @@ variable "manifest_files_paths" {
   description = "The list of manifest files relative paths to generate"
   type        = list(string)
   default = [
-    "../../manifests/auth-code/ReadOnlyManifest.json",
-    "../../manifests/auth-code/ReadWriteManifest.json",
-    "../../manifests/client-credentials/ReadOnlyManifest.json",
-    "../../manifests/client-credentials/ReadWriteManifest.json",
+    "../../manifests/authorizationCode/ReadOnlyManifest.json",
+    "../../manifests/authorizationCode/ReadWriteManifest.json",
+    "../../manifests/clientCredentials/ReadOnlyManifest.json",
+    "../../manifests/clientCredentials/ReadWriteManifest.json",
   ]
 }
 

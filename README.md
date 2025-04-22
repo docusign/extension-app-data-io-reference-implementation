@@ -11,7 +11,7 @@ This reference implementation supports two authentication flows:
 * Authorization Code Grant – required for public extension apps
 * Client Credentials Grant – available to private extension apps
 
-*Private extension apps can use either authentication method, but public extension apps must use authorization code grant.*
+*Private extension apps can use either authentication method, but public extension apps must use Authorization Code Grant.*
 
 ```bash
 manifests/
