@@ -79,7 +79,7 @@ resource "docker_image" "app" {
     dockerfile = var.app_image_build_dockerfile
     platform   = var.app_image_build_platform
     target     = var.app_image_build_target_stage
-    build_arg  = var.app_image_build_args
+    build_args = var.app_image_build_args
     no_cache   = !var.do_use_build_cache
     tag        = local.app_image_build_tags
     label      = local.app_image_build_labels

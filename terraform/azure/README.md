@@ -35,7 +35,7 @@ Before deploying your extension app on Azure, complete the following setup steps
 
 In that case `azurerm` Terraform provider is [authenticated to Azure using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), but you may use other methods for [authenticating to Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#authenticating-to-azure).
 
-Now that you’ve set up your Azure environment, continue with the [Terraform deployment guide](terraform/README.md) to provision your infrastructure.
+Now that you’ve set up your Azure environment, continue with the [Terraform deployment guide](../README.md) to provision your infrastructure.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

@@ -11,4 +11,12 @@ export type GenerateAuthTokenBody =
       code?: string;
       grant_type: 'authorization_code';
     }
-  | { refresh_token?: string; grant_type: 'refresh_token' };
+  | {
+      refresh_token?: string; 
+      grant_type: 'refresh_token';
+    }
+  | {
+      client_id?: string;
+      client_secret?: string;
+      grant_type: 'client_credentials';
+  };

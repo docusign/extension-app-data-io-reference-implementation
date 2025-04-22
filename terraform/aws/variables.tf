@@ -28,7 +28,7 @@ variable "application_name" {
   description = "The name of the application"
   type        = string
   nullable    = false
-  default     = "extension-app-data-io"
+  default     = "ext-app-data-io-clientcreds"
 
   validation {
     condition     = can(regex("^[a-zA-Z0-9-]+$", var.application_name)) && length(var.application_name) <= 32
@@ -195,8 +195,10 @@ variable "manifest_files_paths" {
   description = "The list of manifest files relative paths to generate"
   type        = list(string)
   default = [
-    "../../ReadOnlyManifest.json",
-    "../../ReadWriteManifest.json",
+    "../../manifests/aauthorizationCode/ReadOnlyManifest.json",
+    "../../manifests/authorizationCode/ReadWriteManifest.json",
+    "../../manifests/clientCredentials/ReadOnlyManifest.json",
+    "../../manifests/clientCredentials/ReadWriteManifest.json",
   ]
 }
 

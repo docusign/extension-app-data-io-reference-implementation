@@ -8,5 +8,5 @@ export const authorizeQuery: Schema = {
 };
 
 export const generateAuthTokenBody: Schema = {
-  grant_type: { isIn: { options: [['authorization_code', 'refresh_token']] } },
+  grant_type: { isIn: { options: [['authorization_code', 'refresh_token', 'client_credentials']] } },
 };

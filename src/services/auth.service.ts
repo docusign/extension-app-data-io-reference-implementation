@@ -26,6 +26,7 @@ export const generateAuthToken = (req: IReq<GenerateAuthTokenBody>, res: IRes) =
   const accessToken = jwt.sign({ type: 'access_token', sub: crypto.randomUUID(), email: `${crypto.randomUUID()}@test.com` }, env.JWT_SECRET_KEY, {
     expiresIn: 3600,
   });
+  
   const refreshToken = jwt.sign({ type: 'refresh_token' }, env.JWT_SECRET_KEY);
 
   const jwtResponse = {
@@ -43,6 +44,23 @@ export const generateAuthToken = (req: IReq<GenerateAuthTokenBody>, res: IRes) =
       throw new Error();
     }
     return res.json(jwtResponse);
+  } else if(req.body.grant_type === 'client_credentials') {
+
+    const authHeader = req.headers.authorization;
+
+    if(!authHeader?.startsWith('Basic ')){
+      throw new Error();
+    }
+
+    const base64Credentials = authHeader.split(' ')[1];
+    const decoded = Buffer.from(base64Credentials, 'base64').toString('utf-8');
+    const [clientId, clientSecret] = decoded.split(':');
+
+    if(clientId === env.OAUTH_CLIENT_ID && clientSecret === env.OAUTH_CLIENT_SECRET){
+      return res.json(jwtResponse);
+    } else {
+      throw new Error();
+    }
   }
 
   throw new Error(JSON.stringify(req.body));

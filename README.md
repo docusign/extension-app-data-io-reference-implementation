@@ -2,12 +2,33 @@
 ## Introduction
 This reference implementation models the implementation of data input and output functionalities in an [extension app](https://developers.docusign.com/extension-apps/).
 
-To test a read-only data IO extension app, modify the `ReadOnlyManifest.json` file.
+To test a read-only data IO extension app, modify one of the `ReadOnlyManifest.json` files.
 
-To test a data IO extension app with both read and write capabilities, modify the `ReadWriteManifest.json` file.
+To test a data IO extension app with both read and write capabilities, modify one of the `ReadWriteManifest.json` files.
 
+## Authentication
+This reference implementation supports two authentication flows:
+* Authorization Code Grant – required for public extension apps
+* Client Credentials Grant – available to private extension apps
+
+*Private extension apps can use either authentication method, but public extension apps must use Authorization Code Grant.*
+
+```bash
+manifests/
+  ├── authorizationCode/
+  │   ├── ReadOnlyManifest.json
+  │   └── ReadWriteManifest.json
+  ├── clientCredentials/
+  │   ├── ReadOnlyManifest.json
+  │   └── ReadWriteManifest.json
+  └── hosted/
+      ├── AuthorizationCode.ReadOnlyManifest.json
+      └── AuthorizationCode.ReadWriteManifest.json
+      └── ClientCredentials.ReadOnlyManifest.json
+      └── ClientCredentials.ReadWriteManifest.json
+```
 ## Hosted Version (no setup required)
-You can use the hosted version of this reference implementation by directly uploading the appropriate manifest file located in the root of the repository: `Hosted.ReadOnlyManifest.json` or `Hosted.ReadWriteManifest.json` to the Docusign Developer Console. See [Upload your manifest and create the data IO app](#3-upload-your-manifest-and-create-the-data-io-app).
+You can use the hosted version of this reference implementation by directly uploading the appropriate manifest file located in the [manifests/hosted/](manifests/hosted) folder to the Docusign Developer Console. See [Upload your manifest and create the data IO app](#3-upload-your-manifest-and-create-the-data-io-app).
 
 **Note:** The provided manifests include `clientId` and `clientSecret` values used in the sample authentication connection. These do not authenticate to a real system, but the hosted reference implementation requires these exact values.
 

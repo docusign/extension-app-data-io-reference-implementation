@@ -44,7 +44,7 @@ Before deploying your extension app on GCP, complete the following setup steps:
 
 In that case `google` Terraform provider is authenticated to Google using [User Application Default Credentials ("ADCs")](https://cloud.google.com/sdk/gcloud/reference/auth/application-default), but you may use other methods for [authenticating to Google](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#authentication).
 
-Now that you’ve set up your Google Cloud environment, continue with the [Terraform deployment guide](terraform/README.md) to provision your infrastructure.
+Now that you’ve set up your Google Cloud environment, continue with the [Terraform deployment guide](../README.md) to provision your infrastructure.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
