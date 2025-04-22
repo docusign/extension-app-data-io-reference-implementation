@@ -18,7 +18,7 @@
 	"termsOfServiceUrl": "www.johndoe.com/tos",
 	"privacyUrl": "www.johndoe.com/privacy",
 	"supportUrl": "www.johndoe.com/support",
-		"connections": [
+	"connections": [
 	  {
 		"name": "authentication",
 		"description": "Secure connection to the data io proxy",
