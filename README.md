@@ -22,10 +22,10 @@ manifests/
   │   ├── ReadOnlyManifest.json
   │   └── ReadWriteManifest.json
   └── hosted/
-      ├── AuthorizationCode.ReadOnlyManifest.json
-      └── AuthorizationCode.ReadWriteManifest.json
-      └── ClientCredentials.ReadOnlyManifest.json
-      └── ClientCredentials.ReadWriteManifest.json
+      ├── authorizationCode.ReadOnlyManifest.json
+      └── authorizationCode.ReadWriteManifest.json
+      └── clientCredentials.ReadOnlyManifest.json
+      └── clientCredentials.ReadWriteManifest.json
 ```
 ## Hosted Version (no setup required)
 You can use the hosted version of this reference implementation by directly uploading the appropriate manifest file located in the [manifests/hosted/](manifests/hosted) folder to the Docusign Developer Console. See [Upload your manifest and create the data IO app](#3-upload-your-manifest-and-create-the-data-io-app).

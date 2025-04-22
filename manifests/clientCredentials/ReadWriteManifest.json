@@ -23,10 +23,10 @@
 		"name": "authentication",
 		"description": "secure connection to the data io proxy",
 		"type": "oauth2",
-        "grantType": "client_credentials",
 		"params": {
 		  "provider": "CUSTOM",
 		  "scopes": [],
+		  "grantType": "client_credentials",
 		  "clientId": "<CLIENT_ID>",
 		  "clientSecret": "<CLIENT_SECRET>",
 		  "customConfig": {
@@ -34,8 +34,7 @@
             "authorizationParams": {},
             "requiredScopes": [],
             "scopeSeparator": " ",
-            "tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
-            "refreshScopes": []
+            "tokenUrl": "<PROXY_BASE_URL>/api/oauth/token"
           }
 		}
 	  }
