@@ -15,17 +15,17 @@ This reference implementation supports two authentication flows:
 
 ```bash
 manifests/
-  ├── auth-code/
+  ├── authorizationCode/
   │   ├── ReadOnlyManifest.json
   │   └── ReadWriteManifest.json
-  ├── client-credentials/
+  ├── clientCredentials/
   │   ├── ReadOnlyManifest.json
   │   └── ReadWriteManifest.json
   └── hosted/
-      ├── auth-code.ReadOnlyManifest.json
-      └── auth-code.ReadWriteManifest.json
-      └── client-credentials.ReadOnlyManifest.json
-      └── client-credentials.ReadWriteManifest.json
+      ├── AuthorizationCode.ReadOnlyManifest.json
+      └── AuthorizationCode.ReadWriteManifest.json
+      └── ClientCredentials.ReadOnlyManifest.json
+      └── ClientCredentials.ReadWriteManifest.json
 ```
 ## Hosted Version (no setup required)
 You can use the hosted version of this reference implementation by directly uploading the appropriate manifest file located in the [manifests/hosted/](manifests/hosted) folder to the Docusign Developer Console. See [Upload your manifest and create the data IO app](#3-upload-your-manifest-and-create-the-data-io-app).
