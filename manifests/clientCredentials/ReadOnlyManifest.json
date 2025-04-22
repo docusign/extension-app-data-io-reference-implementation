@@ -18,29 +18,25 @@
 	"termsOfServiceUrl": "www.johndoe.com/tos",
 	"privacyUrl": "www.johndoe.com/privacy",
 	"supportUrl": "www.johndoe.com/support",
-	"connections": [
+		"connections": [
 	  {
 		"name": "authentication",
-		"description": "secure connection to the data io proxy",
+		"description": "Secure connection to the data io proxy",
 		"type": "oauth2",
 		"params": {
 		  "provider": "CUSTOM",
 		  "scopes": [],
+		  "grantType": "client_credentials",
 		  "clientId": "<CLIENT_ID>",
 		  "clientSecret": "<CLIENT_SECRET>",
 		  "customConfig": {
-			"tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
-			"authorizationUrl": "<PROXY_BASE_URL>/api/oauth/authorize",
-			"authorizationParams": {
-			  "access_type": "offline",
-			  "prompt": "consent"
-			},
-			"authorizationMethod": "header",			
-			"scopeSeparator": " ",
-			"requiredScopes": []
-		  }
+            "authorizationMethod": "header",
+            "authorizationParams": {},
+            "requiredScopes": [],
+            "scopeSeparator": " ",
+            "tokenUrl": "<PROXY_BASE_URL>/api/oauth/token"
+          }
 		}
-
 	  }
 	],
 	"extensions": [
