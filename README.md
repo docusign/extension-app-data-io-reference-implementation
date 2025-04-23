@@ -7,9 +7,9 @@ To test a read-only data IO extension app, modify one of the `ReadOnlyManifest.j
 To test a data IO extension app with both read and write capabilities, modify one of the `ReadWriteManifest.json` files.
 
 ## Authentication
-This reference implementation supports two authentication flows:
-* Authorization Code Grant – required for public extension apps
-* Client Credentials Grant – available to private extension apps
+This reference implementation supports two [authentication](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/) flows:
+* [Authorization Code Grant](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/#authorization-code-grant) – required for public extension apps
+* [Client Credentials Grant](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/#client-credentials-grant) – available to private extension apps. See [Choosing private distribution instead of public](https://developers.docusign.com/extension-apps/extension-apps-101/choosing-private-distribution/)
 
 *Private extension apps can use either authentication method, but public extension apps must use Authorization Code Grant.*
 
