@@ -6,6 +6,9 @@ To test a read-only data IO extension app, modify one of the `ReadOnlyManifest.j
 
 To test a data IO extension app with both read and write capabilities, modify one of the `ReadWriteManifest.json` files.
 
+## Combining with Other Extensions
+The data IO extension type is designed to work with other extension types to enhance the functionality of an extension app and simplify workflows. For a practical example of combining extension types in an extension app, see the [File Archive and Data Verification Reference Implementation](https://github.com/docusign/file-archive-dv-reference-implementation/).
+
 ## Authentication
 This reference implementation supports two [authentication](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/) flows:
 * [Authorization Code Grant](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/#authorization-code-grant) – required for public extension apps
