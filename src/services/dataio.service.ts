@@ -3,7 +3,7 @@ import { IReq, IRes } from '../utils/types';
 import { QueryExecutor } from '../utils/queryExecutor';
 import { FileDB } from '../db/fileDB';
 import moment from 'moment';
-import { ConceptDeclaration, ModelManager } from '@accordproject/concerto-core';
+import { ConceptDeclaration, EnumDeclaration, MapDeclaration, ModelManager, ScalarDeclaration } from '@accordproject/concerto-core';
 import path from 'path';
 import { ModelManagerUtil } from '../utils/modelManagerUtil';
 import { ResultRehydrator } from '../utils/resultRehydrator';
@@ -120,8 +120,8 @@ const generateErrorResponse = (message: string, code: string): ErrorResponse => 
  * Concerto model manager setup using CTO file.
  * Model manager allowes users to load in CTO files and use Concerto model features directly in code.
  */
-const MODEL_MANAGER: ModelManager = ModelManagerUtil.createModelManagerFromCTO(path.join(__dirname, "../dataModel/model.cto"));
-const CONCEPTS: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations();
+const MODEL_MANAGER: ModelManager = ModelManagerUtil.createModelManagerFromCTO();
+const CONCEPTS: ConceptDeclaration[] = MODEL_MANAGER.getModelFile("org.example@1.0.0").getConceptDeclarations();
 const READABLE_CONCEPTS: ConceptDeclaration[] = CONCEPTS.filter(isReadableConcept);
 
 /**
@@ -247,11 +247,26 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
   if (!typeNames) {
     return res.status(400).json(generateErrorResponse(ErrorCode.BAD_REQUEST, 'Missing typeNames in request')).send();
   }
-  MODEL_MANAGER.addCTOModel
+  
   try {
+    const modelFile = MODEL_MANAGER.getModelFile("org.example@1.0.0");
+    
     return res.json({
-      declarations: READABLE_CONCEPTS.map((concept: ConceptDeclaration) => concept.ast)
-    })
+      declarations: [
+        ...modelFile
+          .getEnumDeclarations()
+          .map((decl: EnumDeclaration) => decl.ast),
+        ...modelFile
+          .getScalarDeclarations()
+          .map((decl: ScalarDeclaration) => decl.ast),
+        ...modelFile
+          .getConceptDeclarations()
+          .map((decl: ConceptDeclaration) => decl.ast),
+        ...modelFile
+          .getMapDeclarations()
+          .map((decl: MapDeclaration) => decl.value.ast)
+      ]
+    });
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();
