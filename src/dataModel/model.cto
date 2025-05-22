@@ -1,4 +1,5 @@
 namespace org.example@1.0.0
+import org.accordproject.contact@1.0.0.{EmailAddress, PhoneNumber}
 
 enum AccountType_Enum {
   o Prospect
@@ -165,11 +166,11 @@ concept Contact identified by Id {
 
     @Term("Email")
     @Crud("Createable,Readable,Updateable")
-    o String email optional
+    o EmailAddress email optional
 
     @Term("Phone")
     @Crud("Createable,Readable,Updateable")
-    o String phone optional
+    o PhoneNumber phone optional
 
     @Term("Opportunity Link")
     @Crud("Createable,Readable,Updateable")
