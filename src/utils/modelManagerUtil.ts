@@ -4,7 +4,7 @@ import fs from 'fs';
 
 export class ModelManagerUtil {
     private static DATA_MODELS_FOLDER: string = '../dataModel/';
-    private static DATA_MODLS_FILES: string[] = [
+    private static DATA_MODELS_FILES: string[] = [
         'contact@1.0.0.cto',
         'model.cto',
     ];
@@ -18,7 +18,7 @@ export class ModelManagerUtil {
         // @ts-ignore
         const modelManager: ModelManager = new ModelManager({ strict: true,skipLocationNodes: true });
         
-        this.DATA_MODLS_FILES.forEach((fileName: string) => {
+        this.DATA_MODELS_FILES.forEach((fileName: string) => {
           modelManager.addCTOModel(
             fs.readFileSync(
               path.join(__dirname, `${this.DATA_MODELS_FOLDER}${fileName}`),
