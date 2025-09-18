@@ -29,8 +29,6 @@ export const generateAuthToken = (req: IReq<GenerateAuthTokenBody>, res: IRes) =
   
   const refreshToken = jwt.sign({ type: 'refresh_token' }, env.JWT_SECRET_KEY);
 
-  const decodedAuthCode = decodeURIComponent(env.AUTHORIZATION_CODE.replace(/\+/g, '%20'));
-
   const jwtResponse = {
     access_token: accessToken,
     token_type: 'Bearer',
@@ -38,7 +36,11 @@ export const generateAuthToken = (req: IReq<GenerateAuthTokenBody>, res: IRes) =
     refresh_token: refreshToken,
   };
 
-  if (req.body.grant_type === 'authorization_code' && req.body.code === env.AUTHORIZATION_CODE) {
+  if (
+    req.body.grant_type === 'authorization_code' &&
+    typeof req.body.code === 'string' &&
+    decodeURIComponent(req.body.code.replace(/\+/g, '%20')) === env.AUTHORIZATION_CODE
+  ) {
     return res.json(jwtResponse);
   } else if (req.body.grant_type === 'refresh_token' && req.body.refresh_token) {
     const payload = jwt.verify(req.body.refresh_token, env.JWT_SECRET_KEY) as JwtPayload;
