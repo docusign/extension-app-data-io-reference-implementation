@@ -36,7 +36,7 @@ export class ResultRehydrator {
 
         for (let i = 0; i < segments.length; i++) {
             // Remove type suffix (e.g., (:typeName)) from segment
-            const segment: string = segments[i].replace(/\(:.*?\)/, '').replace(/\[\]$/, ''); // Remove array indicator and type suffix
+            const segment: string = segments[i].replace(/\(:.*?\)/, '').replace(/\[\]$/, '').replace(/\([^()]*\)/, ''); // Remove array indicator and type suffix
 
             if (i === segments.length - 1) {
                 // Assign value at last segment

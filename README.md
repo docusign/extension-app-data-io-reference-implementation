@@ -175,8 +175,8 @@ Open the `Account.json` file in the `/src/db/` folder and check that the records
 
 ![Account.json](https://github.com/user-attachments/assets/37cca0e3-9113-4e01-a710-514b16763dbe)
 
+#### SearchRecords extension tests
 
-#### SearchRecords extension test
 This query searches the records that have been created. You don’t have to use the same sample values used here; the search should work with a valid attribute in `Account.json`.
 
 Open the SearchRecords test and create a new query based on the `Account.json` file:
@@ -224,12 +224,56 @@ The query below has been updated based on the directions above. You can copy and
 }
 ```
 
-Running the test will return the record you queried.
-
 ![new search records](https://github.com/user-attachments/assets/4e6e26e2-040b-43a1-b20c-f69c84bcf765)
 
+The following query searches the records in `Contact.json`. You don’t have to use the same sample values used here.
 
+Open the SearchRecords test and create a new query based on the `Contact.json` file:
 
+- The `from` attribute maps to the value of `typeName` in the CreateRecord query; in this case, `Contact`.
+- The `data` array from the CreateRecord query maps to the `attributesToSelect` array; in this case, `fullName`, `email` and `phone`.
+- The `name` property of the `leftOperand` object should be the value of `email`; in this case, `s.johnson@techcorp.com`.
+- The `operator` value should be `EQUALS`.
+- The `name` property of the `rightOperand` object should be the same as what's in `attributesToSelect` array; in this case, `email`.
+
+The query below has been updated based on the directions above. You can copy and paste this into the SearchRecords test input box.
+
+```json
+{
+    "query": {
+        "$class": "com.docusign.connected.data.queries@1.0.0.Query",
+        "attributesToSelect": [
+            "fullName", "email", "phone"
+        ],
+        "from": "Contact",
+        "queryFilter": {
+            "$class": "com.docusign.connected.data.queries@1.0.0.QueryFilter",
+            "operation": {
+                "$class": "com.docusign.connected.data.queries@1.0.0.ComparisonOperation",
+                "leftOperand": {
+                    "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
+                    "name": "s.johnson@techcorp.com",
+                    "type": "STRING",
+                    "isLiteral": true
+                },
+                "operator": "EQUALS",
+                "rightOperand": {
+                    "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
+                    "name": "email",
+                    "type": "INTEGER",
+                    "isLiteral": false
+                }
+            }
+        }
+    },
+    "pagination": {
+        "limit": 10,
+        "skip": 10
+    }
+}
+```
+
+Running the tests will return the records you queried.
 
 #### PatchRecord extension test
 The `recordId` property in the sample input maps to an `Id` in the `Account.json` file. Any valid record ID can be used in this field.
