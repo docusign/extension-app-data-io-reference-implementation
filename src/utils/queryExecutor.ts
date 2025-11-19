@@ -77,7 +77,7 @@ export class QueryExecutor {
             }
 
             const isArray: boolean = segment.endsWith('[]');
-            const cleanSegment: string = segment.replace(/\[\]$/, '');
+            const cleanSegment: string = segment.replace(/\[\]$/, '').replace(/\([^()]*\)/, '');
 
             currentValue = currentValue[cleanSegment];
 
