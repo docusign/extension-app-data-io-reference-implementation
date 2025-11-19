@@ -226,17 +226,17 @@ The query below has been updated based on the directions above. You can copy and
 
 ![new search records](https://github.com/user-attachments/assets/4e6e26e2-040b-43a1-b20c-f69c84bcf765)
 
-The following query searches the records in `Contact.json`. You don’t have to use the same sample values used here.
+The following sample query searches the records in `Contact.json`. These records include the Accord Project [EmailAddress and PhoneNumber types](https://github.com/accordproject/models/blob/main/src/contact%401.0.0.cto).
 
 Open the SearchRecords test and create a new query based on the `Contact.json` file:
 
-- The `from` attribute maps to the value of `typeName` in the CreateRecord query; in this case, `Contact`.
-- The `data` array from the CreateRecord query maps to the `attributesToSelect` array; in this case, `fullName`, `email` and `phone`.
-- The `name` property of the `leftOperand` object should be the value of `email`; in this case, `s.johnson@techcorp.com`.
+- The `from` attribute specifies the object to query; in this case, `Contact`.
+- The `attributesToSelect` array defines the values to return; in this case, `fullName`, `email` and `phone`.
+- The `name` property of the `leftOperand` object should be the search string; in this case, `s.johnson@fontara.com`.
 - The `operator` value should be `EQUALS`.
-- The `name` property of the `rightOperand` object should be the same as what's in `attributesToSelect` array; in this case, `email`.
+- The `name` property of the `rightOperand` object should be the `Contact` property to check for the search string; in this case, `email`.
 
-The query below has been updated based on the directions above. You can copy and paste this into the SearchRecords test input box.
+You can copy and paste this sample query into the SearchRecords test input box.
 
 ```json
 {
@@ -252,7 +252,7 @@ The query below has been updated based on the directions above. You can copy and
                 "$class": "com.docusign.connected.data.queries@1.0.0.ComparisonOperation",
                 "leftOperand": {
                     "$class": "com.docusign.connected.data.queries@1.0.0.Operand",
-                    "name": "s.johnson@techcorp.com",
+                    "name": "s.johnson@fontara.com",
                     "type": "STRING",
                     "isLiteral": true
                 },
