@@ -29,8 +29,8 @@
 		  "clientId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 		  "clientSecret": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 		  "customConfig": {
-			"tokenUrl": "https://app-extension-app-data-io-sample-fece.azurewebsites.net/api/oauth/token",
-			"authorizationUrl": "https://app-extension-app-data-io-sample-fece.azurewebsites.net/api/oauth/authorize",
+			"tokenUrl": "https://app-extension-app-data-io-sample-5242.azurewebsites.net/api/oauth/token",
+			"authorizationUrl": "https://app-extension-app-data-io-sample-5242.azurewebsites.net/api/oauth/authorize",
 			"authorizationParams": {
 			  "access_type": "offline",
 			  "prompt": "consent"
@@ -64,7 +64,7 @@
 		"template": "DataIO.Version6.CreateRecord",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://app-extension-app-data-io-sample-fece.azurewebsites.net/api/dataio/createRecord"
+		  "uri": "https://app-extension-app-data-io-sample-5242.azurewebsites.net/api/dataio/createRecord"
 		}
 	  },
 	  {
@@ -73,7 +73,7 @@
 		"template": "DataIO.Version6.PatchRecord",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://app-extension-app-data-io-sample-fece.azurewebsites.net/api/dataio/patchRecord"
+		  "uri": "https://app-extension-app-data-io-sample-5242.azurewebsites.net/api/dataio/patchRecord"
 		}
 	  },
 	  {
@@ -82,7 +82,7 @@
 		"template": "DataIO.Version6.SearchRecords",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://app-extension-app-data-io-sample-fece.azurewebsites.net/api/dataio/searchRecords"
+		  "uri": "https://app-extension-app-data-io-sample-5242.azurewebsites.net/api/dataio/searchRecords"
 		}
 	  },
 	  {
@@ -91,7 +91,7 @@
 		"template": "DataIO.Version6.GetTypeNames",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://app-extension-app-data-io-sample-fece.azurewebsites.net/api/dataio/getTypeNames"
+		  "uri": "https://app-extension-app-data-io-sample-5242.azurewebsites.net/api/dataio/getTypeNames"
 		}
 	  },
 	  {
@@ -100,7 +100,7 @@
 		"template": "DataIO.Version6.GetTypeDefinitions",
 		"connectionsReference": "authentication",
 		"params": {
-		  "uri": "https://app-extension-app-data-io-sample-fece.azurewebsites.net/api/dataio/getTypeDefinitions"
+		  "uri": "https://app-extension-app-data-io-sample-5242.azurewebsites.net/api/dataio/getTypeDefinitions"
 		}
 	  }
 	],
