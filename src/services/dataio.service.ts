@@ -200,15 +200,19 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     }
     const db: FileDB = new FileDB(generateFilePath(query.from));
     const data: object[] = db.readFile();
-    const index: number = QueryExecutor.execute(query, data);
-    if (index === -1) {
+    const indices: number[] = QueryExecutor.executeAll(query, data);
+    if (!indices || indices.length === 0) {
       console.log('No results found');
       return res.json({ records: [] })
     }
-    const dataResult: object = data[index];
-    convertDateToISO8601(dataResult, query.from);
 
-    return res.json({ records: [ResultRehydrator.filterAndRehydrate(query.attributesToSelect, data[index])] });
+    const records = indices.map((idx: number) => {
+      const record: object = data[idx];
+      convertDateToISO8601(record, query.from);
+      return ResultRehydrator.filterAndRehydrate(query.attributesToSelect, record);
+    });
+
+    return res.json({ records });
   } catch (err) {
     console.log(`Encountered an error searching data: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();
