@@ -61,6 +61,7 @@ module "manifest" {
     "${basename(dirname(var.manifest_files_paths[count.index]))}.${basename(var.manifest_files_paths[count.index])}"
   ])
 
+  execution_mode = var.execution_mode
   client_id     = local.application_oauth_client_id
   client_secret = local.application_oauth_client_secret
   base_url      = local.application_service_url

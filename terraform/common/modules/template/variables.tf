@@ -1,3 +1,14 @@
+variable "execution_mode" {
+  description = "Controls whether Terraform writes manifests to disk (local) or only renders them (ci)"
+  type        = string
+  default     = "local"
+
+  validation {
+    condition     = contains(["local", "ci"], var.execution_mode)
+    error_message = "execution_mode must be 'local' or 'ci'."
+  }
+}
+
 variable "input_file_path" {
   description = "The absolute path to the input file. If it doesn't exist, the module will not do anything"
   type        = string

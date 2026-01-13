@@ -1,0 +1,112 @@
+name: Terraform CI/CD
+
+on:
+  pull_request:
+    branches: [deploy]
+  push:
+    branches: [deploy]
+
+permissions:
+  id-token: write          # Required for Azure OIDC
+  contents: write          # Needed to commit manifest updates
+  pull-requests: write     # Needed to open PRs
+
+env:
+  TF_VAR_application_name: ${{ vars.APPLICATION_NAME }}
+  TF_VAR_application_oauth_client_id: ${{ secrets.APPLICATION_OAUTH_CLIENT_ID }}
+  TF_VAR_application_oauth_client_secret: ${{ secrets.APPLICATION_OAUTH_CLIENT_SECRET }}
+  TF_VAR_location: ${{ vars.AZURE_LOCATION }}
+  TF_VAR_execution_mode: ci
+  ACR_NAME: ${{ vars.ACR_NAME }}
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.10.5
+
+      # Temporarily remove repo provider configuration
+      - name: Disable repo azurerm provider
+        working-directory: terraform/azure
+        run: mv providers.tf providers.tf.bak
+
+      # Create CI-only backend + OIDC provider
+      - name: Create CI Azure backend/provider
+        working-directory: terraform/azure
+        run: |
+          cat <<EOF > azure_ci.tf
+          terraform {
+            backend "azurerm" {}
+          }
+          
+          provider "azurerm" {
+            features {}
+          }
+          EOF
+
+      - name: Configure Azure OIDC environment
+        run: |
+          echo "ARM_USE_OIDC=true" >> $GITHUB_ENV
+          echo "ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
+          echo "ARM_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Login to ACR
+        run: |
+          TOKEN=$(az acr login --name ${{ env.ACR_NAME }} --expose-token --output tsv --query accessToken)
+          docker login -u 00000000-0000-0000-0000-000000000000 --password-stdin ${{ env.ACR_NAME }}.azurecr.io <<< $TOKEN
+
+      - name: Terraform Init
+        working-directory: terraform/azure
+        run: |
+          terraform init -upgrade -reconfigure\
+            -backend-config="resource_group_name=${{ vars.AZURE_RG }}" \
+            -backend-config="storage_account_name=${{ vars.AZURE_STORAGE_ACCOUNT }}" \
+            -backend-config="container_name=${{ vars.AZURE_CONTAINER }}" \
+            -backend-config="key=${{ vars.AZURE_TFSTATE_KEY }}" \
+            -backend-config="use_oidc=true"
+
+      - name: Debug backend values
+        run: |
+          terraform state pull | head -20
+          echo "RG=${{ vars.AZURE_RG }}"
+          echo "SA=${{ vars.AZURE_STORAGE_ACCOUNT }}"
+          echo "CONTAINER=${{ vars.AZURE_CONTAINER }}"
+          echo "KEY=${{ vars.AZURE_TFSTATE_KEY }}"
+
+      # Terraform plan (PR only)
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request'
+        working-directory: terraform/azure
+        run: terraform plan -out=tfplan
+
+      # Terraform apply (merge to main only)
+      - name: Terraform Apply
+        if: github.event_name == 'push'
+        working-directory: terraform/azure
+        run: |
+          terraform plan -out=tfplan
+          terraform apply -auto-approve tfplan
+
+      # Cleanup CI-only files
+      - name: Cleanup CI Terraform files
+        working-directory: terraform/azure
+        run: |
+          rm -f azure_ci.tf
+          mv providers.tf.bak providers.tf 
