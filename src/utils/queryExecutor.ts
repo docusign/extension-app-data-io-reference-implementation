@@ -32,6 +32,23 @@ export class QueryExecutor {
     }
 
     /**
+     * Executes a query on the given input data and returns all matching indices.
+     * @param {IQuery} query - The query to execute.
+     * @param {object[]} inputData - The data to query against.
+     * @returns {number[]} An array of indices for matching records (empty if none).
+     */
+    public static executeAll(query: IQuery, inputData: object[]): number[] {
+        const operation: OperationUnion = query.queryFilter.operation;
+        const results: number[] = [];
+        for (let index: number = 0; index < inputData.length; index++) {
+            if (this.evaluateOperation(operation, inputData[index])) {
+                results.push(index);
+            }
+        }
+        return results;
+    }
+
+    /**
      * Evaluates an operation on a given record.
      * @param {OperationUnion} operation - The operation to evaluate.
      * @param {object} record - The record to evaluate against.
