@@ -133,7 +133,7 @@ The directory structure is organized to support deploying the extension app to d
 - `README.md`: The main documentation file.
 - `aws/`: Contains Terraform configuration files for deploying to Amazon Web Services.
     - `README.md`: Documentation specific to AWS deployment.
-    - `apprunner.tf`, `ecr.tf`, `image.tf`, `main.tf`, `outputs.tf`, `providers.tf`, `terraform.tf`, `variables.tf`: Various Terraform configuration files for AWS resources.
+    - `lightsail.tf`, `ecr.tf`, `image.tf`, `main.tf`, `outputs.tf`, `providers.tf`, `terraform.tf`, `variables.tf`: Various Terraform configuration files for AWS resources.
 - `azure/`: Contains Terraform configuration files for deploying to Microsoft Azure.
     - `README.md`: Documentation specific to Azure deployment.
     - `acr.tf`, `image.tf`, `main.tf`, `outputs.tf`, `providers.tf`, `resource_group.tf`, `terraform.tf`, `variables.tf`, `webapp.tf`: Various Terraform configuration files for Azure resources.
@@ -156,7 +156,7 @@ The directory structure is organized to support deploying the extension app to d
 ├── README.md
 ├── aws
 │   ├── README.md
-│   ├── apprunner.tf
+│   ├── lightsail.tf
 │   ├── ecr.tf
 │   ├── image.tf
 │   ├── main.tf

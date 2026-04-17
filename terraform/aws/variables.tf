@@ -103,59 +103,27 @@ variable "application_build_labels" {
   }
 }
 
-variable "application_instance_cpu" {
-  description = "The number of CPU units to allocate to the application instance"
+variable "application_instance_power" {
+  description = "The power specification for the Lightsail container service instance"
   type        = string
   nullable    = false
-  default     = "256"
+  default     = "nano"
 
   validation {
-    condition = contains(
-      [
-        "256",
-        "512",
-        "1024",
-        "2048",
-        "4096",
-        "0.25 vCPU",
-        "0.5 vCPU",
-        "1 vCPU",
-        "2 vCPU",
-        "4 vCPU",
-    ], var.application_instance_cpu)
-    error_message = "The number of CPU units must be one of '256', '512', '1024', '2048', '4096', '0.25 vCPU', '0.5 vCPU', '1 vCPU', '2 vCPU', or '4 vCPU'"
+    condition     = contains(["nano", "micro", "small", "medium", "large", "xlarge"], var.application_instance_power)
+    error_message = "The power must be one of 'nano', 'micro', 'small', 'medium', 'large', or 'xlarge'"
   }
 }
 
-variable "application_instance_memory" {
-  description = "The amount of memory to allocate to the application instance"
-  type        = string
+variable "application_instance_scale" {
+  description = "The number of nodes for the Lightsail container service"
+  type        = number
   nullable    = false
-  default     = "512"
+  default     = 1
 
   validation {
-    condition = contains(
-      [
-        "512",
-        "1024",
-        "2048",
-        "3072",
-        "4096",
-        "6144",
-        "8192",
-        "10240",
-        "12288",
-        "0.5 GB",
-        "1 GB",
-        "2 GB",
-        "3 GB",
-        "4 GB",
-        "6 GB",
-        "8 GB",
-        "10 GB",
-        "12 GB",
-    ], var.application_instance_memory)
-    error_message = "The amount of memory must be one of '512', '1024', '2048', '3072', '4096', '6144', '8192', '10240', '12288', '0.5 GB', '1 GB', '2 GB', '3 GB', '4 GB', '6 GB', '8 GB', '10 GB', or '12 GB'"
+    condition     = var.application_instance_scale >= 1 && var.application_instance_scale <= 20
+    error_message = "The scale must be between 1 and 20"
   }
 }
 
