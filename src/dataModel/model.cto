@@ -105,11 +105,11 @@ concept MasterRecordId identified by Id {
 
   @Term("Address Relationship")
   @Crud("Createable,Readable,Updateable")
-  --> Address addy
+  --> Address addy2 optional
 
   @Term("Address Object")
   @Crud("Createable,Readable,Updateable")
-  o Address addy2
+  o Address addy
 }
 
 // Concept: Address
